@@ -1,0 +1,32 @@
+version: '3.9'
+services:
+  postgres:
+    image: "postgres:14-alpine"
+    volumes:
+      - postgres:/var/lib/postgresql/data
+      - ../migrations:/docker-entrypoint-initdb.d/
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    restart: always
+
+  backend:
+    container_name: backend
+    depends_on:
+      - postgres
+    volumes:
+      - ../src:/var/www/html/
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    ports:
+      - 3000:80
+
+volumes:
+  postgres:
