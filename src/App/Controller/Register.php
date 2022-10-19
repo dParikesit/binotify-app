@@ -24,23 +24,24 @@ if (!$username || !$password || !$email){
     http_response_code(400);
     $return = array(
         'status' => 400,
-        'error' => 'Bad request, one of field is empty',
-        'email' => $email,
-        'password' => $password,
-        'username' => $username
+        'error' => 'Bad request, one of field is empty'
     );
     print_r(json_encode($return));
     exit;
 }
 
 
-$users_service = new UsersService();
 try {
+    $users_service = new UsersService();
     $hashed_pass = password_hash($password, PASSWORD_DEFAULT);
     $result = $users_service->create($email, $hashed_pass, $username);
 
-    http_response_code($result['Status code']);
-    print_r(json_encode($result));
+    http_response_code(201);
+    $return = array(
+        'status' => 201,
+        'message' => $result
+    );
+    print_r(json_encode($return));
 } catch (PDOException $e) {
     $error_code = ($e->getCode() == 23000) ? 400 : 500;
 
