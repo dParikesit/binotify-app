@@ -1,10 +1,9 @@
 <?php 
 namespace App\Controller;
-if (!defined('BASEPATH')){
-  require_once "../../inc/config.php";
-}
+require_once "../../inc/config.php";
 
 use App\Service\UsersService;
+
 
 if ($_SERVER["REQUEST_METHOD"] != 'POST'){
     http_response_code(422);
@@ -16,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] != 'POST'){
     exit;
 }
 
+$_POST = json_decode(file_get_contents('php://input'), true);
 $email = isset($_POST['email']) ? $_POST['email'] : '';
 $password = isset($_POST['password']) ? $_POST['password'] : '' ;
 $username = isset($_POST['username']) ? $_POST['username'] : '';
@@ -24,7 +24,10 @@ if (!$username || !$password || !$email){
     http_response_code(400);
     $return = array(
         'status' => 400,
-        'error' => 'Bad request, one of field is empty'
+        'error' => 'Bad request, one of field is empty',
+        'email' => $email,
+        'password' => $password,
+        'username' => $username
     );
     print_r(json_encode($return));
     exit;

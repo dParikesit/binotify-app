@@ -16,22 +16,51 @@
         
         <div>
             <form method="POST">
-                <label for="fname">Name</label>
-                <input type="text" id="fname" name="fullname" placeholder="Your name..">
-
-                <label for="lname">Username</label>
-                <input type="text" id="lname" name="username" placeholder="Your username..">
+                <label for="fname">Email</label>
+                <input type="text" id="femail" name="email" placeholder="Your name..">
 
                 <label for="lname">Password</label>
-                <input type="text" id="lname" name="password" placeholder="Your password..">
+                <input type="text" id="lpassword" name="password" placeholder="Your password..">
 
-                <input type="submit" name="submit" value="Submit">
+                <label for="lname">Username</label>
+                <input type="text" id="lusername" name="username" placeholder="Your username..">
+
             </form>
+            <button type="button" onclick={register(event)} >Submit</button>
             <div class="flex">
                 <p>Have account? </p>
                 <a href="/login" class="button-text">Login</a>
             </div>
         </div>
         
-        </body>
+    </body>
+
+    <script>
+        const register = (e) => {
+            e.preventDefault();
+            const email = document.getElementById('femail').value;
+            const password = document.getElementById('lpassword').value;
+            const username = document.getElementById('lusername').value;
+            const payload = {
+                email: "dimasparikesitt@gmail.com",
+                password: "123456",
+                username: "dparikesit"
+            }
+
+            const xmlhttp = new XMLHttpRequest();
+            // xmlhttp.onload = () => {
+            //     if (xmlhttp.status != 200){
+            //     return;      
+            //     }
+            //     window.location.href = '/';
+            // }
+            // xmlhttp.onreadystatechange = function() {
+            //     console.log(this.responseText)
+            // };
+
+            xmlhttp.open("POST", "/App/Controller/Register.php");
+            xmlhttp.setRequestHeader("Content-type", "application/json");
+            xmlhttp.send(JSON.stringify(payload));
+        }
+    </script>
 </html>

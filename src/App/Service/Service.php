@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Service;
+use \PDO;
 if (!defined('BASEPATH')){
-  require_once "../../inc/config.php";
+    require_once "../../inc/config.php";
 }
 
-use PDO;
 
-final class Service
+class Service
 {
     protected $db;
 

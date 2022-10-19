@@ -1,5 +1,6 @@
 <?php
 namespace App\Service;
+use \PDO;
 
 class UsersService extends Service{
     public function __construct() {
