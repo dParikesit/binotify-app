@@ -1,6 +1,8 @@
+-- Create username iniuser password 1234User
+-- Create username iniadmin password 1234Admin
 INSERT INTO users(email, password, username) 
-VALUES ('user@gmail.com','1234User','iniuser'),
-('admin@gmail.com','1234Admin','iniadmin');
+VALUES ('user@gmail.com','$2y$10$/xj2UML489m0Pa1xGz8dcuPf1.Atvo/a9olT.zUdUEdfVQWlPlwmy','iniuser'),
+('admin@gmail.com','$2y$10$OiZg1MQ8wvC1pK0UjlguZOS7G21E1gS3FNG1fiJTSElKPrfL3S4I2','iniadmin');
 
 INSERT INTO albums(Judul, Penyanyi, Total_duration, Image_path, Tanggal_terbit, Genre)
 VALUES ("JUDUL-1", "Penyanyi-1", 100, "Path-1", "", "GENRE-1"),
