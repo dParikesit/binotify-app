@@ -42,9 +42,9 @@
             const password = document.getElementById('lpassword').value;
             const username = document.getElementById('lusername').value;
             const payload = {
-                email: "dimasparikesitt@gmail.com",
-                password: "123456",
-                username: "dparikesit"
+                email,
+                password,
+                username"
             }
 
             const xmlhttp = new XMLHttpRequest();
