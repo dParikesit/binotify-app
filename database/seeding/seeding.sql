@@ -1,3 +1,7 @@
+INSERT INTO users(email, password, username) 
+VALUES ('user@gmail.com','1234User','iniuser'),
+('admin@gmail.com','1234Admin','iniadmin');
+
 INSERT INTO albums(Judul, Penyanyi, Total_duration, Image_path, Tanggal_terbit, Genre)
 VALUES ("JUDUL-1", "Penyanyi-1", 100, "Path-1", "", "GENRE-1"),
 ("JUDUL-2", "Penyanyi-2", 100, "Path-2", "", "GENRE-2"),
