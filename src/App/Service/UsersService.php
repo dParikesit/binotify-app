@@ -17,9 +17,23 @@ class UsersService extends Service{
             $statement->bindParam(':username', $username, PDO::PARAM_STR);
             $statement->execute();
 
-            return array("Status code" => 201,"Message"=>"Successfully Created");
+            return "Successfully Created";
         } catch (PDOException $e) {
-            return array("Status code" => 400,"Message"=>"Error: [all] {$e->getMessage()}");
+            return $e;
+        }
+    }
+
+    public function findUserByUsername(string $username) {
+        try {
+            $sql = "SELECT user_id, email, username, password, isAdmin FROM users WHERE username=:username";
+
+            $statement = $this->db->prepare($sql);
+            $statement->bindParam(':username', $username, PDO::PARAM_STR);
+            $statement->execute();
+
+            return $statement->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return $e;
         }
     }
 }
