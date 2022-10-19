@@ -1,0 +1,4 @@
+FROM postgres:14-alpine
+COPY database/0-extensions.sql /docker-entrypoint-initdb.d
+COPY database/migration /docker-entrypoint-initdb.d
+COPY database/seeding /docker-entrypoint-initdb.d
