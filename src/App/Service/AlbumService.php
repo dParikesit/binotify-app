@@ -31,12 +31,12 @@ class AlbumService extends Service{
         try {
             $sql = "DELETE FROM albums WHERE album_id = :album_id";
             $statement = $this->db->prepare($sql);
-            $statement->bindParam(':album_id', $album_id, PDO::PARAM_INT);
+            $statement->bindParam(':album_id', $album_id, PDO::PARAM_STRING);
             $statement->execute();
 
             $sql = "UPDATE albums SET album_id = NULL WHERE album_id = :album_id";
             $statement = $this->db->prepare($sql);
-            $statement->bindParam(':album_id', $album_id, PDO::PARAM_INT);
+            $statement->bindParam(':album_id', $album_id, PDO::PARAM_STRING);
             $statement->execute();
 
             return array("Status code" => 200,"Message"=>"Successfully Deleted");
@@ -49,7 +49,7 @@ class AlbumService extends Service{
         try {
             $sql = "UPDATE albums SET judul = :judul, penyanyi = :penyanyi, image_path = :image_path, tanggal_terbit = :tanggal_terbit, genre = :genre WHERE album_id = :album_id";
             $statement = $this->db->prepare($sql);
-            $statement->bindParam(':album_id', $album_id, PDO::PARAM_INT);
+            $statement->bindParam(':album_id', $album_id, PDO::PARAM_STRING);
             $statement->bindParam(':judul', $judul, PDO::PARAM_STR);
             $statement->bindParam(':penyanyi', $penyanyi, PDO::PARAM_STR);
             $statement->bindParam(':image_path', $image_path, PDO::PARAM_STR);
@@ -80,13 +80,13 @@ class AlbumService extends Service{
         try {
             $sql = "SELECT * FROM albums WHERE album_id = :album_id";
             $statement = $this->db->prepare($sql);
-            $statement->bindParam(':album_id', $album_id, PDO::PARAM_INT);
+            $statement->bindParam(':album_id', $album_id, PDO::PARAM_STRING);
             $statement->execute();
             $result = $statement->fetch();
 
             $sql = "SELECT * FROM songs WHERE album_id = :album_id";
             $statement = $this->db->prepare($sql);
-            $statement->bindParam(':album_id', $album_id, PDO::PARAM_INT);
+            $statement->bindParam(':album_id', $album_id, PDO::PARAM_STRING);
             $statement->execute();
             $result2 = $statement->fetch();
 
