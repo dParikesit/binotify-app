@@ -98,6 +98,26 @@ class SongService extends Service{
             return array("Status code" => 400,"Message"=>"Error: [all] {$e->getMessage()}");
         }
     }
+
+    public function getSongByParam($judul, $penyanyi, $tahun, $genre, $ordering, $page, $maxdata) {
+        try {
+            $sql = "SELECT * FROM songs WHERE Judul = :Judul OR Penyanyi = :Penyanyi OR year(Tanggal_terbit) = :Tahun ORDER BY Tanggal_terbit ASC OFFSET :MinData LIMIT :Maxdata";
+            $statement = $this->db->prepare($sql);
+            $statement->bindParam(':Judul', $judul, PDO::PARAM_INT);
+            $statement->bindParam(':Penyanyi', $penyanyi, PDO::PARAM_INT);
+            $statement->bindParam(':Tahun', $tahun, PDO::PARAM_INT);
+            // $statement->bindParam(':Genre', $genre, PDO::PARAM_INT);
+            // $statement->bindParam(':Ordering', $ordering, PDO::PARAM_INT);
+            $statement->bindParam(':MinData', $page, PDO::PARAM_INT);
+            $statement->bindParam(':Maxdata', $maxdata, PDO::PARAM_INT);
+            $statement->execute();
+            $result = $statement->fetch();
+
+            return array("Status code" => 200,"Message"=>"Successfully Read","Data"=>$result);
+        } catch (PDOException $e) {
+            return array("Status code" => 400,"Message"=>"Error: [all] {$e->getMessage()}");
+        }
+    }
 }
 
 ?>

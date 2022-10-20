@@ -16,6 +16,10 @@ $route->add('/login', function() {
     include "login.php";
 });
 
+$route->add('/search', function() {
+    include "search.php";
+});
+
 $route->listen();
 
 ?>
