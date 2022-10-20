@@ -26,11 +26,11 @@ class SongService extends Service{
         }
     }
 
-    public function delete($id) {
+    public function delete($song_id) {
         try {
-            $sql = "DELETE FROM songs WHERE id = :id";
+            $sql = "DELETE FROM songs WHERE song_id = :song_id";
             $statement = $this->db->prepare($sql);
-            $statement->bindParam(':id', $id, PDO::PARAM_INT);
+            $statement->bindParam(':song_id', $song_id, PDO::PARAM_STRING);
             $statement->execute();
 
             return array("Status code" => 201,"Message"=>"Successfully Deleted");
@@ -39,11 +39,11 @@ class SongService extends Service{
         }
     }
 
-    public function update($id, string $judul, string $penyanyi, string $tanggal_terbit, string $genre, string $audio_path, string $image_path) {
+    public function update($song_id, string $judul, string $penyanyi, string $tanggal_terbit, string $genre, string $audio_path, string $image_path) {
         try {
-            $sql = "UPDATE songs SET judul=:judul, penyanyi=:penyanyi, tanggal_terbit=:tanggal_terbit, genre=:genre, audio_path=:audio_path, image_path=:image_path WHERE id = :id";
+            $sql = "UPDATE songs SET judul=:judul, penyanyi=:penyanyi, tanggal_terbit=:tanggal_terbit, genre=:genre, audio_path=:audio_path, image_path=:image_path WHERE song_id = :song_id";
             $statement = $this->db->prepare($sql);
-            $statement->bindParam(':id', $id, PDO::PARAM_INT);
+            $statement->bindParam(':song_id', $song_id, PDO::PARAM_STRING);
             $statement->bindParam(':judul', $judul, PDO::PARAM_STR);
             $statement->bindParam(':penyanyi', $penyanyi, PDO::PARAM_STR);
             $statement->bindParam(':tanggal_terbit', $tanggal_terbit, PDO::PARAM_STR);
@@ -58,12 +58,12 @@ class SongService extends Service{
         }
     }
 
-    public function updateSongToAlbum($id, $album_id) {
+    public function updateSongToAlbum($song_id, $album_id) {
         try {
-            $sql = "UPDATE songs SET album_id=:album_id WHERE id = :id";
+            $sql = "UPDATE songs SET album_id=:album_id WHERE song_id = :song_id";
             $statement = $this->db->prepare($sql);
-            $statement->bindParam(':id', $id, PDO::PARAM_INT);
-            $statement->bindParam(':album_id', $album_id, PDO::PARAM_INT);
+            $statement->bindParam(':song_id', $song_id, PDO::PARAM_STRING);
+            $statement->bindParam(':album_id', $album_id, PDO::PARAM_STRING);
             $statement->execute();
 
             return array("Status code" => 201,"Message"=>"Successfully Updated Song to Album");
@@ -74,7 +74,7 @@ class SongService extends Service{
 
     public function readAll() {
         try {
-            $sql = "SELECT * FROM songs ORDER BY jUdul asc";
+            $sql = "SELECT * FROM songs ORDER BY judul asc";
             $statement = $this->db->prepare($sql);
             $statement->execute();
             $result = $statement->fetchAll();
@@ -85,11 +85,11 @@ class SongService extends Service{
         }
     }
 
-    public function getSongById($id) {
+    public function getSongById($song_id) {
         try {
-            $sql = "SELECT * FROM songs WHERE id = :id";
+            $sql = "SELECT * FROM songs WHERE song_id = :song_id";
             $statement = $this->db->prepare($sql);
-            $statement->bindParam(':id', $id, PDO::PARAM_INT);
+            $statement->bindParam(':song_id', $song_id, PDO::PARAM_STRING);
             $statement->execute();
             $result = $statement->fetch();
 
