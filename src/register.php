@@ -44,7 +44,7 @@
             const payload = {
                 email,
                 password,
-                username"
+                username
             }
 
             const xmlhttp = new XMLHttpRequest();

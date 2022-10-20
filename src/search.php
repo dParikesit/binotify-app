@@ -37,15 +37,15 @@
             const judul = document.getElementById('judul').value;
             const penyanyi = document.getElementById('penulis').value;
             const tahun = document.getElementById('tahun').value;
-            const maxdata = 1;
-            const ordering = "ASC"
-            const genre = "GENRE_1"
-            const page = 1;
+            const maxdata = 4;
+            const ordering = 'ASC'
+            // const genre = ''
+            const page = 4;
             const payload = {
                 judul,
                 penyanyi,
                 tahun,
-                genre,
+                // genre,
                 ordering,
                 page,
                 maxdata

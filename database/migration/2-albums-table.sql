@@ -5,5 +5,5 @@ CREATE TABLE IF NOT EXISTS albums (
     Total_duration INTEGER NOT NULL,
     Image_path VARCHAR(256) NOT NULL,
     Tanggal_terbit date NOT NULL,
-    Genre VARCHAR(64) NOT NULL,
+    Genre VARCHAR(64) NOT NULL
 );

@@ -16,10 +16,10 @@ if ($_SERVER["REQUEST_METHOD"] != 'POST'){
 }
 
 $_POST = json_decode(file_get_contents('php://input'), true);
-$judul = isset($_POST['judul']) ? $_POST['judul'] : '';
-$penyanyi = isset($_POST['penyanyi']) ? $_POST['penyanyi'] : '';
-$tahun = isset($_POST['tahun']) ? $_POST['tahun'] : '';
-$genre = isset($_POST['genre']) ? $_POST['genre'] : '';
+$judul = isset($_POST['judul']) && $_POST['judul'] != '' ? $_POST['judul'] : '';
+$penyanyi = isset($_POST['penyanyi']) && $_POST['penyanyi'] != '' ? $_POST['penyanyi'] : '';
+$tahun = isset($_POST['tahun']) && $_POST['tahun'] != '' ? $_POST['tahun'] : '';
+$genre = isset($_POST['genre']) && $_POST['genre'] != '' ? $_POST['genre'] : '';
 $ordering = isset($_POST['ordering']) ? $_POST['ordering'] : '';
 $page = isset($_POST['page']) ? $_POST['page'] : '';
 $maxdata = isset($_POST['maxdata']) ? $_POST['maxdata'] : '';
