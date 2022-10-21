@@ -16,17 +16,14 @@ if ($_SERVER["REQUEST_METHOD"] != 'GET'){
 
 try {
     $album_service = new AlbumService();
-    $query = $_GET["id"];
-    $result = $album_service->getAlbumById($query);
+    $result = $album_service->readAll();
     $data = $result["Data"];
-    $songs = $result["Songs"];
 
     if ($data) {
         http_response_code(200);
         $return = array(
             'status' => 200,
             'data' => $data,
-            'songs' => $songs
         );
         print_r(json_encode($return));
     } else {
@@ -37,6 +34,7 @@ try {
         );
         print_r(json_encode($return));
     }
+
 } catch (PDOException $e) {
     $error_code = ($e->getCode() == 23000) ? 400 : 500;
 

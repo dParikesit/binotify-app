@@ -2,7 +2,7 @@
 namespace App\Controller;
 require_once "../../inc/config.php";
 
-use App\Service\AlbumService;
+use App\Service\SongService;
 
 if ($_SERVER["REQUEST_METHOD"] != 'GET'){
     http_response_code(422);
@@ -15,28 +15,26 @@ if ($_SERVER["REQUEST_METHOD"] != 'GET'){
 }
 
 try {
-    $album_service = new AlbumService();
-    $query = $_GET["id"];
-    $result = $album_service->getAlbumById($query);
+    $song_service = new SongService();
+    $result = $song_service->readAll();
     $data = $result["Data"];
-    $songs = $result["Songs"];
 
     if ($data) {
         http_response_code(200);
         $return = array(
             'status' => 200,
             'data' => $data,
-            'songs' => $songs
         );
         print_r(json_encode($return));
     } else {
         http_response_code(404);
         $return = array(
             'status' => 404,
-            'error' => 'Album not found'
+            'error' => 'Song not found'
         );
         print_r(json_encode($return));
     }
+    
 } catch (PDOException $e) {
     $error_code = ($e->getCode() == 23000) ? 400 : 500;
 
