@@ -37,7 +37,7 @@ if (!$judul || !$penyanyi || !$total_duration || !$genre || !$audio_path || !$im
 
 try {
     $album_service = new AlbumService();
-    $result = $album_service->create($judul, $penyanyi, $total_duration, $genre, $audio_path, $image_path);
+    $result = $album_service->create($judul, $penyanyi, $total_duration, $image_path, $tanggal_terbit, $genre);
 
     http_response_code(201);
     $return = array(

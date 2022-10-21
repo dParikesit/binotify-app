@@ -5,7 +5,7 @@ require_once "../../inc/config.php";
 use App\Service\AlbumService;
 
 
-if ($_SERVER["REQUEST_METHOD"] != 'POST'){
+if ($_SERVER["REQUEST_METHOD"] != 'PUT'){
     http_response_code(422);
     $return = array(
         'status' => 422,
@@ -15,14 +15,14 @@ if ($_SERVER["REQUEST_METHOD"] != 'POST'){
     exit;
 }
 
-$_POST = json_decode(file_get_contents('php://input'), true);
-$judul = isset($_POST['judul']) ? $_POST['judul'] : '';
-$penyanyi = isset($_POST['penyanyi']) ? $_POST['penyanyi'] : '' ;
-$genre = isset($_POST['genre']) ? $_POST['genre'] : '';
-$audio_path = isset($_POST['audio_path']) ? $_POST['audio_path'] : '';
-$tanggal_terbit = isset($_POST['tanggal_terbit']) ? $_POST['tanggal_terbit'] : '';
-$image_path = isset($_POST['image_path']) ? $_POST['image_path'] : '';
-$album_id = isset($_POST['album_id']) ? $_POST['album_id'] : '';
+$_PUT = json_decode(file_get_contents('php://input'), true);
+$judul = isset($_PUT['judul']) ? $_PUT['judul'] : '';
+$penyanyi = isset($_PUT['penyanyi']) ? $_PUT['penyanyi'] : '' ;
+$genre = isset($_PUT['genre']) ? $_PUT['genre'] : '';
+$audio_path = isset($_PUT['audio_path']) ? $_PUT['audio_path'] : '';
+$tanggal_terbit = isset($_PUT['tanggal_terbit']) ? $_PUT['tanggal_terbit'] : '';
+$image_path = isset($_PUT['image_path']) ? $_PUT['image_path'] : '';
+$album_id = isset($_PUT['album_id']) ? $_PUT['album_id'] : '';
 
 if (!$album_id || !$judul || !$penyanyi || !$genre || !$audio_path || !$image_path || !$tanggal_terbit){
     http_response_code(400);
