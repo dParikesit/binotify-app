@@ -16,17 +16,11 @@ if ($_SERVER["REQUEST_METHOD"] != 'PUT'){
 }
 
 $_PUT = json_decode(file_get_contents('php://input'), true);
-$judul = isset($_PUT['judul']) ? $_PUT['judul'] : '';
-$penyanyi = isset($_PUT['penyanyi']) ? $_PUT['penyanyi'] : '' ;
-$tanggal_terbit = isset($_PUT['tanggal_terbit']) ? $_PUT['tanggal_terbit'] : '';
-$genre = isset($_PUT['genre']) ? $_PUT['genre'] : '';
-$duration = isset($_PUT['duration']) ? $_PUT['duration'] : '';
-$audio_path = isset($_PUT['audio_path']) ? $_PUT['audio_path'] : '';
-$image_path = isset($_PUT['image_path']) ? $_PUT['image_path'] : '';
 $song_id = isset($_PUT['song_id']) ? $_PUT['song_id'] : '';
+$album_id = isset($_PUT['album_id']) ? $_PUT['album_id'] : '';
 
 
-if (!$song_id || !$judul || !$penyanyi || !$tanggal_terbit || !$genre || !$duration || !$audio_path || !$image_path){
+if (!$song_id || !$album_id){
     http_response_code(400);
     $return = array(
         'status' => 400,
@@ -39,7 +33,7 @@ if (!$song_id || !$judul || !$penyanyi || !$tanggal_terbit || !$genre || !$durat
 
 try {
     $song_service = new SongService();
-    $result = $song_service->update($song_id, $judul, $penyanyi, $tanggal_terbit, $genre, $duration, $audio_path, $image_path);
+    $result = $song_service->updateSongToAlbum($song_id, $album_id);
 
     http_response_code(201);
     $return = array(
