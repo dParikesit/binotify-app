@@ -20,7 +20,7 @@ $judul = isset($_POST['judul']) ? $_POST['judul'] : '';
 $penyanyi = isset($_POST['penyanyi']) ? $_POST['penyanyi'] : '' ;
 $total_duration = isset($_POST['total_duration']) ? $_POST['total_duration'] : '';
 $genre = isset($_POST['genre']) ? $_POST['genre'] : '';
-$image_path = isset($_POST['image_path']) ? $_POST['image_path'] : '';
+$image_path = isset($_POST['image_path']) ? $_POST['image_path'] : ''; //TODO
 
 
 if (!$judul || !$penyanyi || !$total_duration || !$genre || !$image_path){

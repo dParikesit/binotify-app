@@ -21,8 +21,8 @@ $penyanyi = isset($_PUT['penyanyi']) ? $_PUT['penyanyi'] : '' ;
 $tanggal_terbit = isset($_PUT['tanggal_terbit']) ? $_PUT['tanggal_terbit'] : '';
 $genre = isset($_PUT['genre']) ? $_PUT['genre'] : '';
 $duration = isset($_PUT['duration']) ? $_PUT['duration'] : '';
-$audio_path = isset($_PUT['audio_path']) ? $_PUT['audio_path'] : '';
-$image_path = isset($_PUT['image_path']) ? $_PUT['image_path'] : '';
+$audio_path = isset($_PUT['audio_path']) ? $_PUT['audio_path'] : ''; //TODO
+$image_path = isset($_PUT['image_path']) ? $_PUT['image_path'] : ''; //TODO
 $song_id = isset($_PUT['song_id']) ? $_PUT['song_id'] : '';
 
 

@@ -20,7 +20,7 @@ $judul = isset($_PUT['judul']) ? $_PUT['judul'] : '';
 $penyanyi = isset($_PUT['penyanyi']) ? $_PUT['penyanyi'] : '' ;
 $genre = isset($_PUT['genre']) ? $_PUT['genre'] : '';
 $tanggal_terbit = isset($_PUT['tanggal_terbit']) ? $_PUT['tanggal_terbit'] : '';
-$image_path = isset($_PUT['image_path']) ? $_PUT['image_path'] : '';
+$image_path = isset($_PUT['image_path']) ? $_PUT['image_path'] : ''; //TODO
 $album_id = isset($_PUT['album_id']) ? $_PUT['album_id'] : '';
 
 if (!$album_id || !$judul || !$penyanyi || !$genre || !$image_path || !$tanggal_terbit){
