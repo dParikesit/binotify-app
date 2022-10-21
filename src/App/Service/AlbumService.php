@@ -33,12 +33,6 @@ class AlbumService extends Service{
             $statement = $this->db->prepare($sql);
             $statement->bindParam(':album_id', $album_id, PDO::PARAM_STRING);
             $statement->execute();
-
-            $sql = "UPDATE albums SET album_id = NULL WHERE album_id = :album_id";
-            $statement = $this->db->prepare($sql);
-            $statement->bindParam(':album_id', $album_id, PDO::PARAM_STRING);
-            $statement->execute();
-
             return array("Status code" => 200,"Message"=>"Successfully Deleted");
         } catch (PDOException $e) {
             return array("Status code" => 400,"Message"=>"Error: [all] {$e->getMessage()}");
