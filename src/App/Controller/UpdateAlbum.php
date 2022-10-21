@@ -19,12 +19,11 @@ $_PUT = json_decode(file_get_contents('php://input'), true);
 $judul = isset($_PUT['judul']) ? $_PUT['judul'] : '';
 $penyanyi = isset($_PUT['penyanyi']) ? $_PUT['penyanyi'] : '' ;
 $genre = isset($_PUT['genre']) ? $_PUT['genre'] : '';
-$audio_path = isset($_PUT['audio_path']) ? $_PUT['audio_path'] : '';
 $tanggal_terbit = isset($_PUT['tanggal_terbit']) ? $_PUT['tanggal_terbit'] : '';
 $image_path = isset($_PUT['image_path']) ? $_PUT['image_path'] : '';
 $album_id = isset($_PUT['album_id']) ? $_PUT['album_id'] : '';
 
-if (!$album_id || !$judul || !$penyanyi || !$genre || !$audio_path || !$image_path || !$tanggal_terbit){
+if (!$album_id || !$judul || !$penyanyi || !$genre || !$image_path || !$tanggal_terbit){
     http_response_code(400);
     $return = array(
         'status' => 400,
