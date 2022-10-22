@@ -101,24 +101,18 @@ class SongService extends Service{
 
     public function getSongByParam($judul, $penyanyi, $tahun, $genre, $ordering, $page, $maxdata) {
         try {
-            // $sql = "SELECT * FROM songs WHERE Judul = :Judul OR Penyanyi = :Penyanyi OR Tanggal_terbit = :Tahun ORDER BY Tanggal_terbit ASC OFFSET :MinData LIMIT :Maxdata";
-/*             if ($genre == '') {
-                $sql = "SELECT * FROM songs WHERE (Judul = :Judul OR Penyanyi = :Penyanyi OR Tanggal_terbit = :Tahun) AND Genre LIKE :Genre ORDER BY Tanggal_terbit ASC LIMIT :Maxdata";
-            } else {
-                $sql = "SELECT * FROM songs WHERE Judul = :Judul OR Penyanyi = :Penyanyi OR Tanggal_terbit = :Tahun ORDER BY Tanggal_terbit ASC LIMIT :Maxdata";
-            } */
-            $sql = "SELECT * FROM songs";
+            $sql = "SELECT * FROM songs WHERE Judul = :Judul OR Penyanyi = :Penyanyi OR DATE_PART('year', Tanggal_terbit::date) = :Tahun LIMIT :Maxdata OFFSET :Mindata";
 
             $statement = $this->db->prepare($sql);
-            $statement->bindParam(':Judul', $judul, PDO::PARAM_STR);
-            // $statement->bindParam(':Penyanyi', $penyanyi, PDO::PARAM_INT);
-            // $statement->bindParam(':Tahun', $tahun, PDO::PARAM_INT);
+            $statement->bindParam(':Judul', $judul, PDO::PARAM_INT);
+            $statement->bindParam(':Penyanyi', $penyanyi, PDO::PARAM_INT);
+            $statement->bindParam(':Tahun', $tahun, PDO::PARAM_INT);
             // $statement->bindParam(':Genre', $genre, PDO::PARAM_INT);
             // $statement->bindParam(':Ordering', $ordering, PDO::PARAM_INT);
-            // $statement->bindParam(':MinData', $page, PDO::PARAM_INT);
-            // $statement->bindParam(':Maxdata', $maxdata, PDO::PARAM_INT);
+            $statement->bindParam(':Mindata', $page, PDO::PARAM_STR);
+            $statement->bindParam(':Maxdata', $maxdata, PDO::PARAM_STR);
             $statement->execute();
-            $result = $statement->fetch();
+            $result = $statement->fetchAll();
 
             return array("Status code" => 200,"Message"=>"Successfully Read","Data"=>$result);
         } catch (PDOException $e) {

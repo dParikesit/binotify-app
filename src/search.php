@@ -37,10 +37,10 @@
             const judul = document.getElementById('judul').value;
             const penyanyi = document.getElementById('penulis').value;
             const tahun = document.getElementById('tahun').value;
-            const maxdata = 4;
+            const maxdata = 1;
             const ordering = 'ASC'
             // const genre = ''
-            const page = 4;
+            const page = 2;
             const payload = {
                 judul,
                 penyanyi,
@@ -63,7 +63,7 @@
             //     console.log(this.responseText)
             // };
 
-            xmlhttp.open("POST", "/App/Controller/Search.php");
+            xmlhttp.open("POST", "/App/Controller/SearchSong.php");
             xmlhttp.setRequestHeader("Content-type", "application/json");
             xmlhttp.send(JSON.stringify(payload));
 
