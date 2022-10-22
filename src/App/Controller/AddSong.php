@@ -109,7 +109,7 @@ if (!is_dir($image_target_dir)) {
     mkdir($image_target_dir,0777, true);
 }
 
-$image_file_extension_allowed = ['mp3','wav','ogg'];
+$image_file_extension_allowed = ['jpg','jpeg','png'];
 $image_file_name = $_FILES['image_file']['name'];
 $image_file_size = $_FILES['image_file']['size'];
 $image_file_tmpname  = $_FILES['image_file']['tmp_name'];
@@ -118,7 +118,7 @@ $image_file_ext = strtolower(end($image_file_namefrag));
 $image_target_file = floor(microtime(true)).".".$image_file_ext;
 
 if (!in_array($image_file_ext,$image_file_extension_allowed)) {
-    $image_errors[] = "This file extension is not allowed. Please upload a MP3 or WAV or OGG file";
+    $image_errors[] = "This file extension is not allowed. Please upload a JPG, JPEG, or PNG file";
     $image_file_error = true;
 }
 
