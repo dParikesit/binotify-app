@@ -20,9 +20,10 @@ $judul = isset($_PUT['judul']) ? $_PUT['judul'] : '';
 $penyanyi = isset($_PUT['penyanyi']) ? $_PUT['penyanyi'] : '' ;
 $genre = isset($_PUT['genre']) ? $_PUT['genre'] : '';
 $tanggal_terbit = isset($_PUT['tanggal_terbit']) ? $_PUT['tanggal_terbit'] : '';
+$total_duration = isset($_POST['total_duration']) ? $_POST['total_duration'] : '';
 $album_id = isset($_PUT['album_id']) ? $_PUT['album_id'] : '';
 
-if (!$album_id || !$judul || !$penyanyi || !$genre || !$tanggal_terbit){
+if (!$album_id || !$judul || !$penyanyi || !$genre || !$tanggal_terbit || !$total_duration){
     http_response_code(400);
     $return = array(
         'status' => 400,
@@ -78,7 +79,7 @@ if ($image_file_error) {
 
 try {
     $album_service = new AlbumService();
-    $result = $album_service->update($album_id, $judul, $penyanyi, $full_image_path, $tanggal_terbit, $genre);
+    $result = $album_service->update($album_id, $judul, $penyanyi, $total_duration, $full_image_path, $tanggal_terbit, $genre);
 
     http_response_code(201);
     $return = array(

@@ -40,7 +40,7 @@
                 </div<>
                 <div id="admin-content">
                     <!-- form for editing field, upload image and audio file -->
-                    <form id="form_edit" method="POST" enctype="multipart/form-data">
+                    <form id="form_edit" method="PUT" enctype="multipart/form-data">
                         <input type="text" name="judul" id="judul_edit" placeholder="Title">
                         <input type="text" name="penyanyi" id="penyanyi_edit" placeholder="Artist">
                         <input type="text" name="tanggal_terbit" id="tanggal_terbit_edit" placeholder="Release">
