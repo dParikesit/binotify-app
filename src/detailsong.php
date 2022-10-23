@@ -50,7 +50,7 @@
                     <button type="submit" id="button_submit" onclick={update(event)}>
                         Submit
                     </button>
-                    <button type="button" id="button_delete">
+                    <button type="button" id="button_delete" onclick={delete(event)}>
                         Delete
                     </button>
                 </div>
@@ -112,6 +112,15 @@
             xmlhttp.open("PUT", "/App/Controller/UpdateSong.php");
             xmlhttp.setRequestHeader("Content-type", "application/json");
             xmlhttp.send(JSON.stringify(payload));
+        }
+
+        const delete = (e) => {
+            e.preventDefault();
+            const xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("DELETE", "/App/Controller/DeleteSong.php");
+            xmlhttp.send();
+
+            window.location.href = "/index.php";
         }
     </script>
 </html>
