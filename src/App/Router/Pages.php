@@ -20,6 +20,10 @@ $route->add('/search', function() {
     include "search.php";
 });
 
+$route->add('/home', function() {
+    include "home.php";
+});
+
 $route->listen();
 
 ?>
