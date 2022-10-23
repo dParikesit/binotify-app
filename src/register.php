@@ -6,61 +6,63 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
-        <link rel="stylesheet" href="./app/style/style.css" />
+        <link rel="stylesheet" href="./layout/assets/css/register.css" />
         <title>Notes App</title>
     </head>
 
     <body>
-
-        <h3>Register as User</h3>
+        <a href="/"><img src="./layout/assets/img/spotify-text.png"></a>
+        <h1>Sign up for free to start <br/> listening.</h1>
         
-        <div>
-            <form method="POST">
-                <label for="fname">Email</label>
-                <input type="text" id="femail" name="email" placeholder="Your name..">
+        <form method="POST">
+            <section>
+                <label for="email"><b>What's your email?</b></label>
+                <input type="text" id="email" name="email" placeholder="Enter your email.">
+            </section>
 
-                <label for="lname">Password</label>
-                <input type="text" id="lpassword" name="password" placeholder="Your password..">
-
-                <label for="lname">Username</label>
-                <input type="text" id="lusername" name="username" placeholder="Your username..">
-
-            </form>
-            <button type="button" onclick={register(event)} >Submit</button>
-            <div class="flex">
-                <p>Have account? </p>
-                <a href="/login" class="button-text">Login</a>
-            </div>
-        </div>
+            <section>
+                <label for="email"><b>Confirm your email</b></label>
+                <input type="text" id="emailagain" name="email" placeholder="Enter your email again.">
+            </section>
+            
+            <section>
+                <label for="password"><b>Create a password</b></label>
+                <input type="text" id="password" name="password" placeholder="Create a password.">
+            </section>
+            
+            <section>
+                <label for="username"><b>What should we call you?</b></label>
+                <input type="text" id="username" name="username" placeholder="Enter a username.">
+            </section>
+            
+        </form>
+        <p>By clicking on sign-up, you agree to Spotify's Terms and Conditions of Use.</p>
+        <button type="button" onclick={register(event)} ><b>Sign up</b></button>
+        <p>Have account? <a href="/login" class="button-text">Log in</a> </p>
         
     </body>
 
     <script>
         const register = (e) => {
             e.preventDefault();
-            const email = document.getElementById('femail').value;
-            const password = document.getElementById('lpassword').value;
-            const username = document.getElementById('lusername').value;
-            const payload = {
-                email,
-                password,
-                username
+            const email = document.getElementById('email').value;
+            const emailagain = document.getElementById('emailagain').value;
+            const password = document.getElementById('password').value;
+            const username = document.getElementById('username').value;
+            
+            if (email===emailagain){
+                const payload = {
+                    email,
+                    password,
+                    username
+                }
+
+                const xmlhttp = new XMLHttpRequest();
+
+                xmlhttp.open("POST", "/App/Controller/Register.php");
+                xmlhttp.setRequestHeader("Content-type", "application/json");
+                xmlhttp.send(JSON.stringify(payload));
             }
-
-            const xmlhttp = new XMLHttpRequest();
-            // xmlhttp.onload = () => {
-            //     if (xmlhttp.status != 200){
-            //     return;      
-            //     }
-            //     window.location.href = '/';
-            // }
-            // xmlhttp.onreadystatechange = function() {
-            //     console.log(this.responseText)
-            // };
-
-            xmlhttp.open("POST", "/App/Controller/Register.php");
-            xmlhttp.setRequestHeader("Content-type", "application/json");
-            xmlhttp.send(JSON.stringify(payload));
         }
     </script>
 </html>
