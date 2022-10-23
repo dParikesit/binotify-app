@@ -9,6 +9,3 @@ CREATE TABLE IF NOT EXISTS songs (
     Image_path VARCHAR(256) NOT NULL,
     album_id INTEGER REFERENCES albums (album_id) ON UPDATE CASCADE on DELETE CASCADE
 );
-
--- ALTER TABLE songs
--- ADD CONSTRAINT fk_album_id FOREIGN KEY (album_id) REFERENCES albums (album_id);
