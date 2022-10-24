@@ -19,12 +19,12 @@ $_POST = json_decode(file_get_contents('php://input'), true);
 $param = isset($_POST['param']) && $_POST['param'] != '' ? $_POST['param'] : '';
 $tahun = isset($_POST['tahun']) && $_POST['tahun'] != '' ? $_POST['tahun'] : '0';
 $ordering = isset($_POST['ordering']) ? $_POST['ordering'] : '';
-$page = isset($_POST['page']) ? $_POST['page'] : '';
+$page = isset($_POST['page']) ? $_POST['page'] : 0;
 $maxdata = isset($_POST['maxdata']) ? $_POST['maxdata'] : '';
 
 try {
     $songs_service = new SongService();
-    $result = $songs_service->getSongByParam($judul, $penyanyi, $tahun, $ordering, $page, $maxdata);
+    $result = $songs_service->getSongByParam($param, $tahun, $ordering, $page, $maxdata);
 
     http_response_code(201);
     $return = array(

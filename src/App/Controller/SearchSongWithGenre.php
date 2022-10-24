@@ -27,7 +27,7 @@ $maxdata = isset($_POST['maxdata']) ? $_POST['maxdata'] : '';
 
 try {
     $songs_service = new SongService();
-    $result = $songs_service->getSongByParamAndGenre($judul, $penyanyi, $tahun, $genre, $ordering, $page, $maxdata);
+    $result = $songs_service->getSongByParamAndGenre($param, $tahun, $genre, $ordering, $page, $maxdata);
 
     http_response_code(201);
     $return = array(

@@ -52,36 +52,22 @@
     </body>
 
     <script>
-        const register = (e) => {
-            e.preventDefault();
-            const penyanyi = "Penyanyi-1"
-            const maxdata = 1;
-            const ordering = 'ASC'
-            // const genre = ''
-            const page = 1;
-            const payload = {
-                penyanyi,
-                // genre,
-                ordering,
-                page,
-                maxdata
-            }
-            console.log(payload)
-
-            const xmlhttp = new XMLHttpRequest();
-            // xmlhttp.onload = () => {
-            //     if (xmlhttp.status != 200){
-            //     return;      
-            //     }
-            //     window.location.href = '/';
-            // }
-            // xmlhttp.onreadystatechange = function() {
-            //     console.log(this.responseText)
-            // };
-            xmlhttp.open("POST", "/App/Controller/SearchSong.php");
-            xmlhttp.setRequestHeader("Content-type", "application/json");
-            xmlhttp.send(JSON.stringify(payload));
-            
+        const nameOf = (f) => (f).toString();
+        param = nameOf(() => <?php echo $_POST["search"]; ?>);
+        const maxdata = 1;
+        // const genre = ''
+        const page = 0;
+        const payload = {
+            param,
+            // genre,
+            page,
+            maxdata
         }
+        console.log(payload)
+
+        const xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("POST", "/App/Controller/SearchSong.php");
+        xmlhttp.setRequestHeader("Content-type", "application/json");
+        xmlhttp.send(JSON.stringify(payload));
     </script>
 </html>

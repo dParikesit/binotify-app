@@ -1,3 +1,4 @@
+
 /* 
 ** The Header Media Queries **
 ** Tweak as per your needs **
@@ -67,7 +68,7 @@
     transform: translateX(-100%);
     background-color: #000000;
     transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-    display: block; 
+    display: block;
 }
 
 .nav__wrapper.active {
@@ -78,14 +79,18 @@
 @media (max-width: 679px) {
     .nav__wrapper {
         top: 8%;
-        /* Use a CSS variable and get JS help */ 
     } 
 }
+ul {
+    padding: 0 !important;
+}
+
 .nav__item {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2); 
 }
 .nav__item a {
     display: block;
+    width: 100%;
     padding: 1.5rem 2rem; 
     text-decoration: none;
     color: white;
