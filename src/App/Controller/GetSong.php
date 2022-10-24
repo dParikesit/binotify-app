@@ -5,7 +5,7 @@ require_once "../../inc/config.php";
 use App\Service\SongService;
 
 
-if ($_SERVER["REQUEST_METHOD"] != 'POST'){
+if ($_SERVER["REQUEST_METHOD"] != 'GET'){
     http_response_code(422);
     $return = array(
         'status' => 422,
@@ -15,20 +15,14 @@ if ($_SERVER["REQUEST_METHOD"] != 'POST'){
     exit;
 }
 
-$_POST = json_decode(file_get_contents('php://input'), true);
-$param = isset($_POST['param']) && $_POST['param'] != '' ? $_POST['param'] : '';
-$tahun = isset($_POST['tahun']) && $_POST['tahun'] != '' ? $_POST['tahun'] : '0';
-$ordering = isset($_POST['ordering']) ? $_POST['ordering'] : '';
-$page = isset($_POST['page']) ? $_POST['page'] : '';
-$maxdata = isset($_POST['maxdata']) ? $_POST['maxdata'] : '';
 
 try {
     $songs_service = new SongService();
-    $result = $songs_service->getSongByParam($judul, $penyanyi, $tahun, $ordering, $page, $maxdata);
+    $result = $songs_service->getSong();
 
-    http_response_code(201);
+    http_response_code(200);
     $return = array(
-        'status' => 201,
+        'status' => 200,
         'message' => $result
     );
     print_r(json_encode($return));

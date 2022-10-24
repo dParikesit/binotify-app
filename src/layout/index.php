@@ -33,11 +33,11 @@ $isNavVisible = false;
             <button class="search__toggle" aria-label="Open search">
               Search
             </button>
-            <form class="search__form" action="">
+            <form class="search__form" action="/search" method="post">
               <label class="sr-only" for="search">Search</label>
               <input
                 type="search"
-                name=""
+                name="search"
                 id="search"
                 placeholder="What's on your mind?"
               />

@@ -99,12 +99,11 @@ class SongService extends Service{
         }
     }
 
-    public function getSongByParam($judul, $penyanyi, $tahun, $ordering, $page, $maxdata) {
+    public function getSongByParam($param, $ordering, $page, $maxdata) {
         try {
-            $sql = "SELECT * FROM songs WHERE Judul = :Judul OR Penyanyi = :Penyanyi OR DATE_PART('year', Tanggal_terbit::date) = :Tahun LIMIT :Maxdata OFFSET :Mindata";
+            $sql = "SELECT * FROM songs WHERE Judul = :Parameter OR Penyanyi = :Parameter OR DATE_PART('year', Tanggal_terbit::date) = :Tahun LIMIT :Maxdata OFFSET :Mindata";
             $statement = $this->db->prepare($sql);
-            $statement->bindParam(':Judul', $judul, PDO::PARAM_INT);
-            $statement->bindParam(':Penyanyi', $penyanyi, PDO::PARAM_INT);
+            $statement->bindParam(':Parameter', $param, PDO::PARAM_INT);
             $statement->bindParam(':Tahun', $tahun, PDO::PARAM_INT);
             $statement->bindParam(':Mindata', $page, PDO::PARAM_STR);
             $statement->bindParam(':Maxdata', $maxdata, PDO::PARAM_STR);
@@ -117,17 +116,30 @@ class SongService extends Service{
         }
     }
 
-    public function getSongByParamAndGenre($judul, $penyanyi, $tahun, $genre, $ordering, $page, $maxdata) {
+    public function getSongByParamAndGenre($param, $genre, $ordering, $page, $maxdata) {
         try {
-            $sql = "SELECT * FROM songs WHERE (Judul = :Judul OR Penyanyi = :Penyanyi OR DATE_PART('year', Tanggal_terbit::date) = :Tahun) AND Genre = :Genre LIMIT :Maxdata OFFSET :Mindata";
+            $sql = "SELECT * FROM songs WHERE (Judul = :Parameter OR Penyanyi = :Parameter OR DATE_PART('year', Tanggal_terbit::date) = :Tahun) AND Genre = :Genre LIMIT :Maxdata OFFSET :Mindata";
 
             $statement = $this->db->prepare($sql);
-            $statement->bindParam(':Judul', $judul, PDO::PARAM_INT);
-            $statement->bindParam(':Penyanyi', $penyanyi, PDO::PARAM_INT);
+            $statement->bindParam(':Parameter', $param, PDO::PARAM_INT);
             $statement->bindParam(':Tahun', $tahun, PDO::PARAM_INT);
             $statement->bindParam(':Genre', $genre, PDO::PARAM_INT);
             $statement->bindParam(':Mindata', $page, PDO::PARAM_STR);
             $statement->bindParam(':Maxdata', $maxdata, PDO::PARAM_STR);
+            $statement->execute();
+            $result = $statement->fetchAll();
+
+            return array("Status code" => 200,"Message"=>"Successfully Read","Data"=>$result);
+        } catch (PDOException $e) {
+            return array("Status code" => 400,"Message"=>"Error: [all] {$e->getMessage()}");
+        }
+    }
+
+    public function getSong() {
+        try {
+            $sql = "SELECT * FROM songs ORDER BY Tanggal_terbit DESC, Judul ASC LIMIT 10";
+
+            $statement = $this->db->prepare($sql);
             $statement->execute();
             $result = $statement->fetchAll();
 

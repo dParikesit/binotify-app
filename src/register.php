@@ -27,7 +27,7 @@
             
             <section>
                 <label for="password"><b>Create a password</b></label>
-                <input type="text" id="password" name="password" placeholder="Create a password.">
+                <input type="password" id="password" name="password" placeholder="Create a password.">
             </section>
             
             <section>

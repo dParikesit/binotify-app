@@ -1,0 +1,41 @@
+body{
+    font-family: 'Helvetica', 'Arial', sans-serif;
+}
+
+table{
+    color:white;
+    width:50%;
+    border-collapse: collapse;
+    margin-left:3rem;
+}
+
+th{
+    background-color: #1ed760;
+    color: black;
+    padding-top:1rem;
+    padding-bottom: 1rem;
+}
+
+td{
+    padding:0.5rem;
+    padding-left:1rem;
+}
+
+tr{
+    transition-duration: 0.1s;
+}
+
+tr:hover{
+    color:black;
+    background-color: #88e2a8;
+}
+
+.list-of-users {
+    color: white;
+    padding-left: 3rem;
+    padding-top: 1rem;
+}
+
+.email{
+    text-align:right
+}
