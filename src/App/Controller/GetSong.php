@@ -20,9 +20,9 @@ try {
     $songs_service = new SongService();
     $result = $songs_service->getSong();
 
-    http_response_code(201);
+    http_response_code(200);
     $return = array(
-        'status' => 201,
+        'status' => 200,
         'message' => $result
     );
     print_r(json_encode($return));
