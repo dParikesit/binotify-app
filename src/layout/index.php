@@ -37,7 +37,7 @@ $isNavVisible = false;
               <label class="sr-only" for="search">Search</label>
               <input
                 type="search"
-                name=""
+                name="search"
                 id="search"
                 placeholder="What's on your mind?"
               />

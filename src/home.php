@@ -20,9 +20,7 @@
             </tr>
             <?php
                 $songs = new App\Service\SongService();
-                $result = $songs->getSong();
                 $count_data = count($songs->getSong()["Data"]);
-                echo $count_data;
                 for($i = 0; $i < $count_data; $i++) {
                     $data = $songs->getSong()["Data"][$i];
                     echo "<tr class='subcard' onClick={testButton(" . $data[0] .  ")}>";
