@@ -16,14 +16,11 @@ if ($_SERVER["REQUEST_METHOD"] != 'POST'){
 }
 
 $_POST = json_decode(file_get_contents('php://input'), true);
-$judul = isset($_POST['judul']) && $_POST['judul'] != '' ? $_POST['judul'] : '';
-$penyanyi = isset($_POST['penyanyi']) && $_POST['penyanyi'] != '' ? $_POST['penyanyi'] : '';
+$param = isset($_POST['param']) && $_POST['param'] != '' ? $_POST['param'] : '';
 $tahun = isset($_POST['tahun']) && $_POST['tahun'] != '' ? $_POST['tahun'] : '0';
 $ordering = isset($_POST['ordering']) ? $_POST['ordering'] : '';
 $page = isset($_POST['page']) ? $_POST['page'] : '';
 $maxdata = isset($_POST['maxdata']) ? $_POST['maxdata'] : '';
-
-
 
 try {
     $songs_service = new SongService();
