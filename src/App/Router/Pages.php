@@ -24,6 +24,10 @@ $route->add('/home', function() {
     include "home.php";
 });
 
+$route->add('/users', function() {
+    include "users.php";
+});
+
 $route->listen();
 
 ?>

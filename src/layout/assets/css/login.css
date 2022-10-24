@@ -1,0 +1,144 @@
+body {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 5vmin;
+}
+
+img {
+    width: 25vmin;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+    min-width: 55vmin;
+}
+
+section {
+    min-width: 55vmin;
+    font-size: 0.9rem;
+}
+
+input {
+    margin-top: 0.5rem;
+    padding-left: 0.75rem;
+    width: 100%;
+    height: 3rem;
+    border-radius: 0.25rem;
+    border: 0.1rem solid #bbb;
+}
+
+input::placeholder {
+    font-size: 1rem;
+}
+
+h1 {
+    max-width: 40%;
+    text-align: center;
+}
+
+button {
+    width: 17vmin;
+    height: 3rem;
+    border-radius: 2rem;
+    border-width: 0;
+    background-color: #1bd760;
+    font-size: 1rem;
+}
+
+button:hover {
+    width: 17.5vmin;
+    height: 3.1rem;
+    border-radius: 2.25rem;
+    border-width: 0;
+    background-color: #69dc72;
+    font-size: 1.05rem;
+    cursor: pointer;
+}
+
+p {
+    font-size: 1rem;
+}
+
+button~p {
+    font-size: 1.1rem;
+}
+
+a {
+    color: #1bd760;
+    text-decoration-color: #1bd760;
+}
+
+div>p {
+    font-size: 1.3rem;
+}
+
+.register-redirect {
+    min-width: 55vmin;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.button-register {
+    color: gray;
+    min-width: 100%;
+    height: 3rem;
+    border-radius: 2rem;
+    border: thin solid #bbb;
+    background-color: #fff;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.button-register:hover {
+    color: gray;
+    min-width: 100%;
+    height: 3rem;
+    border-radius: 2rem;
+    border: thin solid #000;
+    background-color: #fff;
+    font-size: 1rem;
+}
+
+.solid {
+    border-top: 0.05rem solid #bbb;
+    margin-top: 1rem;
+}
+
+.first-divider {
+    min-width: 100vw;
+}
+
+.second-divider {
+    min-width: 55vmin;
+}
+
+.submit-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    padding-top: 15px;
+}
+
+.submit-remember{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-width: 17rem;
+}
+
+input[type=checkbox]{
+    width: 20px;
+    margin: 0;
+    margin-right: 10px;
+}
+
+
+
