@@ -137,7 +137,7 @@ class SongService extends Service{
 
     public function getSong() {
         try {
-            $sql = "SELECT * FROM songs ORDER BY Tanggal_terbit DESC LIMIT 10";
+            $sql = "SELECT * FROM songs ORDER BY Tanggal_terbit DESC, Judul ASC LIMIT 10";
 
             $statement = $this->db->prepare($sql);
             $statement->execute();
