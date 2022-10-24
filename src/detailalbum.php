@@ -25,7 +25,6 @@
                         <a class="total_duration" id="total_duration">Total Duration: </a><br>
                     </div>
                 </div<>
-                <!-- TODO: DAFTAR LAGU -->
                 <div class="content">
                     <div class="admin_content_album" id="admin_content">
                         <!-- form for editing field, upload image and audio file -->
@@ -42,6 +41,45 @@
                         </button>
                     </div>
                 </div>
+                <table class="card">
+                    <tr>
+                        <th class="first-index">#</th>
+                        <th>Judul</th>
+                        <th>Genre</th>
+                        <th>Duration</th>
+                        <th>Tahun</th>
+                    </tr>
+                    <?php
+                        $songs = new App\Service\SongService();
+                        $query = $_GET['id'];
+                        $result = $songs->getSongByAlbumId($query)["Data"];
+                        $count_data = count($result);
+                        for($i = 0; $i < $count_data; $i++) {
+                            $data = $result[$i];
+                            echo "<tr class='subcard' onClick={deleteSong(" . $data[0] .  ")}>";
+                            echo "<td class='index'>";
+                            echo $i + 1;
+                            echo "</td>";
+                            echo "<td>";
+                            echo "<div class='flex'>";
+                            echo "<div class='main-content'>";
+                            echo "<div class='title'>" . $data[1] .  "</div>";
+                            echo "</div>";
+                            echo "</div>";
+                            echo "</td>";
+                            echo "<td>";
+                            echo "<div class='genre'>" . $data[4] .  "</div>";
+                            echo "</td>";
+                            echo "<td>";
+                            echo "<div class='duration'>" . $data[5] .  "</div>";
+                            echo "</td>";
+                            echo "<td>";
+                            echo "<div class='year'>" . substr($data[3], 0, 4) . "</div>";
+                            echo "</td>";
+                            echo "</tr>";
+                        }
+                    ?>
+                </table>
             </div>
         </div>
         
@@ -67,8 +105,6 @@
             document.getElementById('tanggal_terbit').innerHTML = data.tanggal_terbit;
             document.getElementById('genre').innerHTML = data.genre;
             document.getElementById('total_duration').innerHTML = data.total_duration;
-            const songs[] = data.songs;
-            // TODO: DAFTAR LAGU
         }
         xmlhttp.send();
 
@@ -79,7 +115,7 @@
             const tanggal_terbit = document.getElementById('tanggal_terbit_edit').value;
             const genre = document.getElementById('genre_edit').value;
             const cover_file = document.getElementById('cover_file_edit').files[0]
-
+            // need to handle get total duration from all song
             // const payload = {
             //     judul,
             //     penyanyi,
@@ -101,6 +137,14 @@
             xmlhttp.send();
 
             window.location.href = "/index.php";
+        }
+
+        const deleteSong = (id) => {
+            const xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("PUT", "/App/Controller/DeleteSongFromAlbum.php?id=" + id);
+            xmlhttp.send();
+
+            window.location.reload();
         }
     </script>
 </html>

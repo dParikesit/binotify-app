@@ -72,6 +72,19 @@ class SongService extends Service{
         }
     }
 
+    public function deleteSongFromAlbum($song_id) {
+        try {
+            $sql = "UPDATE songs SET album_id=:null WHERE song_id = :song_id";
+            $statement = $this->db->prepare($sql);
+            $statement->bindParam(':song_id', $song_id, PDO::PARAM_STRING);
+            $statement->execute();
+
+            return array("Status code" => 201,"Message"=>"Successfully Deleted Song from Album");
+        } catch (PDOException $e) {
+            return array("Status code" => 400,"Message"=>"Error: [all] {$e->getMessage()}");
+        }
+    }
+
     public function readAll() {
         try {
             $sql = "SELECT * FROM songs ORDER BY judul asc";
@@ -90,6 +103,20 @@ class SongService extends Service{
             $sql = "SELECT * FROM songs WHERE song_id = :song_id";
             $statement = $this->db->prepare($sql);
             $statement->bindParam(':song_id', $song_id, PDO::PARAM_STRING);
+            $statement->execute();
+            $result = $statement->fetch();
+
+            return array("Status code" => 200,"Message"=>"Successfully Read","Data"=>$result);
+        } catch (PDOException $e) {
+            return array("Status code" => 400,"Message"=>"Error: [all] {$e->getMessage()}");
+        }
+    }
+
+    public function getSongByAlbumId($album_id) {
+        try {
+            $sql = "SELECT * FROM songs WHERE album_id = :album_id";
+            $statement = $this->db->prepare($sql);
+            $statement->bindParam(':album_id', $album_id, PDO::PARAM_STRING);
             $statement->execute();
             $result = $statement->fetch();
 
