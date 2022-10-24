@@ -24,6 +24,14 @@ $route->add('/home', function() {
     include "home.php";
 });
 
+$route->add('/detailsong', function() {
+    include "detailsong.php";
+});
+
+$route->add('/detailalbum', function() {
+    include "detailalbum.php";
+});
+
 $route->listen();
 
 ?>

@@ -1,0 +1,97 @@
+body {
+    font-family: 'Gotham';
+    font-weight: 400;
+    color: white;
+}
+
+.cover {
+    margin-left: 2vh;
+    width: 100%;
+    height: undefined;
+    border-radius: 0.5vh;
+    aspect-ratio: 1/1;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    max-width: 640px;
+    margin: 6vh;
+}
+
+.admin_content {
+    margin-left: 15vh;
+    margin-bottom: 8vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.admin_content_album {
+    margin-top: 4vh;
+    margin-left: 15vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.content-left {
+    padding: 0 5vh 0 2vh;
+}
+
+.content-right {
+    margin-top: 5vh;
+    padding: 2vh 0 0 5vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.audio_source {
+    margin-bottom: 5vh;
+}
+
+.form_edit {
+    display: block;
+}
+
+.button {
+    border-radius: 2vh;
+    background-color: #1DB954;
+    text-decoration: none;
+    font-family: "Gotham";
+    font-weight: 700;
+    padding: 2vh;
+    cursor: pointer;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-left: 6vh;
+}
+
+@font-face {
+    font-family: 'Gotham';
+    src: url(http://localhost:3000/layout/assets/font/Gotham-Bold.eot); /* IE9 Compat Modes */
+    src: url(http://localhost:3000/layout/assets/font/Gotham-Bold.eot?#iefix) format('embedded-opentype'), /* IE6-IE8 */
+    url(http://localhost:3000/layout/assets/font/Gotham-Bold.woff) format('woff'), /* Modern Browsers */
+    url(http://localhost:3000/layout/assets/font/GothamBold.ttf)  format('truetype'), /* Safari, Android, iOS */
+    url(http://localhost:3000/layout/assets/font/Gotham-Bold.svg#svgFontName) format('svg'); /* Legacy iOS */
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gotham';
+    src: url(http://localhost:3000/layout/assets/font/Gotham-Medium.eot); /* IE9 Compat Modes */
+    src: url(http://localhost:3000/layout/assets/font/Gotham-Medium.eot?#iefix) format('embedded-opentype'), /* IE6-IE8 */
+    url(http://localhost:3000/layout/assets/font/Gotham-Medium.woff) format('woff'), /* Modern Browsers */
+    url(http://localhost:3000/layout/assets/font/GothamMedium.ttf)  format('truetype'), /* Safari, Android, iOS */
+    url(http://localhost:3000/layout/assets/font/Gotham-Medium.svg#svgFontName) format('svg'); /* Legacy iOS */
+    font-weight: 400;
+    font-style: normal;
+}
