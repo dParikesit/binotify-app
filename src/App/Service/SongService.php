@@ -136,6 +136,20 @@ class SongService extends Service{
             return array("Status code" => 400,"Message"=>"Error: [all] {$e->getMessage()}");
         }
     }
+
+    public function getSong() {
+        try {
+            $sql = "SELECT * FROM songs ORDER BY Tanggal_terbit DESC LIMIT 10";
+
+            $statement = $this->db->prepare($sql);
+            $statement->execute();
+            $result = $statement->fetchAll();
+
+            return array("Status code" => 200,"Message"=>"Successfully Read","Data"=>$result);
+        } catch (PDOException $e) {
+            return array("Status code" => 400,"Message"=>"Error: [all] {$e->getMessage()}");
+        }
+    }
 }
 
 ?>
