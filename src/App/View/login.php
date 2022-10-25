@@ -34,10 +34,10 @@
         </form>
 
         <div class="submit-container">
-            <section class="submit-remember">
+            <!-- <section class="submit-remember">
                 <input type="checkbox" name="rememberme" id="rememberme">
                 <label for="rememberme">Remember me</label>
-            </section>
+            </section> -->
             
             <button type="button" onclick={login(event)} ><b>LOG IN</b></button>
         </div>
