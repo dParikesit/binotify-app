@@ -3,6 +3,8 @@ namespace App\Controller;
 require_once "../../inc/config.php";
 
 use App\Service\SongService;
+use App\Service\AlbumService;
+
 
 if ($_SERVER["REQUEST_METHOD"] != 'POST'){
     http_response_code(422);
@@ -20,6 +22,7 @@ $penyanyi = isset($_POST['penyanyi']) ? $_POST['penyanyi'] : '' ;
 $tanggal_terbit = isset($_POST['tanggal_terbit']) ? $_POST['tanggal_terbit'] : '';
 $genre = isset($_POST['genre']) ? $_POST['genre'] : '';
 $duration = isset($_POST['duration']) ? $_POST['duration'] : '';
+$album_id = isset($_POST['album_id']) ? $_POST['album_id'] : '';
 
 if (!$judul || !$penyanyi || !$tanggal_terbit || !$genre || !$duration){
     http_response_code(400);
@@ -148,8 +151,24 @@ if ($image_did_upload) {
 
 try {
     $song_service = new SongService();
+    $album_service = new AlbumService();
+    $result = null;
     $result = $song_service->create($judul, $penyanyi, $tanggal_terbit, $genre, $duration, $full_audio_path, $full_image_path);
-
+    if ($album_id != "") {
+        $penyanyi_compare = $album_service->getAlbumById($album_id)['penyanyi'];
+        if ($penyanyi != $penyanyi_compare){
+            http_response_code(400);
+            $return = array(
+                'status' => 400,
+                'error' => 'Bad request, Penyanyi song and album is not match'
+            );
+            print_r(json_encode($return));
+            exit;
+        }
+        $total_duration = $duration + $album_service->getAlbumById($album_id)['total_duration'];
+        $result = $song_service->updateSongToAlbum($song_id, $album_id, $total_duration);
+    }
+    
     http_response_code(201);
     $return = array(
         'status' => 201,

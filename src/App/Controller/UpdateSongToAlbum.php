@@ -3,6 +3,7 @@ namespace App\Controller;
 require_once "../../inc/config.php";
 
 use App\Service\SongService;
+use App\Service\AlbumService;
 
 
 if ($_SERVER["REQUEST_METHOD"] != 'PUT'){
@@ -33,7 +34,22 @@ if (!$song_id || !$album_id){
 
 try {
     $song_service = new SongService();
-    $result = $song_service->updateSongToAlbum($song_id, $album_id);
+    $album_service = new AlbumService();
+    
+    $penyanyi = $song_service->getSongById($song_id)['penyanyi'];
+    $penyanyi_compare = $album_service->getAlbumById($album_id)['penyanyi'];
+
+    $total_duration =  $song_service->getSongById($song_id)['duration'] + $album_service->getAlbumById($album_id)['total_duration'];
+    if ($penyanyi != $penyanyi_compare){
+        http_response_code(400);
+        $return = array(
+            'status' => 400,
+            'error' => 'Bad request, Penyanyi song and album is not match'
+        );
+        print_r(json_encode($return));
+        exit;
+    }
+    $result = $song_service->updateSongToAlbum($song_id, $album_id, $total_duration);
 
     http_response_code(201);
     $return = array(

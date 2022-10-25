@@ -68,6 +68,23 @@ body {
     cursor: pointer;
 }
 
+.input {
+    padding: 1vh;
+    border: 1px solid #1DB954;
+    border-radius: 1vh;
+}
+
+.selection {
+    border-radius: 2vh;
+    margin-top: 2vh;
+    max-width: 35vh;
+    text-decoration: none;
+    font-family: "Gotham";
+    font-weight: 700;
+    padding: 1vh;
+    cursor: pointer;
+}
+
 .title {
     font-size: 24px;
     font-weight: 700;

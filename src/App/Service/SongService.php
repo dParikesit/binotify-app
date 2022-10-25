@@ -39,7 +39,7 @@ class SongService extends Service{
         }
     }
 
-    public function update($song_id, string $judul, string $penyanyi, string $tanggal_terbit, string $genre, string $audio_path, string $image_path) {
+    public function update($song_id, string $judul, string $penyanyi, string $tanggal_terbit, string $genre, $duration, string $audio_path, string $image_path) {
         try {
             $sql = "UPDATE songs SET judul=:judul, penyanyi=:penyanyi, tanggal_terbit=:tanggal_terbit, genre=:genre, audio_path=:audio_path, image_path=:image_path WHERE song_id = :song_id";
             $statement = $this->db->prepare($sql);
@@ -58,12 +58,13 @@ class SongService extends Service{
         }
     }
 
-    public function updateSongToAlbum($song_id, $album_id) {
+    public function updateSongToAlbum($song_id, $album_id, $total_duration) {
         try {
-            $sql = "UPDATE songs SET album_id=:album_id WHERE song_id = :song_id";
+            $sql = "UPDATE songs SET album_id=:album_id, total_duration:=total_duration WHERE song_id = :song_id AND penyanyi = (SELECT penyanyi FROM albums WHERE album_id = :album_id)";
             $statement = $this->db->prepare($sql);
             $statement->bindParam(':song_id', $song_id, PDO::PARAM_STRING);
             $statement->bindParam(':album_id', $album_id, PDO::PARAM_STRING);
+            $statement->bindParam(':total_duration', $total_duration, PDO::PARAM_INT);
             $statement->execute();
 
             return array("Status code" => 201,"Message"=>"Successfully Updated Song to Album");

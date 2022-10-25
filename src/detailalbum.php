@@ -80,6 +80,25 @@
                         }
                     ?>
                 </table>
+                <div>
+                        <form class="form_edit" id="form_edit" method="PUT" enctype="multipart/form-data">
+                            <select class="selection" name="song_id" id="song_id">
+                                <option value="">Select Song To Add</option>
+                                <?php
+                                    $songs = new App\Service\SongService();
+                                    $result = $songs->readAll()["Data"];
+                                    $count_data = count($result);
+                                    for($i = 0; $i < $count_data; $i++) {
+                                        $data = $result[$i];
+                                        echo "<option value='$data[0]'>$data[1] - $data[2]</option>";
+                                    }
+                                ?>
+                            </select>
+                        </form>
+                        <button type="submit" id="button_submit" class="button" onclick={updateSongToAlbum(event)}>
+                            Submit
+                        </button>
+                </div>
             </div>
         </div>
         
@@ -137,6 +156,21 @@
             xmlhttp.send();
 
             window.location.href = "/index.php";
+        }
+
+        const updateSongToAlbum = (e) => {
+            e.preventDefault();
+            const song_id = document.getElementById('song_id').value;
+            // need to get duration from song and album
+            // const payload = {
+            //     song_id,
+            //     album_id,
+            //     total_duration
+            // }
+            const xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("PUT", "/App/Controller/UpdateSongToAlbum.php?id=" + myParam);
+            xmlhttp.setRequestHeader("Content-type", "application/json");
+            xmlhttp.send(JSON.stringify(payload));
         }
 
         const deleteSong = (id) => {
