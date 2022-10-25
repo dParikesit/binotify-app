@@ -1,7 +1,7 @@
 <?php
 
 use App\Router\Router;
-use App\Controller\{HomeController, UserController, SongController};
+use App\Controller\{HomeController, UserController, SongController, AlbumController};
 
 $router = new Router();
 $router->get("/", function(){
@@ -46,6 +46,13 @@ $router->patch(`/updateSongToAlbum?id=$id`, function(){
 $router->patch(`/deleteSongFromAlbum?id=$id`, function(){
     $home = new SongController();
     $home->deleteSongFromAlbum();
+});
+
+//ALBUM
+
+$router->delete(`/deletealbum?id=$id`, function(){
+    $home = new AlbumController();
+    $home->deleteAlbum();
 });
 
 $router->run();
