@@ -34,6 +34,10 @@ class UserService extends Service{
             $statement->bindParam(':username', $username, PDO::PARAM_STR);
             $statement->execute();
 
+            if($statement->rowCount() == 0) {
+                throw new HTTPException('User not found', 404);
+            }
+
             return $statement->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             $error_code = ($e->getCode() == 23000) ? 400 : 500;
