@@ -104,4 +104,9 @@ $router->delete("/deletealbum", function(){
     $home->deleteAlbum();
 });
 
+$router->get("/listalbum", function(){
+    $home = new AlbumController();
+    $home->viewAllAlbum();
+});
+
 $router->run();
