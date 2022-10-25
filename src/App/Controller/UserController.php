@@ -35,7 +35,7 @@ final class UserController {
             $res->sendJSON();
 
         } catch (HTTPException $e) {
-            $e->sendResponse();
+            $e->sendJSON();
         }
     }
 
@@ -65,7 +65,7 @@ final class UserController {
             }
 
         } catch (HTTPException $e) {
-            $e->sendResponse();
+            $e->sendJSON();
         }
     }
 

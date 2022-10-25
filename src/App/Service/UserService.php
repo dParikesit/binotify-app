@@ -22,7 +22,7 @@ class UserService extends Service{
         } catch (PDOException $e) {
             $error_code = ($e->getCode() == 23000) ? 400 : 500;
             $res = new HTTPException($e->getMessage(), $error_code);
-            $e->sendResponse();
+            $e->sendJSON();
         }
     }
 
@@ -38,7 +38,7 @@ class UserService extends Service{
         } catch (PDOException $e) {
             $error_code = ($e->getCode() == 23000) ? 400 : 500;
             $res = new HTTPException($e->getMessage(), $error_code);
-            $e->sendResponse();
+            $e->sendJSON();
         }
     }
 
@@ -52,7 +52,7 @@ class UserService extends Service{
         } catch (PDOException $e) {
             $error_code = ($e->getCode() == 23000) ? 400 : 500;
             $res = new HTTPException($e->getMessage(), $error_code);
-            $e->sendResponse();
+            $e->sendJSON();
         }
     }
 }

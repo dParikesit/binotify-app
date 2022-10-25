@@ -7,7 +7,7 @@ class HTTPException extends \Exception {
         parent::__construct($message, $code, $previous);
     }
 
-    public function sendResponse(){
+    public function sendJSON(){
         http_response_code($this->code);
         $return = array(
             'status' => $this->code,
