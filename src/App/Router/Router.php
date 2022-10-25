@@ -1,101 +1,115 @@
 <?php
+
 namespace App\Router;
 
-
-/**
- * Router class for routing
- */
-final class Router
+class Router
 {
-	/**
-	* @var array $_listUri List of URI's to match against
-	*/
-	private array $_listUri = array();
+    private $namespace = '';
+    private $routeList = [];
+    private $notFoundView = null;
+    private $acceptedHttpMethods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
+    private $httpMethod = 'GET';
+    private $route = [];
 
-	/**
-	* @var array $_listCall List of closures to call
-	*/
-	private array $_listCall = array();
+    private function request_path()
+    {
+        return parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    }
 
-	/**
-	* @var string $_trim Used class-wide items to clean strings
-	*/
-	private string $_trim = '/\^$';
+    private function requestMethod() : string
+    {
+        return $_SERVER['REQUEST_METHOD'];
+    }
 
-	/**
-	* add - Adds a URI and Function to the two lists
-	*
-	* @param string $uri A path such as about/system
-	* @param object $function An anonymous function
-	*/
-	public function add($uri, $function)
-	{
-		$uri = trim($uri, $this->_trim);
-		$this->_listUri[] = $uri;
-		$this->_listCall[] = $function;
-	}
+    private function checkHttpMethod()
+    {
+        $this->httpMethod = $this->requestMethod();
 
+        $path = substr($this->request_path(),1);
 
-	public function isURIDisallowed(){
-		$uri = $this->getUriFromQuery();
-		foreach($this->_listUri as $listKey => $listUri){
-			if(preg_match("#^$listUri$#", $uri)){
-				return false;
-			}
-		}
-		return true;
-	}
+        if(!isset($this->routeList[$path][$this->httpMethod])){
+            return false;
+        }
 
-	public function getUriFromQuery(){
-		$uri = isset($_REQUEST['uri']) ? $_REQUEST['uri'] : '/';
-		$uri = trim($uri, $this->_trim);
-		$uri = filter_var($uri, FILTER_SANITIZE_URL);
-		return $uri;
-	}
-	/**
-	* listen
-    * @desc Looks for a match for the URI and runs the related function
-	*/
-	public function listen()
-	{
-		$uri = $this->getUriFromQuery();
-		$replacementValues = array();
+        $this->route = $this->routeList[$path][$this->httpMethod];
+        return true;
+    }
 
-		/**
-		* List through the stored URI's
-		*/
-		foreach ($this->_listUri as $listKey => $listUri)
-		{
-			/**
-			* See if there is a match
-			*/
-			if (preg_match("#^$listUri$#", $uri))
-			{
-				/**
-				* Replace the values
-				*/
-				$realUri = explode('/', $uri);
-				$fakeUri = explode('/', $listUri);
+    private function createRoute(string $httpMethod, string $path, callable $function)
+    {
+        $route = array();
+        $route["path"] = substr($path,1);
+        $route["http_method"] = $httpMethod;
+        $route["function"] = $function;
 
-				/**
-				* Gather the .+ values with the real values in the URI
-				*/
-				foreach ($fakeUri as $key => $value)
-				{
-					if ($value == '.+')
-					{
-						$replacementValues[] = $realUri[$key];
-					}
-				}
+        return $route;
+    }
 
-				/**
-				* Pass an array for arguments
-				*/
-				call_user_func_array($this->_listCall[$listKey], $replacementValues);
-			}
+    private function setRoute(array $route) : void
+    {
+        $this->routeList[$route["path"]][$route["http_method"]] = $route;
+    }
 
-		} // End of Loop
+    public function notFoundView(string $view) : void
+    {
+        $this->notFoundView = $view;
+    }
 
-	} // end of Listen
+    public function run()
+    {
+        try {
+            // Check http verb of current request
+            if(!$this->checkHttpMethod()) {
+                // Exception
+                http_response_code(404);
+                if(!$this->notFoundView) {
+                    header("HTTP/1.0 404 Not Found");
+                    throw new \Exception('404 Not Found');
+                    exit();
+                }
+                include $this->notFoundView;
+                exit();
+            }
 
+            // Defining controller and method
+            $functionName = $this->route['function'];
+        
+            return $functionName();
+            
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    public function registerRoute(string $httpMethod, string $path, callable $function)
+    {
+        // Creating route
+        $route = $this->createRoute($httpMethod, $path, $function);
+        $this->setRoute($route);
+    }
+
+    public function get(string $path, callable $function)
+    {
+        $this->registerRoute('GET', $path, $function);
+    }
+
+    public function post(string $path, callable $function)
+    {
+        $this->registerRoute('POST', $path, $function);
+    }
+
+    public function put(string $path, callable $function)
+    {
+        $this->registerRoute('PUT', $path, $function);
+    }
+
+    public function patch(string $path, callable $function)
+    {
+        $this->registerRoute('PATCH', $path, $function);
+    }
+
+    public function delete(string $path, callable $function)
+    {
+        $this->registerRoute('DELETE', $path, $function);
+    }
 }

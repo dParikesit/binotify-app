@@ -2,7 +2,7 @@
 namespace App\Service;
 use \PDO;
 
-class UsersService extends Service{
+class UserService extends Service{
     public function __construct() {
         parent::__construct();
     }
@@ -33,7 +33,7 @@ class UsersService extends Service{
 
             return $statement->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            return $e;
+            throw $e;
         }
     }
 }

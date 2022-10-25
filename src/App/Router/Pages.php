@@ -1,53 +1,30 @@
 <?php
 
-namespace App\Router;
+use App\Router\Router;
+use App\Controller\{HomeController, UserController};
 
-$route = new Router();
-
-$route->add('/', function () {
-    include "login.php";
+$router = new Router();
+$router->get("/", function(){
+    $home = new HomeController();
+    $home->index();
 });
 
-$route->add('/register', function() {
-    include "register.php";
+$router->get("/login", function(){
+    $home = new UserController();
+    $home->viewLogin();
+});
+$router->get("/register", function(){
+    $home = new UserController();
+    $home->viewRegister();
 });
 
-$route->add('/login', function() {
-    include "login.php";
+$router->post("/login", function(){
+    $home = new UserController();
+    $home->login();
+});
+$router->post("/register", function(){
+    $home = new UserController();
+    $home->register();
 });
 
-$route->add('/search', function() {
-    include "search.php";
-});
-
-$route->add('/home', function() {
-    include "home.php";
-});
-
-$route->add('/detailsong', function() {
-    include "detailsong.php";
-});
-
-$route->add('/detailalbum', function() {
-    include "detailalbum.php";
-});
-
-$route->add('/addsong', function() {
-    include "addsong.php";
-});
-
-$route->add('/addalbum', function() {
-    include "addalbum.php";
-});
-
-$route->add('/listalbum', function() {
-    include "listalbum.php";
-});
-
-$route->add('/users', function() {
-    include "users.php";
-});
-
-$route->listen();
-
-?>
+$router->run();

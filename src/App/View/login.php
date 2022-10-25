@@ -1,7 +1,7 @@
 <?php
     defined('BASEPATH') OR exit('No direct access to script allowed');
     if (isset($_SESSION["user_id"])) {
-        header("Location: "."/home");
+        header("Location: "."/");
     }
 ?>
 
@@ -68,11 +68,11 @@
 
             xhr.onload = function() {
                 if (xhr.status==200){
-                    window.location.href="/home";
+                    window.location.href="/";
                 }
             }
 
-            xhr.open("POST", "/App/Controller/Login.php");
+            xhr.open("POST", "/login");
             xhr.setRequestHeader("Content-type", "application/json");
             xhr.send(JSON.stringify(payload));
         }
