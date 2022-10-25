@@ -27,70 +27,75 @@ $router->post("/register", function(){
     $home->register();
 });
 
+$router->get("/users", function() {
+    $home = new UserController();
+    $home->viewListUser();
+});
+
 //SONG
 $router->post("/search", function(){
     $home = new SearchSongController();
     $home->searchSong();
 });
 
-$router->get(`/detailsong?id=$id`, function(){
+$router->get("/detailsong", function(){
     $home = new SongController();
     $home->viewDetailSong();
 });
 
-$router->get(`/addsong`, function(){
+$router->get("/addsong", function(){
     $home = new SongController();
     $home->viewAddSong();
 });
 
-$router->post(`/addsong`, function(){
+$router->post("/addsong", function(){
     $home = new SongController();
     $home->addSong();
 });
 
-$router->put(`/updatesong?id=$id`, function(){
+$router->put("/updatesong", function(){
     $home = new SongController();
     $home->updateSong();
 });
 
-$router->delete(`/deletesong?id=$id`, function(){
+$router->delete("/deletesong", function(){
     $home = new SongController();
     $home->deleteSong();
 });
 
-$router->patch(`/updatesongtoalbum?id=$id`, function(){
+$router->patch("/updatesongtoalbum", function(){
     $home = new SongController();
     $home->updateSongToAlbum();
 });
 
-$router->patch(`/deletesongfromalbum?id=$id`, function(){
+$router->patch("/deletesongfromalbum", function(){
     $home = new SongController();
     $home->deleteSongFromAlbum();
 });
 
 //ALBUM
 
-$router->get(`/detailalbum?id=$id`, function(){
+$router->get("/detailalbum", function(){
     $home = new AlbumController();
     $home->viewDetailAlbum();
 });
 
-$router->get(`/addalbum`, function(){
+$router->get("/addalbum", function(){
     $home = new AlbumController();
     $home->viewAddAlbum();
 });
 
-$router->post(`/addalbum`, function(){
+$router->post("/addalbum", function(){
     $home = new AlbumController();
     $home->addAlbum();
 });
 
-$router->put(`/updatealbum?id=$id`, function(){
+$router->put("/updatealbum", function(){
     $home = new AlbumController();
     $home->updateAlbum();
 });
 
-$router->delete(`/deletealbum?id=$id`, function(){
+$router->delete("/deletealbum", function(){
     $home = new AlbumController();
     $home->deleteAlbum();
 });

@@ -11,6 +11,10 @@ final class UserController {
         include $_SERVER['DOCUMENT_ROOT'] . "/App/View/register.php";
     }
 
+    public function viewListUser(){
+        include $_SERVER['DOCUMENT_ROOT'] . "/App/View/users.php";
+    }
+
     public function register(){
         $_POST = json_decode(file_get_contents('php://input'), true);
         $email = isset($_POST['email']) ? $_POST['email'] : '';

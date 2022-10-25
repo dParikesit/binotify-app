@@ -36,6 +36,18 @@ class UserService extends Service{
             throw $e;
         }
     }
+
+    public function readAll() {
+        try {
+            $sql = "SELECT * FROM users";
+            $statement = $this->db->prepare($sql);
+            $statement->execute();
+
+            return $statement->fetchAll();
+        } catch (PDOException $e) {
+            throw $e;
+        }
+    }
 }
 
 ?>
