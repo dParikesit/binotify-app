@@ -1,6 +1,7 @@
 <?php
 namespace App\Service;
 use \PDO;
+use App\Utils\HTTPException;
 
 class UserService extends Service{
     public function __construct() {
@@ -19,7 +20,9 @@ class UserService extends Service{
 
             return "Successfully Created";
         } catch (PDOException $e) {
-            return $e;
+            $error_code = ($e->getCode() == 23000) ? 400 : 500;
+            $res = new HTTPException($e->getMessage(), $error_code);
+            $e->sendResponse();
         }
     }
 
@@ -33,7 +36,9 @@ class UserService extends Service{
 
             return $statement->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            throw $e;
+            $error_code = ($e->getCode() == 23000) ? 400 : 500;
+            $res = new HTTPException($e->getMessage(), $error_code);
+            $e->sendResponse();
         }
     }
 
@@ -45,7 +50,9 @@ class UserService extends Service{
 
             return $statement->fetchAll();
         } catch (PDOException $e) {
-            throw $e;
+            $error_code = ($e->getCode() == 23000) ? 400 : 500;
+            $res = new HTTPException($e->getMessage(), $error_code);
+            $e->sendResponse();
         }
     }
 }
