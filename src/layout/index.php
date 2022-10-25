@@ -1,5 +1,5 @@
 <?php 
-  $isNavVisible = true;
+  $isNavVisible = $_SERVER['REQUEST_URI']=="/register" || $_SERVER['REQUEST_URI']=="/login" ? false : true;
   $isAdmin = false;
   $username = "USERNAME";
 ?>
@@ -72,11 +72,12 @@
       </div>
     <?php };?>
     <?php if ($isNavVisible == false) {?>
-      <div class="utama">
+      <!-- <div class="utama">
           <main class="main_page">
-              <?php require_once "App/Router/Pages.php" ?>
+              
           </main>
-      </div>
+      </div> -->
+      <?php require_once "App/Router/Pages.php" ?>
     <?php };?>
 
   </body>
