@@ -19,7 +19,7 @@ function navbar($isAdmin, $username){
             <li class=\"nav__item\"><a href=\"/\">Keluar</a></li>
           </ul>
         </nav>
-        <a href=\"#\" class=\"brand\">Binotify</a>
+        <a href=\"/\" class=\"brand\">Binotify</a>
   ";
   $element4 = "
   <div class=\"search\">

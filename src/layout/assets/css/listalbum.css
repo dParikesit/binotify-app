@@ -1,7 +1,9 @@
-
+.flex {
+    display: flex;
+}
 
 .flex-container {
-    width: 100%;
+    width: 90%;
     margin-top: 3%;
     margin-left: 3%;
     display: flex;
