@@ -1,7 +1,7 @@
 <?php
 
 use App\Router\Router;
-use App\Controller\{HomeController, UserController, SongController, AlbumController};
+use App\Controller\{HomeController, UserController, SearchSongController, SongController, AlbumController};
 
 $router = new Router();
 $router->get("/", function(){
@@ -27,6 +27,10 @@ $router->post("/register", function(){
     $home->register();
 });
 
+$router->post("/search", function(){
+    $home = new SearchSongController();
+    $home->searchSong();
+});
 //SONG
 $router->get(`/detailsong?id=$id`, function(){
     $home = new SongController();
