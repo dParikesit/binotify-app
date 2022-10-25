@@ -24,7 +24,7 @@ final class UserController {
 
         try {
             if (!$username || !$password || !$email){
-                throw new HTTPException('Bad request, one of field is empty', 400);
+                throw new HTTPException('Empty fields', 400);
             }
 
             $users_service = new UserService();
@@ -46,7 +46,7 @@ final class UserController {
 
         try {
             if (!$username || !$password){
-                throw new HTTPException('Bad request, one of field is empty', 400);
+                throw new HTTPException('Empty fields', 400);
             }
 
             $users_service = new UserService();
