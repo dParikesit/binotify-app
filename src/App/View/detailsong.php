@@ -63,7 +63,7 @@
         const xmlhttp = new XMLHttpRequest();
         const urlParams = new URLSearchParams(window.location.search);
         const myParam = urlParams.get('id');
-        xmlhttp.open("GET", "/App/Controller/DetailSong.php?id=" + myParam);
+        xmlhttp.open("GET", "/detailsong?id=" + myParam);
         xmlhttp.onreadystatechange = () => {
             if (xmlhttp.status != 200){
                 const error = JSON.parse(xmlhttp.responseText);
@@ -111,7 +111,7 @@
                 audio_file
             }
             const xmlhttp = new XMLHttpRequest();
-            xmlhttp.open("PUT", "/App/Controller/UpdateSong.php?id=" + myParam);
+            xmlhttp.open("PUT", "updatesong?id=" + myParam);
             xmlhttp.setRequestHeader("Content-type", "application/json");
             xmlhttp.send(JSON.stringify(payload));
         }
@@ -119,7 +119,7 @@
         const delete = (e) => {
             e.preventDefault();
             const xmlhttp = new XMLHttpRequest();
-            xmlhttp.open("DELETE", "/App/Controller/DeleteSong.php?id=" + myParam);
+            xmlhttp.open("DELETE", "deletesong?id=" + myParam);
             xmlhttp.send();
 
             window.location.href = "/index.php";

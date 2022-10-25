@@ -108,7 +108,7 @@
         const xmlhttp = new XMLHttpRequest();
         const urlParams = new URLSearchParams(window.location.search);
         const myParam = urlParams.get('id');
-        xmlhttp.open("GET", "/App/Controller/DetailAlbum.php?id=" + myParam);
+        xmlhttp.open("GET", "/detailalbum?id=" + myParam);
         xmlhttp.onreadystatechange = () => {
             if (xmlhttp.status != 200){
                 const error = JSON.parse(xmlhttp.responseText);
@@ -144,7 +144,7 @@
             //     duration,
             // }
             const xmlhttp = new XMLHttpRequest();
-            xmlhttp.open("PUT", "/App/Controller/UpdateAlbum.php?id=" + myParam);
+            xmlhttp.open("PUT", "updatealbum?id=" + myParam);
             xmlhttp.setRequestHeader("Content-type", "application/json");
             xmlhttp.send(JSON.stringify(payload));
         }
@@ -152,7 +152,7 @@
         const delete = (e) => {
             e.preventDefault();
             const xmlhttp = new XMLHttpRequest();
-            xmlhttp.open("DELETE", "/App/Controller/DeleteAlbum.php?id=" + myParam);
+            xmlhttp.open("DELETE", "deletealbum?id=" + myParam);
             xmlhttp.send();
 
             window.location.href = "/index.php";
@@ -168,14 +168,14 @@
             //     total_duration
             // }
             const xmlhttp = new XMLHttpRequest();
-            xmlhttp.open("PUT", "/App/Controller/UpdateSongToAlbum.php?id=" + myParam);
+            xmlhttp.open("PUT", "updatesongtoalbum?id=" + myParam);
             xmlhttp.setRequestHeader("Content-type", "application/json");
             xmlhttp.send(JSON.stringify(payload));
         }
 
         const deleteSong = (id) => {
             const xmlhttp = new XMLHttpRequest();
-            xmlhttp.open("PUT", "/App/Controller/DeleteSongFromAlbum.php?id=" + id);
+            xmlhttp.open("PUT", "deletesongfromalbum?id=" + id);
             xmlhttp.send();
 
             window.location.reload();

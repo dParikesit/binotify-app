@@ -27,14 +27,30 @@ $router->post("/register", function(){
     $home->register();
 });
 
+//SONG
 $router->post("/search", function(){
     $home = new SearchSongController();
     $home->searchSong();
 });
-//SONG
+
 $router->get(`/detailsong?id=$id`, function(){
     $home = new SongController();
-    $home->viewDetailSong($id);
+    $home->viewDetailSong();
+});
+
+$router->get(`/addsong`, function(){
+    $home = new SongController();
+    $home->viewAddSong();
+});
+
+$router->post(`/addsong`, function(){
+    $home = new SongController();
+    $home->addSong();
+});
+
+$router->put(`/updatesong?id=$id`, function(){
+    $home = new SongController();
+    $home->updateSong();
 });
 
 $router->delete(`/deletesong?id=$id`, function(){
@@ -42,12 +58,12 @@ $router->delete(`/deletesong?id=$id`, function(){
     $home->deleteSong();
 });
 
-$router->patch(`/updateSongToAlbum?id=$id`, function(){
+$router->patch(`/updatesongtoalbum?id=$id`, function(){
     $home = new SongController();
     $home->updateSongToAlbum();
 });
 
-$router->patch(`/deleteSongFromAlbum?id=$id`, function(){
+$router->patch(`/deletesongfromalbum?id=$id`, function(){
     $home = new SongController();
     $home->deleteSongFromAlbum();
 });
@@ -55,8 +71,23 @@ $router->patch(`/deleteSongFromAlbum?id=$id`, function(){
 //ALBUM
 
 $router->get(`/detailalbum?id=$id`, function(){
-    $home = new SongController();
-    $home->viewDetailAlbum($id);
+    $home = new AlbumController();
+    $home->viewDetailAlbum();
+});
+
+$router->get(`/addalbum`, function(){
+    $home = new AlbumController();
+    $home->viewAddAlbum();
+});
+
+$router->post(`/addalbum`, function(){
+    $home = new AlbumController();
+    $home->addAlbum();
+});
+
+$router->put(`/updatealbum?id=$id`, function(){
+    $home = new AlbumController();
+    $home->updateAlbum();
 });
 
 $router->delete(`/deletealbum?id=$id`, function(){
