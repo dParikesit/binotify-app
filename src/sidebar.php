@@ -3,9 +3,9 @@ function sidebar($isAdmin){
     $element1 = "<div class=\"utama\">
     <nav class=\"nav show-sidebar\">
         <ul class=\"sidebar\">";
-    $element2 = " <li class=\"nav__item\"><a href=\"/\">Tambah Lagu</a></li>
-    <li class=\"nav__item\"><a href=\"/\">Tambah Album</a></li>";
-    $element3 = "<li class=\"nav__item\"><a href=\"/\">Daftar Album</a></li>
+    $element2 = " <li class=\"nav__item\"><a href=\"/addsong\">Tambah Lagu</a></li>
+    <li class=\"nav__item\"><a href=\"/addalbum\">Tambah Album</a></li>";
+    $element3 = "<li class=\"nav__item\"><a href=\"/listalbum\">Daftar Album</a></li>
     <li class=\"nav__item\"><a href=\"/logout\">Keluar</a></li>
   </ul>
 </nav>
