@@ -1,7 +1,7 @@
 <?php
     defined('BASEPATH') OR exit('No direct access to script allowed');
     if (isset($_SESSION["user_id"])) {
-        header("Location: "."/home");
+        header("Location: "."/");
     }
 ?>
 
@@ -70,7 +70,7 @@
                     }
                 }
 
-                xhr.open("POST", "/App/Controller/Register.php");
+                xhr.open("POST", "/register");
                 xhr.setRequestHeader("Content-type", "application/json");
                 xhr.send(JSON.stringify(payload));
             }
