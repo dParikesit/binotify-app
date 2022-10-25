@@ -50,6 +50,11 @@ $router->patch(`/deleteSongFromAlbum?id=$id`, function(){
 
 //ALBUM
 
+$router->get(`/detailalbum?id=$id`, function(){
+    $home = new SongController();
+    $home->viewDetailAlbum($id);
+});
+
 $router->delete(`/deletealbum?id=$id`, function(){
     $home = new AlbumController();
     $home->deleteAlbum();
