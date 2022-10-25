@@ -73,6 +73,28 @@ final class UserController {
         session_destroy();
         header("Location: /login");
     }
+
+    public function checkUsername(){
+        // $_GET = json_decode(file_get_contents('php://input'), true);
+
+        try {
+            $username = isset($_GET['username']) ? $_GET['username'] : '';
+
+            if (!$username){
+                throw new HTTPException('Empty fields', 400);
+            }
+
+            $users_service = new UserService();
+            $user = $users_service->findUserByUsername($username);
+
+            $res = new Response("User available", 200);
+            $res->sendJSON();
+
+        } catch (HTTPException $e) {
+            $e->sendJSON();
+        }
+        
+    }
 }
 
 ?>

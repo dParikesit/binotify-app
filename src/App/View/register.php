@@ -37,7 +37,7 @@
             
             <section>
                 <label for="username"><b>What should we call you?</b></label>
-                <input type="text" id="username" name="username" placeholder="Enter a username.">
+                <input type="text" id="username" name="username" onkeyup={processChange()} placeholder="Enter a username.">
             </section>
             
         </form>
@@ -48,6 +48,34 @@
     </body>
 
     <script>
+        function debounce(func, timeout = 1000){
+            let timer;
+            return (...args) => {
+                clearTimeout(timer);
+                timer = setTimeout(() => { func.apply(this, args); }, timeout);
+            };
+        }
+        function check(){
+            const username = document.getElementById('username').value;
+            const xhr = new XMLHttpRequest();
+
+            xhr.onload = function() {
+                let res = JSON.parse(xhr.responseText);
+                if (res.status==404) {
+                    // Username not found, hence can be used
+                    alert(res.error);
+                } else if(res.status==200){
+                    // Username found, hence cannot be used
+                    alert(res.message);
+                }
+                console.log(res)
+            }
+
+            xhr.open("GET", `/username?username=${username}`);
+            xhr.send();
+        }
+        const processChange = debounce(() => check());
+
         const register = (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;

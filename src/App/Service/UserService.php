@@ -43,7 +43,10 @@ class UserService extends Service{
             $error_code = ($e->getCode() == 23000) ? 400 : 500;
             $res = new HTTPException($e->getMessage(), $error_code);
             $e->sendJSON();
+        } catch (HTTPException $e) {
+            $e->sendJSON();
         }
+        
     }
 
     public function readAll() {
