@@ -1,4 +1,9 @@
-<?php defined('BASEPATH') OR exit('No direct access to script allowed'); ?>
+<?php
+    defined('BASEPATH') OR exit('No direct access to script allowed');
+    if (isset($_SESSION["user_id"])) {
+        header("Location: "."/home");
+    }
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +39,7 @@
                 <label for="rememberme">Remember me</label>
             </section>
             
-            <button type="button" onclick={register(event)} ><b>LOG IN</b></button>
+            <button type="button" onclick={login(event)} ><b>LOG IN</b></button>
         </div>
 
         <hr class="solid second-divider">
@@ -49,26 +54,27 @@
     </body>
 
     <script>
-        const register = (e) => {
+        const login = (e) => {
             e.preventDefault();
-            const email = document.getElementById('email').value;
-            const emailagain = document.getElementById('emailagain').value;
-            const password = document.getElementById('password').value;
             const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
             
-            if (email===emailagain){
-                const payload = {
-                    email,
-                    password,
-                    username
-                }
-
-                const xmlhttp = new XMLHttpRequest();
-
-                xmlhttp.open("POST", "/App/Controller/Register.php");
-                xmlhttp.setRequestHeader("Content-type", "application/json");
-                xmlhttp.send(JSON.stringify(payload));
+            const payload = {
+                username,
+                password
             }
+
+            const xhr = new XMLHttpRequest();
+
+            xhr.onload = function() {
+                if (xhr.status==200){
+                    window.location.href="/home";
+                }
+            }
+
+            xhr.open("POST", "/App/Controller/Login.php");
+            xhr.setRequestHeader("Content-type", "application/json");
+            xhr.send(JSON.stringify(payload));
         }
     </script>
 </html>

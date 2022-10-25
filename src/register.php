@@ -1,4 +1,9 @@
-<?php defined('BASEPATH') OR exit('No direct access to script allowed'); ?>
+<?php
+    defined('BASEPATH') OR exit('No direct access to script allowed');
+    if (isset($_SESSION["user_id"])) {
+        header("Location: "."/home");
+    }
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -57,11 +62,17 @@
                     username
                 }
 
-                const xmlhttp = new XMLHttpRequest();
+                const xhr = new XMLHttpRequest();
 
-                xmlhttp.open("POST", "/App/Controller/Register.php");
-                xmlhttp.setRequestHeader("Content-type", "application/json");
-                xmlhttp.send(JSON.stringify(payload));
+                xhr.onload = function() {
+                    if (xhr.status==201){
+                        window.location.href="/login";
+                    }
+                }
+
+                xhr.open("POST", "/App/Controller/Register.php");
+                xhr.setRequestHeader("Content-type", "application/json");
+                xhr.send(JSON.stringify(payload));
             }
         }
     </script>

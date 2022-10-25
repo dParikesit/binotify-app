@@ -5,7 +5,7 @@ namespace App\Router;
 $route = new Router();
 
 $route->add('/', function () {
-    include "register.php";
+    include "login.php";
 });
 
 $route->add('/register', function() {
@@ -34,6 +34,10 @@ $route->add('/detailalbum', function() {
 
 $route->add('/listalbum', function() {
     include "listalbum.php";
+});
+
+$route->add('/users', function() {
+    include "users.php";
 });
 
 $route->listen();

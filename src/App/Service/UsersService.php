@@ -25,7 +25,7 @@ class UsersService extends Service{
 
     public function findUserByUsername(string $username) {
         try {
-            $sql = "SELECT user_id, email, username, password, isAdmin FROM users WHERE username=:username";
+            $sql = "SELECT * FROM users WHERE username=:username";
 
             $statement = $this->db->prepare($sql);
             $statement->bindParam(':username', $username, PDO::PARAM_STR);
