@@ -1,14 +1,14 @@
 <?php
 
 use App\Router\Router;
-use App\Controller\{HomeController, UserController, SearchSongController};
+use App\Controller\{HomeController, UserController, SearchSongController, SongController, AlbumController};
 
 $router = new Router();
 $router->get("/", function(){
     $home = new HomeController();
     $home->index();
 });
-
+// AUTH
 $router->get("/login", function(){
     $home = new UserController();
     $home->viewLogin();
@@ -30,6 +30,33 @@ $router->post("/register", function(){
 $router->post("/search", function(){
     $home = new SearchSongController();
     $home->searchSong();
+});
+//SONG
+$router->get(`/detailsong?id=$id`, function(){
+    $home = new SongController();
+    $home->viewDetailSong($id);
+});
+
+$router->delete(`/deletesong?id=$id`, function(){
+    $home = new SongController();
+    $home->deleteSong();
+});
+
+$router->patch(`/updateSongToAlbum?id=$id`, function(){
+    $home = new SongController();
+    $home->updateSongToAlbum();
+});
+
+$router->patch(`/deleteSongFromAlbum?id=$id`, function(){
+    $home = new SongController();
+    $home->deleteSongFromAlbum();
+});
+
+//ALBUM
+
+$router->delete(`/deletealbum?id=$id`, function(){
+    $home = new AlbumController();
+    $home->deleteAlbum();
 });
 
 $router->run();
