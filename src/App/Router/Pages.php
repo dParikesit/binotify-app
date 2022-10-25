@@ -17,6 +17,10 @@ $router->get("/register", function(){
     $home = new UserController();
     $home->viewRegister();
 });
+$router->get("/logout", function(){
+    $home = new UserController();
+    $home->logout();
+});
 
 $router->post("/login", function(){
     $home = new UserController();

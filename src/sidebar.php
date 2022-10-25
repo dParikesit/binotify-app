@@ -6,7 +6,7 @@ function sidebar($isAdmin){
     $element2 = " <li class=\"nav__item\"><a href=\"/\">Tambah Lagu</a></li>
     <li class=\"nav__item\"><a href=\"/\">Tambah Album</a></li>";
     $element3 = "<li class=\"nav__item\"><a href=\"/\">Daftar Album</a></li>
-    <li class=\"nav__item\"><a href=\"/\">Keluar</a></li>
+    <li class=\"nav__item\"><a href=\"/logout\">Keluar</a></li>
   </ul>
 </nav>
 </div>";

@@ -106,6 +106,11 @@ final class UserController {
             print_r(json_encode($return));
         }
     }
+
+    public function logout(){
+        session_destroy();
+        header("Location: /login");
+    }
 }
 
 ?>
