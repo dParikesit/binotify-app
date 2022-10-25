@@ -1,5 +1,13 @@
+body {
+    min-height: 100vmin;
+    background-color: #1d1d1d;
+}
+
 .flex {
     display: flex;
+}
+
+.content-table {
     margin-top: 1%;
     margin-bottom: 1%;
 }
@@ -23,7 +31,8 @@ tr {
 }
 
 .card {
-    width: 90%;
+    width: 75%;
+    height: max-content;
     margin: 0 auto;
     margin-top: 5%;
 }

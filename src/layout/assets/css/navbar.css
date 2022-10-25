@@ -210,19 +210,12 @@ ul {
 .sidebar {
     margin-right: 6vmin;
     list-style-type: none;
+    min-height: 90vmin;
 }
 
 .nav {
+    height: 90vmin;
     background-color: #000000;
-}
-
-@font-face {
-	font-family: "FA";
-	font-style: normal;
-	font-weight: 900;
-	font-display: block;
-	src: url(http://localhost:3000/layout/assets/font/fa-solid-900.eot);
-	src: url(http://localhost:3000/layout/assets/font/fa-solid-900.woff2) format("woff2"), url(http://localhost:3000/layout/assets/font/fa-solid-900.woff) format("woff"), url(http://localhost:3000/layout/assets/font/fa-solid-900.ttf) format("truetype");
 }
 
 .nav__toggle {
