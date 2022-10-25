@@ -1,60 +1,35 @@
 <?php 
-function sidebar($isAdmin, $username){
+function sidebar($isAdmin){
+    $element1 = "<div class=\"utama\">
+    <nav class=\"nav show-sidebar\">
+        <ul class=\"sidebar\">";
+    $element2 = " <li class=\"nav__item\"><a href=\"/\">Tambah Lagu</a></li>
+    <li class=\"nav__item\"><a href=\"/\">Tambah Album</a></li>";
+    $element3 = "<li class=\"nav__item\"><a href=\"/\">Daftar Album</a></li>
+    <li class=\"nav__item\"><a href=\"/\">Keluar</a></li>
+  </ul>
+</nav>
+</div>";
     $element = "
   <div class=\"utama\">
       <nav class=\"nav show-sidebar\">
           <ul class=\"sidebar\">
             <?php if ($isAdmin == true) {?>
-              <li class=\"nav__item\"><a href=\"/\">Tambah Lagu</a></li>
-              <li class=\"nav__item\"><a href=\"/\">Tambah Album</a></li>
+              <li class=\"nav__item\"><a href=\"/addsong\">Tambah Lagu</a></li>
+              <li class=\"nav__item\"><a href=\"/addalbum\">Tambah Album</a></li>
             <?php };?>
-            <li class=\"nav__item\"><a href=\"/\">Daftar Album</a></li>
-            <li class=\"nav__item\"><a href=\"/\">Keluar</a></li>
+            <li class=\"nav__item\"><a href='listalbum.php'>Daftar Album</a></li>
+            <li class=\"nav__item\"><a href=\"/logout\">Keluar</a></li>
           </ul>
       </nav>
   </div>
-<script> 
-  let navToggle = document.querySelector(\".nav__toggle\");
-  let navWrapper = document.querySelector(\".nav__wrapper\");
-
-  navToggle.addEventListener(\"click\", function () {
-    if (navWrapper.classList.contains(\"active\")) {
-      this.setAttribute(\"aria-expanded\", \"false\");
-      this.setAttribute(\"aria-label\", \"menu\");
-      navWrapper.classList.remove(\"active\");
-    } else {
-      navWrapper.classList.add(\"active\");
-      this.setAttribute(\"aria-label\", \"close menu\");
-      this.setAttribute(\"aria-expanded\", \"true\");
-      searchForm.classList.remove(\"active\");
-      searchToggle.classList.remove(\"active\");
-    }
-  });
-
-  let searchToggle = document.querySelector(\".search__toggle\");
-  let searchForm = document.querySelector(\".search__form\");
-
-  searchToggle.addEventListener(\"click\", showSearch);
-
-  function showSearch() {
-    searchForm.classList.toggle(\"active\");
-    searchToggle.classList.toggle(\"active\");
-
-    navToggle.setAttribute(\"aria-expanded\", \"false\");
-    navToggle.setAttribute(\"aria-label\", \"menu\");
-    navWrapper.classList.remove(\"active\");
-
-    if (searchToggle.classList.contains(\"active\")) {
-      searchToggle.setAttribute(\"aria-label\", \"Close search\");
-    } else {
-      searchToggle.setAttribute(\"aria-label\", \"Open search\");
-    }
-  }
-</script>
-
     ";
 
-    echo $element;
+    if ($isAdmin == true) {
+        echo $element1.$element2.$element3;
+    } else {
+        echo $element1.$element3;
+    }
 }
 
 ?>
