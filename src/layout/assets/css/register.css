@@ -16,11 +16,11 @@ form {
     flex-direction: column;
     align-items: flex-start;
     gap: 2rem;
-    min-width: 50vmin;
+    min-width: 50%;
 }
 
 section {
-    min-width: 50vmin;
+    min-width: 50% ;
 }
 
 input{
@@ -38,7 +38,6 @@ input::placeholder {
 }
 
 h1 {
-    max-width: 40%;
     text-align: center;
 }
 

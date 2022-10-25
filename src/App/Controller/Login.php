@@ -1,5 +1,10 @@
 <?php
 
+namespace App\Controller;
+require_once "../../inc/config.php";
+
+use App\Service\UsersService;
+
 if ($_SERVER["REQUEST_METHOD"] != 'POST'){
     http_response_code(422);
     $return = array(
@@ -31,10 +36,16 @@ try {
 
     if ($correct==true) {
         $_SESSION['user_id'] = $user["user_id"];
-        $_SESSION['isAdmin'] = $user["isAdmin"];
+        $_SESSION['username'] = $user["username"];
+        $_SESSION['isAdmin'] = $user["isadmin"];
 
+        // header('Location: /home');
         http_response_code(200);
-        header('location:/home-user');
+        $return = array(
+            'status' => 200,
+            'message' => "Login successful"
+        );
+        print_r(json_encode($user));
     } else {
         http_response_code(401);
         $return = array(
