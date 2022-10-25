@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS songs (
-    song_id INTEGER primary key,
+    song_id SERIAL primary key,
     Judul VARCHAR(64) NOT NULL,
     Penyanyi VARCHAR(128) NOT NULL,
     Tanggal_terbit date NOT NULL,
