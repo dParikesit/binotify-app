@@ -1,0 +1,46 @@
+
+
+.flex-container {
+    width: 100%;
+    margin-top: 3%;
+    margin-left: 3%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .flex-item {
+    flex: 25%;
+  }
+
+  @media (max-width: 800px) {
+    .flex-item-right, .flex-item-left {
+      flex: 50%; 
+    }
+  }
+
+.card {
+    margin-bottom: 5%;
+    padding: 1.75vmin;
+    padding-bottom: 3.5vmin;
+    max-width: max-content;
+    max-height: max-content;
+}
+
+.card:hover {
+    background-color: #535854;
+    border-radius: 10px;
+}
+
+.title {
+    margin-top: 2%;
+    color: white;
+}
+
+.content {
+    margin-top: 2%;
+    color: #a2a3a3;
+}
+
+img {
+    border-radius: 10px;
+}

@@ -32,6 +32,10 @@ $route->add('/detailalbum', function() {
     include "detailalbum.php";
 });
 
+$route->add('/listalbum', function() {
+    include "listalbum.php";
+});
+
 $route->listen();
 
 ?>
