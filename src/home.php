@@ -1,4 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct access to script allowed'); ?>
+<?php include 'navbar.php';?>
+<?php include 'sidebar.php';?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,9 +15,13 @@
 
     <body>
         <?php
-            navbar(true);
+            navbar(true, "USERNAME");
         ?>
-        <table class="card">
+        <div class="flex">
+            <?php
+                sidebar(true, "USERNAME");
+            ?>
+            <table class="card">
             <tr>
                 <th class="first-index">#</th>
                 <th>Judul</th>
@@ -51,6 +57,7 @@
                 }
             ?>
         </table>
+        </div>
     </body>
     <script>
         // TODO: Integrate function to go to detail song page using id
