@@ -15,6 +15,11 @@ $router->get("/images", function(){
     $obj->image();
 });
 
+$router->get("/audios", function(){
+    $obj = new FileServer();
+    $obj->audio();
+});
+
 // AUTH
 $router->get("/login", function(){
     $obj = new UserController();
