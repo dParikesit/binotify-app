@@ -141,10 +141,8 @@
         xmlhttp.open("GET", `/getalbum?id=${id}`);
         xmlhttp.send();
         xmlhttp.onload = () => {
-            console.log(xmlhttp.responseText);
             const result = JSON.parse(xmlhttp.responseText);
             const album = result.data.album;
-            console.log(album)
             const image = document.getElementById('cover');
             image.setAttribute('src', `/images?name=${album.image_path}`);
             document.getElementById('judul').innerHTML = `Title: ${album.judul}`;

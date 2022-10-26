@@ -98,11 +98,11 @@
             // const image = document.getElementById('cover');
             // image.setAttribute('src', data.image_path);
 
-            document.getElementById('judul').innerHTML = data.judul;
-            document.getElementById('penyanyi').innerHTML = data.penyanyi;
-            document.getElementById('tanggal_terbit').innerHTML = data.tanggal_terbit;
-            document.getElementById('genre').innerHTML = data.genre;
-            document.getElementById('duration').innerHTML = data.duration;
+            document.getElementById('judul').innerHTML = `Title: ${data.judul}`;
+            document.getElementById('penyanyi').innerHTML = `Artist: ${data.penyanyi}`;
+            document.getElementById('tanggal_terbit').innerHTML = `Tanggal Terbit: ${data.tanggal_terbit}`;
+            document.getElementById('genre').innerHTML = `Genre: ${data.genre}`;
+            document.getElementById('duration').innerHTML = `Duration: ${Math.floor(data.duration/60)}m ${data.duration%60}s`;
             // const audio = document.getElementById('audio');
             // audio.setAttribute('src', data.audio_path);
             // const ext = data.audio_path.split('.').pop();
