@@ -32,7 +32,7 @@
                         echo "<div class='flex-item' onClick={testButton(" . $data[0] .  ")}>";
                         echo "<div class='card'>";
                         // echo "<img src='" . $data["Image_path"] . "' width='225' />";
-                        echo "<img src='https://i.scdn.co/image/ab67616d0000b2739abdf14e6058bd3903686148' width='225' />";
+                        echo "<img src='https://i.scdn.co/image/ab67616d0000b2739abdf14e6058bd3903686148' />";
                         echo "<div class='title'>";
                         echo $data[1];
                         echo "</div>";
