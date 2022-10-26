@@ -95,8 +95,7 @@ final class AlbumController {
             $full_image_path = "";
             if ($image_did_upload) {
                 // image_path in database
-                $full_image_path = URL."/uploads/images/".$image_target_file."\n";
-                
+                $full_image_path = $image_target_file;
             } else {
                 throw new HTTPException("Image file save error", 400);
             }
