@@ -9,7 +9,10 @@
     color: white;
     text-decoration: none;
 }
-  
+.logo {
+    width: 6vmin;
+}
+
 .site-header {
     position: relative;
     background-color: black; 
