@@ -45,10 +45,6 @@
                             <input type="text" name="judul" id="judul_edit" placeholder="Title"><br>
                         </section>
                         <section>
-                            <label> Artist: </label>
-                            <input type="text" name="penyanyi" id="penyanyi_edit" placeholder="Artist"><br>
-                        </section>
-                        <section>
                             <label> Tanggal Terbit: </label>
                             <input type="date" name="tanggal_terbit" id="tanggal_terbit_edit" value="2022-10-28"  min="1960-01-01"><br>
                         </section>
