@@ -2,12 +2,19 @@
 
 use App\Router\Router;
 use App\Controller\{HomeController, UserController, SearchSongController, SongController, AlbumController};
+use App\Utils\FileServer;
 
 $router = new Router();
 $router->get("/", function(){
     $home = new HomeController();
     $home->index();
 });
+
+$router->get("/images", function(){
+    $home = new FileServer();
+    $home->image();
+});
+
 // AUTH
 $router->get("/login", function(){
     $home = new UserController();
