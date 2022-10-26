@@ -79,3 +79,7 @@ tr {
     color: #a2a3a3;
     padding-top: 1.5%;
 }
+
+.hide {
+    display: none;
+}
