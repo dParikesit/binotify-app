@@ -41,9 +41,9 @@ $router->get("/users", function() {
 });
 
 //SONG
-$router->post("/search", function(){
+$router->get("/search", function(){
     $home = new SearchSongController();
-    $home->searchSong();
+    $home->viewSearch();
 });
 
 $router->get("/detailsong", function(){

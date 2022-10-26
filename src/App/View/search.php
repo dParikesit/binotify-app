@@ -11,7 +11,7 @@
     </head>
 
     <body>
-        <h1><?php echo $_POST["search"]; ?></h1>
+        <h1><?php echo $_GET["search"]; ?></h1>
         <table class="card">
             <tr>
                 <th class="first-index">#</th>
