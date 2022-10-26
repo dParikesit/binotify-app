@@ -21,34 +21,14 @@ final class AlbumController {
             $album_service = new AlbumService();
             $query = $_GET["id"];
             $result = $album_service->getAlbumById($query);
-            $data = $result["Data"];
-            $songs = $result["Songs"];
         
             if ($data) {
-                http_response_code(200);
-                $return = array(
-                    'status' => 200,
-                    'data' => $data,
-                    'songs' => $songs
-                );
-                print_r(json_encode($return));
+                $res = new Response('Success', 200, $result);
             } else {
-                http_response_code(404);
-                $return = array(
-                    'status' => 404,
-                    'error' => 'Album not found'
-                );
-                print_r(json_encode($return));
+                throw new HTTPException('Album not found', 404);
             }
-        } catch (PDOException $e) {
-            $error_code = ($e->getCode() == 23000) ? 400 : 500;
-        
-            http_response_code($error_code);
-            $return = array(
-                'status' => $error_code,
-                'error' => $e->getMessage()
-            );
-            print_r(json_encode($return));
+        } catch (HTTPException $e) {
+            $e->sendJSON();
         }
     }
 
@@ -57,13 +37,7 @@ final class AlbumController {
         $album_id = isset($_DELETE['album_id']) ? $_DELETE['album_id'] : '';
 
         if (!$album_id){
-            http_response_code(400);
-            $return = array(
-                'status' => 400,
-                'error' => 'Bad request, album id empty'
-            );
-            print_r(json_encode($return));
-            exit;
+            throw new HTTPException('Empty fields', 400);
         }
 
 
@@ -71,21 +45,10 @@ final class AlbumController {
             $album_service = new AlbumService();
             $result = $album_service->delete($album_id);
 
-            http_response_code(200);
-            $return = array(
-                'status' => 200,
-                'message' => $result
-            );
-            print_r(json_encode($return));
-        } catch (PDOException $e) {
-            $error_code = ($e->getCode() == 23000) ? 400 : 500;
-
-            http_response_code($error_code);
-            $return = array(
-                'status' => $error_code,
-                'error' => $e->getMessage()
-            );
-            print_r(json_encode($return));
+            $res = new Response($result, 201);
+            $res->sendJSON();
+        } catch (HTTPException $e) {
+            $e->sendJSON();
         }
     }
 
@@ -132,8 +95,7 @@ final class AlbumController {
             $full_image_path = "";
             if ($image_did_upload) {
                 // image_path in database
-                $full_image_path = URL."/uploads/images/".$image_target_file."\n";
-                
+                $full_image_path = $image_target_file;
             } else {
                 throw new HTTPException("Image file save error", 400);
             }
@@ -157,13 +119,7 @@ final class AlbumController {
         $album_id = isset($_PUT['album_id']) ? $_PUT['album_id'] : '';
         
         if (!$album_id || !$judul || !$penyanyi || !$genre || !$tanggal_terbit || !$total_duration){
-            http_response_code(400);
-            $return = array(
-                'status' => 400,
-                'error' => 'Bad request, one of field is empty'
-            );
-            print_r(json_encode($return));
-            exit;
+            throw new HTTPException('Empty fields', 400);
         }
         
         // Image File
@@ -200,13 +156,7 @@ final class AlbumController {
         }
         
         if ($image_file_error) {
-            http_response_code(400);
-            $return = array(
-                'status' => 400,
-                'error' => $image_errors
-            );
-            print_r(json_encode($return));
-            exit;
+            throw new HTTPException("Image file error", 400);
         }
         
         
@@ -214,21 +164,10 @@ final class AlbumController {
             $album_service = new AlbumService();
             $result = $album_service->update($album_id, $judul, $penyanyi, $total_duration, $full_image_path, $tanggal_terbit, $genre);
         
-            http_response_code(201);
-            $return = array(
-                'status' => 201,
-                'message' => $result
-            );
-            print_r(json_encode($return));
-        } catch (PDOException $e) {
-            $error_code = ($e->getCode() == 23000) ? 400 : 500;
-        
-            http_response_code($error_code);
-            $return = array(
-                'status' => $error_code,
-                'error' => $e->getMessage()
-            );
-            print_r(json_encode($return));
+            $res = new Response($result, 201);
+            $res->sendJSON();
+        } catch (HTTPException $e) {
+            $e->sendJSON();
         }                
     }
 
@@ -236,33 +175,16 @@ final class AlbumController {
         try {
             $album_service = new AlbumService();
             $result = $album_service->readAll();
-            $data = $result["Data"];
         
             if ($data) {
-                http_response_code(200);
-                $return = array(
-                    'status' => 200,
-                    'data' => $data,
-                );
-                print_r(json_encode($return));
+                $res = new Response('Success', 200, $result);
+                $res->sendJSON();
             } else {
-                http_response_code(404);
-                $return = array(
-                    'status' => 404,
-                    'error' => 'Album not found'
-                );
-                print_r(json_encode($return));
+                throw new HTTPException('Album no found', 404);
             }
         
-        } catch (PDOException $e) {
-            $error_code = ($e->getCode() == 23000) ? 400 : 500;
-        
-            http_response_code($error_code);
-            $return = array(
-                'status' => $error_code,
-                'error' => $e->getMessage()
-            );
-            print_r(json_encode($return));
+        } catch (HTTPException $e) {
+            $e->sendJSON();
         }
     }
 }

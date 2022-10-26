@@ -33,7 +33,7 @@ class AlbumService extends Service{
             $statement = $this->db->prepare($sql);
             $statement->bindParam(':album_id', $album_id, PDO::PARAM_STRING);
             $statement->execute();
-            return array("Status code" => 200,"Message"=>"Successfully Deleted");
+            return "Successfully Deleted";
         } catch (PDOException $e) {
             $res = new HTTPException($e->getMessage(), 400);
             $e->sendJSON();
@@ -54,7 +54,7 @@ class AlbumService extends Service{
             $statement->bindParam(':genre', $genre, PDO::PARAM_STR);
             $statement->execute();
 
-            return array("Status code" => 200,"Message"=>"Successfully Updated");
+            return "Successfully Updated";
         } catch (PDOException $e) {
             $res = new HTTPException($e->getMessage(), 400);
             $e->sendJSON();
@@ -70,7 +70,7 @@ class AlbumService extends Service{
             $statement->execute();
             $result = $statement->fetchAll();
 
-            return array("Status code" => 200,"Message"=>"Successfully Read","Data"=>$result);
+            return $result;
         } catch (PDOException $e) {
             $res = new HTTPException($e->getMessage(), 400);
             $e->sendJSON();
@@ -93,7 +93,12 @@ class AlbumService extends Service{
             $statement->execute();
             $result2 = $statement->fetch();
 
-            return array("Status code" => 200,"Message"=>"Successfully Read","Data"=>$result,"Songs"=>$result2);
+            $res = array(
+                "album" => $result,
+                "song" => $result2
+            );
+
+            return $res;
         } catch (PDOException $e) {
             $res = new HTTPException($e->getMessage(), 400);
             $e->sendJSON();
