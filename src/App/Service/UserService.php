@@ -1,7 +1,7 @@
 <?php
 namespace App\Service;
 use \PDO;
-use App\Utils\HTTPException;
+use App\Utils\{HTTPException, Response};
 
 class UserService extends Service{
     public function __construct() {

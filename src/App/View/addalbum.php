@@ -87,8 +87,6 @@
 
             const xmlhttp = new XMLHttpRequest();
             xmlhttp.open("POST", "/addalbum");
-            // xmlhttp.setRequestHeader("Content-type","multipart/form-data; charset=utf-8; boundary=" + Math.random().toString().substr(2));
-            // xmlhttp.send(JSON.stringify(payload));
             xmlhttp.send(formData);
         }
     </script>

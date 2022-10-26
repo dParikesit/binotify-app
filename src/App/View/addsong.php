@@ -69,7 +69,7 @@
                                 ?>
                             </select>
                         </form>
-                        <button type="submit" id="button_submit" class="button" onclick={add(event)}>
+                        <button type="button" id="button_submit" class="button" onclick={add(event)}>
                             Submit
                         </button>
                     </div>
@@ -81,33 +81,47 @@
     </body>
 
     <script>
-        const xmlhttp = new XMLHttpRequest();
+        async function getDuration(file) {
+            const url = URL.createObjectURL(file);
 
-        const add = (e) => {
+            return new Promise((resolve) => {
+                const audio = document.createElement("audio");
+                audio.muted = true;
+                const source = document.createElement("source");
+                source.src = url; //--> blob URL
+                audio.preload= "metadata";
+                audio.appendChild(source);
+                audio.onloadedmetadata = function(){
+                    resolve(parseInt(audio.duration))
+                };
+            });
+        }
+        const add = async (e) => {
             e.preventDefault();
-            const judul = document.getElementById('judul_edit').value;
-            const penyanyi = document.getElementById('penyanyi_edit').value;
-            const tanggal_terbit = document.getElementById('tanggal_terbit_edit').value;
-            const genre = document.getElementById('genre_edit').value;
-            const cover_file = document.getElementById('cover_file_edit').files[0];
-            const audio_file = document.getElementById('audio_file_edit').files[0];
-            const duration = parseInt(audio_file.duration);
+            const judul = document.getElementById('judul').value;
+            const penyanyi = document.getElementById('penyanyi').value;
+            const tanggal_terbit = document.getElementById('tanggal_terbit').value;
+            const genre = document.getElementById('genre').value;
+            const cover_file = document.getElementById('cover_file').files[0];
+            const audio_file = document.getElementById('audio_file').files[0];
+            const duration = await getDuration(audio_file);
             const album_id = document.getElementById('album_id').value;
 
-            const payload = {
-                judul,
-                penyanyi,
-                tanggal_terbit,
-                genre,
-                cover_file,
-                duration,
-                audio_file,
-                album_id
-            }
+            let formData = new FormData();
+            formData.append("judul", judul);
+            formData.append("penyanyi", penyanyi);
+            formData.append("tanggal_terbit", tanggal_terbit);
+            formData.append("genre", genre);
+            formData.append("cover_file", cover_file);
+            formData.append("audio_file", audio_file);
+            formData.append("duration", duration);
+            formData.append("album_id", album_id);
+
+            console.log(formData)
+
             const xmlhttp = new XMLHttpRequest();
             xmlhttp.open("POST", "/addsong");
-            xmlhttp.setRequestHeader("Content-type", "application/json");
-            xmlhttp.send(JSON.stringify(payload));
+            xmlhttp.send(formData);
         }
     </script>
 </html>

@@ -53,7 +53,6 @@ final class AlbumController {
     }
 
     public function addAlbum() {
-        // $_POST = json_decode(file_get_contents('php://input'), true);
         try {
             $judul = isset($_POST['judul']) ? $_POST['judul'] : '';
             $penyanyi = isset($_POST['penyanyi']) ? $_POST['penyanyi'] : '' ;

@@ -1,6 +1,7 @@
 <?php
 namespace App\Service;
 use \PDO;
+use App\Utils\{HTTPException, Response};
 
 class SongService extends Service{
     public function __construct() {
@@ -20,10 +21,12 @@ class SongService extends Service{
             $statement->bindParam(':image_path', $image_path, PDO::PARAM_STR);
             $statement->execute();
 
-            return "Successfully Created";
+            return $this->db->lastInsertId();
         } catch (PDOException $e) {
             $error_code = ($e->getCode() == 23000) ? 400 : 500;
             $res = new HTTPException($e->getMessage(), $error_code);
+            $e->sendJSON();
+        } catch (HTTPException $e) {
             $e->sendJSON();
         }
     }
@@ -66,17 +69,24 @@ class SongService extends Service{
 
     public function updateSongToAlbum($song_id, $album_id, $total_duration) {
         try {
-            $sql = "UPDATE songs SET album_id=:album_id, total_duration:=total_duration WHERE song_id = :song_id AND penyanyi = (SELECT penyanyi FROM albums WHERE album_id = :album_id)";
+            $sql = "UPDATE songs SET album_id=:album_id WHERE song_id = :song_id AND penyanyi = (SELECT penyanyi FROM albums WHERE album_id = :album_id)";
             $statement = $this->db->prepare($sql);
-            $statement->bindParam(':song_id', $song_id, PDO::PARAM_STRING);
-            $statement->bindParam(':album_id', $album_id, PDO::PARAM_STRING);
-            $statement->bindParam(':total_duration', $total_duration, PDO::PARAM_INT);
+            $statement->bindParam(':song_id', $song_id, PDO::PARAM_INT);
+            $statement->bindParam(':album_id', $album_id, PDO::PARAM_INT);
             $statement->execute();
 
-            return "Successfully Updated";
-        } catch (PDOException $e) {
+            $sql2 = "UPDATE albums SET total_duration = :total_duration WHERE album_id = :album_id";
+            $statement2 = $this->db->prepare($sql2);
+            $statement2->bindParam(':total_duration', $total_duration, PDO::PARAM_INT);
+            $statement2->bindParam(':album_id', $album_id, PDO::PARAM_INT);
+            $statement2->execute();
+
+            return "Successfully Updated Song to Album";
+        }  catch (PDOException $e) {
             $error_code = ($e->getCode() == 23000) ? 400 : 500;
             $res = new HTTPException($e->getMessage(), $error_code);
+            $e->sendJSON();
+        } catch (HTTPException $e) {
             $e->sendJSON();
         }
     }
