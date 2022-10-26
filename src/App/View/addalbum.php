@@ -64,11 +64,11 @@
     <script>
         const add = (e) => {
             e.preventDefault();
-            const judul = document.getElementById('judul_edit').value;
-            const penyanyi = document.getElementById('penyanyi_edit').value;
-            const tanggal_terbit = document.getElementById('tanggal_terbit_edit').value;
-            const genre = document.getElementById('genre_edit').value;
-            const cover_file = document.getElementById('cover_file_edit').files[0]
+            const judul = document.getElementById('judul').value;
+            const penyanyi = document.getElementById('penyanyi').value;
+            const tanggal_terbit = document.getElementById('tanggal_terbit').value;
+            const genre = document.getElementById('genre').value;
+            const cover_file = document.getElementById('cover_file').files[0]
             
             const payload = {
                 judul,
@@ -77,10 +77,19 @@
                 genre,
                 cover_file,
             }
+
+            let formData = new FormData();
+            formData.append("judul", judul);
+            formData.append("penyanyi", penyanyi);
+            formData.append("tanggal_terbit", tanggal_terbit);
+            formData.append("genre", genre);
+            formData.append("cover_file", cover_file);
+
             const xmlhttp = new XMLHttpRequest();
             xmlhttp.open("POST", "/addalbum");
-            xmlhttp.setRequestHeader("Content-type", "application/json");
-            xmlhttp.send(JSON.stringify(payload));
+            // xmlhttp.setRequestHeader("Content-type","multipart/form-data; charset=utf-8; boundary=" + Math.random().toString().substr(2));
+            // xmlhttp.send(JSON.stringify(payload));
+            xmlhttp.send(formData);
         }
     </script>
 </html>
