@@ -36,9 +36,9 @@
             </tr>
             <?php
                 $songs = new App\Service\SongService();
-                $count_data = count($songs->getSong()["Data"]);
+                $count_data = count($songs->getSong());
                 for($i = 0; $i < $count_data; $i++) {
-                    $data = $songs->getSong()["Data"][$i];
+                    $data = $songs->getSong()[$i];
                     echo "<tr class='subcard' onClick={testButton(" . $data[0] .  ")}>";
                     echo "<td class='index'>";
                     echo $i + 1;

@@ -26,9 +26,9 @@
             <div class="flex-container">
                 <?php
                     $albums = new App\Service\AlbumService();
-                    $count_data = count($albums->readAll()["Data"]);
+                    $count_data = count($albums->readAll());
                     for($i = 0; $i < $count_data; $i++) {
-                        $data = $albums->readAll()["Data"][$i];
+                        $data = $albums->readAll()[$i];
                         echo "<div class='flex-item' onClick={testButton(" . $data[0] .  ")}>";
                         echo "<div class='card'>";
                         // echo "<img src='" . $data["Image_path"] . "' width='225' />";
