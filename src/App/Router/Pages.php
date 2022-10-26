@@ -6,122 +6,122 @@ use App\Utils\FileServer;
 
 $router = new Router();
 $router->get("/", function(){
-    $home = new HomeController();
-    $home->index();
+    $obj = new HomeController();
+    $obj->index();
 });
 
 $router->get("/images", function(){
-    $home = new FileServer();
-    $home->image();
+    $obj = new FileServer();
+    $obj->image();
 });
 
 // AUTH
 $router->get("/login", function(){
-    $home = new UserController();
-    $home->viewLogin();
+    $obj = new UserController();
+    $obj->viewLogin();
 });
 $router->get("/register", function(){
-    $home = new UserController();
-    $home->viewRegister();
+    $obj = new UserController();
+    $obj->viewRegister();
 });
 $router->get("/username", function(){
-    $home = new UserController();
-    $home->checkUsername();
+    $obj = new UserController();
+    $obj->checkUsername();
 });
 $router->get("/email", function(){
-    $home = new UserController();
-    $home->checkEmail();
+    $obj = new UserController();
+    $obj->checkEmail();
 });
 $router->get("/logout", function(){
-    $home = new UserController();
-    $home->logout();
+    $obj = new UserController();
+    $obj->logout();
 });
 
 $router->post("/login", function(){
-    $home = new UserController();
-    $home->login();
+    $obj = new UserController();
+    $obj->login();
 });
 $router->post("/register", function(){
-    $home = new UserController();
-    $home->register();
+    $obj = new UserController();
+    $obj->register();
 });
 
 $router->get("/users", function() {
-    $home = new UserController();
-    $home->viewListUser();
+    $obj = new UserController();
+    $obj->viewListUser();
 });
 
 //SONG
 $router->get("/search", function(){
-    $home = new SearchSongController();
-    $home->viewSearch();
+    $obj = new SearchSongController();
+    $obj->viewSearch();
 });
 
 $router->get("/detailsong", function(){
-    $home = new SongController();
-    $home->viewDetailSong();
+    $obj = new SongController();
+    $obj->viewDetailSong();
 });
 
 $router->get("/addsong", function(){
-    $home = new SongController();
-    $home->viewAddSong();
+    $obj = new SongController();
+    $obj->viewAddSong();
 });
 
 $router->post("/addsong", function(){
-    $home = new SongController();
-    $home->addSong();
+    $obj = new SongController();
+    $obj->addSong();
 });
 
 $router->put("/updatesong", function(){
-    $home = new SongController();
-    $home->updateSong();
+    $obj = new SongController();
+    $obj->updateSong();
 });
 
 $router->delete("/deletesong", function(){
-    $home = new SongController();
-    $home->deleteSong();
+    $obj = new SongController();
+    $obj->deleteSong();
 });
 
 $router->patch("/updatesongtoalbum", function(){
-    $home = new SongController();
-    $home->updateSongToAlbum();
+    $obj = new SongController();
+    $obj->updateSongToAlbum();
 });
 
 $router->patch("/deletesongfromalbum", function(){
-    $home = new SongController();
-    $home->deleteSongFromAlbum();
+    $obj = new SongController();
+    $obj->deleteSongFromAlbum();
 });
 
 //ALBUM
 
 $router->get("/detailalbum", function(){
-    $home = new AlbumController();
-    $home->viewDetailAlbum();
+    $obj = new AlbumController();
+    $obj->viewDetailAlbum();
 });
 
 $router->get("/addalbum", function(){
-    $home = new AlbumController();
-    $home->viewAddAlbum();
+    $obj = new AlbumController();
+    $obj->viewAddAlbum();
 });
 
 $router->post("/addalbum", function(){
-    $home = new AlbumController();
-    $home->addAlbum();
+    $obj = new AlbumController();
+    $obj->addAlbum();
 });
 
 $router->put("/updatealbum", function(){
-    $home = new AlbumController();
-    $home->updateAlbum();
+    $obj = new AlbumController();
+    $obj->updateAlbum();
 });
 
 $router->delete("/deletealbum", function(){
-    $home = new AlbumController();
-    $home->deleteAlbum();
+    $obj = new AlbumController();
+    $obj->deleteAlbum();
 });
 
 $router->get("/listalbum", function(){
-    $home = new AlbumController();
-    $home->viewAllAlbum();
+    $obj = new AlbumController();
+    $obj->viewAllAlbum();
 });
 
 $router->run();
