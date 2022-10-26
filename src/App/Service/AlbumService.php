@@ -7,23 +7,23 @@ class AlbumService extends Service{
         parent::__construct();
     }
 
-    public function create(string $judul, string $penyanyi, int $total_duration, string $image_path, string $tanggal_terbit, string $genre) {
+    public function create(string $judul, string $penyanyi, string $image_path, string $tanggal_terbit, string $genre) {
         try {
-            $sql = "INSERT INTO albums (judul, penyanyi, total_duration, image_path, tanggal_terbit, genre) VALUES (:judul, :penyanyi, :total_duration, :image_path, :tanggal_terbit, :genre)";
+            $sql = "INSERT INTO albums (judul, penyanyi, total_duration, image_path, tanggal_terbit, genre) VALUES (:judul, :penyanyi, 0, :image_path, :tanggal_terbit, :genre)";
             $statement = $this->db->prepare($sql);
             $statement->bindParam(':judul', $judul, PDO::PARAM_STR);
             $statement->bindParam(':penyanyi', $penyanyi, PDO::PARAM_STR);
-            $statement->bindParam(':total_duration', $total_duration, PDO::PARAM_INT);
             $statement->bindParam(':image_path', $image_path, PDO::PARAM_STR);
             $statement->bindParam(':tanggal_terbit', $tanggal_terbit, PDO::PARAM_STR);
             $statement->bindParam(':genre', $genre, PDO::PARAM_STR);
             $statement->execute();
 
-            return array("Status code" => 201,"Message"=>"Successfully Created");
+            return "Successfully Created";
         } catch (PDOException $e) {
-            return array("Status code" => 400,"Message"=>"Error: [all] {$e->getMessage()}");
-        } catch (PDOException $e) {
-            return array("Status code" => 400,"Message"=>"Error: [all] {$e->getMessage()}");
+            $res = new HTTPException($e->getMessage(), 400);
+            $e->sendJSON();
+        } catch (HTTPException $e) {
+            $e->sendJSON();
         }
     }
 
@@ -35,7 +35,10 @@ class AlbumService extends Service{
             $statement->execute();
             return array("Status code" => 200,"Message"=>"Successfully Deleted");
         } catch (PDOException $e) {
-            return array("Status code" => 400,"Message"=>"Error: [all] {$e->getMessage()}");
+            $res = new HTTPException($e->getMessage(), 400);
+            $e->sendJSON();
+        } catch (HTTPException $e) {
+            $e->sendJSON();
         }
     }
 
@@ -53,7 +56,10 @@ class AlbumService extends Service{
 
             return array("Status code" => 200,"Message"=>"Successfully Updated");
         } catch (PDOException $e) {
-            return array("Status code" => 400,"Message"=>"Error: [all] {$e->getMessage()}");
+            $res = new HTTPException($e->getMessage(), 400);
+            $e->sendJSON();
+        } catch (HTTPException $e) {
+            $e->sendJSON();
         }
     }
 
@@ -66,7 +72,10 @@ class AlbumService extends Service{
 
             return array("Status code" => 200,"Message"=>"Successfully Read","Data"=>$result);
         } catch (PDOException $e) {
-            return array("Status code" => 400,"Message"=>"Error: [all] {$e->getMessage()}");
+            $res = new HTTPException($e->getMessage(), 400);
+            $e->sendJSON();
+        } catch (HTTPException $e) {
+            $e->sendJSON();
         }
     }
 
@@ -86,7 +95,10 @@ class AlbumService extends Service{
 
             return array("Status code" => 200,"Message"=>"Successfully Read","Data"=>$result,"Songs"=>$result2);
         } catch (PDOException $e) {
-            return array("Status code" => 400,"Message"=>"Error: [all] {$e->getMessage()}");
+            $res = new HTTPException($e->getMessage(), 400);
+            $e->sendJSON();
+        } catch (HTTPException $e) {
+            $e->sendJSON();
         }
     }
 }

@@ -15,7 +15,7 @@ class Response {
         http_response_code($this->code);
         $return = array(
             'status' => $this->code,
-            'error' => $this->message
+            'message' => $this->message
         );
         print_r(json_encode($return));
         exit;
