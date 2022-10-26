@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS albums (
-    album_id SERIAL primary key,
+    album_id uuid primary key DEFAULT uuid_generate_v4(),
     Judul VARCHAR(64) NOT NULL,
     Penyanyi VARCHAR(128) NOT NULL,
     Total_duration INTEGER NOT NULL,
