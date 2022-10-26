@@ -21,6 +21,10 @@ $router->get("/username", function(){
     $home = new UserController();
     $home->checkUsername();
 });
+$router->get("/email", function(){
+    $home = new UserController();
+    $home->checkEmail();
+});
 $router->get("/logout", function(){
     $home = new UserController();
     $home->logout();
@@ -41,9 +45,9 @@ $router->get("/users", function() {
 });
 
 //SONG
-$router->post("/search", function(){
+$router->get("/search", function(){
     $home = new SearchSongController();
-    $home->searchSong();
+    $home->viewSearch();
 });
 
 $router->get("/detailsong", function(){

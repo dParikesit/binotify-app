@@ -35,7 +35,29 @@ class UserService extends Service{
             $statement->execute();
 
             if($statement->rowCount() == 0) {
-                throw new HTTPException('User not found', 404);
+                throw new HTTPException('User is available', 404);
+            }
+
+            return $statement->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            $error_code = ($e->getCode() == 23000) ? 400 : 500;
+            $res = new HTTPException($e->getMessage(), $error_code);
+            $e->sendJSON();
+        } catch (HTTPException $e) {
+            $e->sendJSON();
+        }
+    }
+
+    public function findUserByEmail(string $email) {
+        try {
+            $sql = "SELECT * FROM users WHERE email=:email";
+
+            $statement = $this->db->prepare($sql);
+            $statement->bindParam(':email', $email, PDO::PARAM_STR);
+            $statement->execute();
+
+            if($statement->rowCount() == 0) {
+                throw new HTTPException('Email is available', 404);
             }
 
             return $statement->fetch(PDO::FETCH_ASSOC);

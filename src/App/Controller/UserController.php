@@ -87,7 +87,29 @@ final class UserController {
             $users_service = new UserService();
             $user = $users_service->findUserByUsername($username);
 
-            $res = new Response("User available", 200);
+            $res = new Response("Username is already taken", 200);
+            $res->sendJSON();
+
+        } catch (HTTPException $e) {
+            $e->sendJSON();
+        }
+        
+    }
+
+    public function checkEmail(){
+        // $_GET = json_decode(file_get_contents('php://input'), true);
+
+        try {
+            $email = isset($_GET['email']) ? $_GET['email'] : '';
+
+            if (!$email){
+                throw new HTTPException('Empty fields', 400);
+            }
+
+            $users_service = new UserService();
+            $user = $users_service->findUserByEmail($email);
+
+            $res = new Response("Email is already taken", 200);
             $res->sendJSON();
 
         } catch (HTTPException $e) {
