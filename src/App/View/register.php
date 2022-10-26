@@ -49,7 +49,7 @@
 
     <script>
         let usernameIsAvailable = false;
-        function debounce(func, timeout = 1000){
+        function debounce(func, timeout = 500){
             let timer;
             return (...args) => {
                 clearTimeout(timer);
