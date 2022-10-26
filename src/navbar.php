@@ -19,6 +19,7 @@ function navbar($isAdmin, $username){
             <li class=\"nav__item\"><a href=\"/\">Keluar</a></li>
           </ul>
         </nav>
+        <a href=\\\"/\\\"><img class=\"logo\" src=\"./layout/assets/img/logo.png\"></img></a>
         <a href=\"/\" class=\"brand\">Binotify</a>
   ";
   $element4 = "
