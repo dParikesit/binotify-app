@@ -1,6 +1,7 @@
 <?php
 namespace App\Service;
 use \PDO;
+use App\Utils\{HTTPException, Response};
 
 class AlbumService extends Service{
     public function __construct() {
@@ -20,7 +21,8 @@ class AlbumService extends Service{
 
             return "Successfully Created";
         } catch (PDOException $e) {
-            $res = new HTTPException($e->getMessage(), 400);
+            $error_code = ($e->getCode() == 23000) ? 400 : 500;
+            $res = new HTTPException($e->getMessage(), $error_code);
             $e->sendJSON();
         } catch (HTTPException $e) {
             $e->sendJSON();
@@ -44,19 +46,21 @@ class AlbumService extends Service{
 
     public function update($album_id, string $judul, string $penyanyi, int $total_duration, string $image_path, string $tanggal_terbit, string $genre) {
         try {
-            $sql = "UPDATE albums SET judul = :judul, penyanyi = :penyanyi, image_path = :image_path, tanggal_terbit = :tanggal_terbit, genre = :genre WHERE album_id = :album_id";
+            $sql = "UPDATE albums SET judul = :judul, penyanyi = :penyanyi, total_duration= :total_duration ,image_path = :image_path, tanggal_terbit = :tanggal_terbit, genre = :genre WHERE album_id = :album_id";
             $statement = $this->db->prepare($sql);
             $statement->bindParam(':album_id', $album_id, PDO::PARAM_STRING);
             $statement->bindParam(':judul', $judul, PDO::PARAM_STR);
             $statement->bindParam(':penyanyi', $penyanyi, PDO::PARAM_STR);
+            $statement->bindParam(':total_duration', $total_duration, PDO::PARAM_INT);
             $statement->bindParam(':image_path', $image_path, PDO::PARAM_STR);
             $statement->bindParam(':tanggal_terbit', $tanggal_terbit, PDO::PARAM_STR);
             $statement->bindParam(':genre', $genre, PDO::PARAM_STR);
             $statement->execute();
 
             return array("Status code" => 200,"Message"=>"Successfully Updated");
-        } catch (PDOException $e) {
-            $res = new HTTPException($e->getMessage(), 400);
+        }  catch (PDOException $e) {
+            $error_code = ($e->getCode() == 23000) ? 400 : 500;
+            $res = new HTTPException($e->getMessage(), $error_code);
             $e->sendJSON();
         } catch (HTTPException $e) {
             $e->sendJSON();
@@ -71,8 +75,9 @@ class AlbumService extends Service{
             $result = $statement->fetchAll();
 
             return array("Status code" => 200,"Message"=>"Successfully Read","Data"=>$result);
-        } catch (PDOException $e) {
-            $res = new HTTPException($e->getMessage(), 400);
+        }  catch (PDOException $e) {
+            $error_code = ($e->getCode() == 23000) ? 400 : 500;
+            $res = new HTTPException($e->getMessage(), $error_code);
             $e->sendJSON();
         } catch (HTTPException $e) {
             $e->sendJSON();
@@ -83,19 +88,20 @@ class AlbumService extends Service{
         try {
             $sql = "SELECT * FROM albums WHERE album_id = :album_id";
             $statement = $this->db->prepare($sql);
-            $statement->bindParam(':album_id', $album_id, PDO::PARAM_STRING);
+            $statement->bindParam(':album_id', $album_id, PDO::PARAM_INT);
             $statement->execute();
             $result = $statement->fetch();
 
             $sql = "SELECT * FROM songs WHERE album_id = :album_id";
             $statement = $this->db->prepare($sql);
-            $statement->bindParam(':album_id', $album_id, PDO::PARAM_STRING);
+            $statement->bindParam(':album_id', $album_id, PDO::PARAM_INT);
             $statement->execute();
             $result2 = $statement->fetch();
 
             return array("Status code" => 200,"Message"=>"Successfully Read","Data"=>$result,"Songs"=>$result2);
-        } catch (PDOException $e) {
-            $res = new HTTPException($e->getMessage(), 400);
+        }  catch (PDOException $e) {
+            $error_code = ($e->getCode() == 23000) ? 400 : 500;
+            $res = new HTTPException($e->getMessage(), $error_code);
             $e->sendJSON();
         } catch (HTTPException $e) {
             $e->sendJSON();
