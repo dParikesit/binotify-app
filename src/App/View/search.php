@@ -8,7 +8,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
-        <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/search-1.css">
+        <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/search-2.css">
         <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/navbar.css">
         <title>Binotify</title>
     </head>
@@ -24,23 +24,30 @@
             ?>
             <div class="main-content">
                 <div class="flex">
-                    <form class="filter" method="get" action="/search\">
-                        <label class="sr-only" for="search">Search</label>
+                    <form class="filter" method="get" action="/search">
+                        <label class="hide" for="search">Search</label>
                         <input
+                        class="hide"
                         type="search"
                         name="search"
                         id="search"
                         placeholder="What's on your mind?"
+                        value="<?php echo $_GET["search"]; ?>"
+                        />
+                        <label class="sr-only" for="genre">Search</label>
+                        <input
+                        type="genre"
+                        name="genre"
+                        id="genre"
+                        placeholder="What's on your mind?"
                         />
                         <label for="order">Order by:</label>
                         <select id="order" name="order">
-                            <option value="none">None</option>
                             <option value="judul">Judul</option>
                             <option value="tahun">Tahun</option>
                         </select>
                         <label for="sort">Sort:</label>
                         <select id="sort" name="sort">
-                            <option value="none">None</option>
                             <option value="asc">ASC</option>
                             <option value="desc">DESC</option>
                         </select>
@@ -64,7 +71,9 @@
                         } else {
                             $tahun = 0;
                         }
-                        $genre = null;
+                        $order = isset($_GET["order"]) && $_GET["order"] != '' ? $_GET["order"] : null;
+                        $sort = isset($_GET["sort"]) && $_GET["sort"] != '' ? $_GET["sort"] : null;
+                        $genre = isset($_GET["genre"]) && $_GET["genre"] != '' ? $_GET["genre"] : null;
                         $songs = new App\Service\SongService();
                         $result = $songs->getSongByParam($param, $tahun, $genre, $page, $maxdata);
                         $count_data = count($songs->getSongByParam($param, $tahun, $genre, $page, $maxdata));
