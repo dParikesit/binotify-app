@@ -1,4 +1,9 @@
-<?php defined('BASEPATH') OR exit('No direct access to script allowed'); ?>
+<?php
+    defined('BASEPATH') OR exit('No direct access to script allowed');
+    if (!isset($_SESSION["user_id"])) {
+        header("Location: "."/login");
+    }
+?>
 
 <!DOCTYPE html>
 <html lang="en">

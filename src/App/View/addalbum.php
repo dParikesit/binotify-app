@@ -24,12 +24,11 @@
 
     <body>
         <?php
-            $isAdmin = true;
-            navbar(true, "USERNAME");
-        ?>      
+            navbar($_SESSION["isAdmin"], $_SESSION["username"]);
+        ?>
         <div class="flex">
             <?php
-                sidebar(true);
+                sidebar($_SESSION["isAdmin"]);
             ?>   
             <div class="content">
                 <h1 class="title">Add Album</h1>
