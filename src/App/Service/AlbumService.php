@@ -35,7 +35,7 @@ class AlbumService extends Service{
             $statement = $this->db->prepare($sql);
             $statement->bindParam(':album_id', $album_id, PDO::PARAM_STRING);
             $statement->execute();
-            return array("Status code" => 200,"Message"=>"Successfully Deleted");
+            return "Successfully Deleted";
         } catch (PDOException $e) {
             $res = new HTTPException($e->getMessage(), 400);
             $e->sendJSON();
@@ -57,10 +57,9 @@ class AlbumService extends Service{
             $statement->bindParam(':genre', $genre, PDO::PARAM_STR);
             $statement->execute();
 
-            return array("Status code" => 200,"Message"=>"Successfully Updated");
-        }  catch (PDOException $e) {
-            $error_code = ($e->getCode() == 23000) ? 400 : 500;
-            $res = new HTTPException($e->getMessage(), $error_code);
+            return "Successfully Updated";
+        } catch (PDOException $e) {
+            $res = new HTTPException($e->getMessage(), 400);
             $e->sendJSON();
         } catch (HTTPException $e) {
             $e->sendJSON();
@@ -74,10 +73,9 @@ class AlbumService extends Service{
             $statement->execute();
             $result = $statement->fetchAll();
 
-            return array("Status code" => 200,"Message"=>"Successfully Read","Data"=>$result);
-        }  catch (PDOException $e) {
-            $error_code = ($e->getCode() == 23000) ? 400 : 500;
-            $res = new HTTPException($e->getMessage(), $error_code);
+            return $result;
+        } catch (PDOException $e) {
+            $res = new HTTPException($e->getMessage(), 400);
             $e->sendJSON();
         } catch (HTTPException $e) {
             $e->sendJSON();
@@ -98,10 +96,14 @@ class AlbumService extends Service{
             $statement->execute();
             $result2 = $statement->fetch();
 
-            return array("Status code" => 200,"Message"=>"Successfully Read","Data"=>$result,"Songs"=>$result2);
-        }  catch (PDOException $e) {
-            $error_code = ($e->getCode() == 23000) ? 400 : 500;
-            $res = new HTTPException($e->getMessage(), $error_code);
+            $res = array(
+                "album" => $result,
+                "song" => $result2
+            );
+
+            return $res;
+        } catch (PDOException $e) {
+            $res = new HTTPException($e->getMessage(), 400);
             $e->sendJSON();
         } catch (HTTPException $e) {
             $e->sendJSON();

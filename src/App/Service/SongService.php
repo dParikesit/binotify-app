@@ -38,9 +38,11 @@ class SongService extends Service{
             $statement->bindParam(':song_id', $song_id, PDO::PARAM_STRING);
             $statement->execute();
 
-            return array("Status code" => 201,"Message"=>"Successfully Deleted");
+            return "Successfully Deleted";
         } catch (PDOException $e) {
-            return array("Status code" => 400,"Message"=>"Error: [all] {$e->getMessage()}");
+            $error_code = ($e->getCode() == 23000) ? 400 : 500;
+            $res = new HTTPException($e->getMessage(), $error_code);
+            $e->sendJSON();
         }
     }
 
@@ -57,9 +59,11 @@ class SongService extends Service{
             $statement->bindParam(':image_path', $image_path, PDO::PARAM_STR);
             $statement->execute();
 
-            return array("Status code" => 201,"Message"=>"Successfully Updated");
+            return "Successfully Updated";
         } catch (PDOException $e) {
-            return array("Status code" => 400,"Message"=>"Error: [all] {$e->getMessage()}");
+            $error_code = ($e->getCode() == 23000) ? 400 : 500;
+            $res = new HTTPException($e->getMessage(), $error_code);
+            $e->sendJSON();        
         }
     }
 
@@ -94,9 +98,11 @@ class SongService extends Service{
             $statement->bindParam(':song_id', $song_id, PDO::PARAM_STRING);
             $statement->execute();
 
-            return array("Status code" => 201,"Message"=>"Successfully Deleted Song from Album");
+            return "Successfully Deleted Song from Album";
         } catch (PDOException $e) {
-            return array("Status code" => 400,"Message"=>"Error: [all] {$e->getMessage()}");
+            $error_code = ($e->getCode() == 23000) ? 400 : 500;
+            $res = new HTTPException($e->getMessage(), $error_code);
+            $e->sendJSON();
         }
     }
 
@@ -107,9 +113,11 @@ class SongService extends Service{
             $statement->execute();
             $result = $statement->fetchAll();
 
-            return array("Status code" => 200,"Message"=>"Successfully Read","Data"=>$result);
+            return $result;
         } catch (PDOException $e) {
-            return array("Status code" => 400,"Message"=>"Error: [all] {$e->getMessage()}");
+            $error_code = ($e->getCode() == 23000) ? 400 : 500;
+            $res = new HTTPException($e->getMessage(), $error_code);
+            $e->sendJSON();
         }
     }
 
@@ -119,11 +127,13 @@ class SongService extends Service{
             $statement = $this->db->prepare($sql);
             $statement->bindParam(':song_id', $song_id, PDO::PARAM_STRING);
             $statement->execute();
-            $result = $statement->fetch();
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
 
-            return array("Status code" => 200,"Message"=>"Successfully Read","Data"=>$result);
+            return $result;
         } catch (PDOException $e) {
-            return array("Status code" => 400,"Message"=>"Error: [all] {$e->getMessage()}");
+            $error_code = ($e->getCode() == 23000) ? 400 : 500;
+            $res = new HTTPException($e->getMessage(), $error_code);
+            $e->sendJSON();
         }
     }
 
@@ -133,11 +143,13 @@ class SongService extends Service{
             $statement = $this->db->prepare($sql);
             $statement->bindParam(':album_id', $album_id, PDO::PARAM_STRING);
             $statement->execute();
-            $result = $statement->fetch();
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
 
-            return array("Status code" => 200,"Message"=>"Successfully Read","Data"=>$result);
+            return $result;
         } catch (PDOException $e) {
-            return array("Status code" => 400,"Message"=>"Error: [all] {$e->getMessage()}");
+            $error_code = ($e->getCode() == 23000) ? 400 : 500;
+            $res = new HTTPException($e->getMessage(), $error_code);
+            $e->sendJSON();
         }
     }
 
@@ -153,9 +165,11 @@ class SongService extends Service{
             $statement->execute();
             $result = $statement->fetchAll();
 
-            return array("Status code" => 200,"Message"=>"Successfully Read","Data"=>$result);
+            return $result;
         } catch (PDOException $e) {
-            return array("Status code" => 400,"Message"=>"Error: [all] {$e->getMessage()}");
+            $error_code = ($e->getCode() == 23000) ? 400 : 500;
+            $res = new HTTPException($e->getMessage(), $error_code);
+            $e->sendJSON();
         }
     }
 
@@ -172,9 +186,11 @@ class SongService extends Service{
             $statement->execute();
             $result = $statement->fetchAll();
 
-            return array("Status code" => 200,"Message"=>"Successfully Read","Data"=>$result);
+            return $result;
         } catch (PDOException $e) {
-            return array("Status code" => 400,"Message"=>"Error: [all] {$e->getMessage()}");
+            $error_code = ($e->getCode() == 23000) ? 400 : 500;
+            $res = new HTTPException($e->getMessage(), $error_code);
+            $e->sendJSON();
         }
     }
 
@@ -186,9 +202,11 @@ class SongService extends Service{
             $statement->execute();
             $result = $statement->fetchAll();
 
-            return array("Status code" => 200,"Message"=>"Successfully Read","Data"=>$result);
+            return $result;
         } catch (PDOException $e) {
-            return array("Status code" => 400,"Message"=>"Error: [all] {$e->getMessage()}");
+            $error_code = ($e->getCode() == 23000) ? 400 : 500;
+            $res = new HTTPException($e->getMessage(), $error_code);
+            $e->sendJSON();
         }
     }
 }
