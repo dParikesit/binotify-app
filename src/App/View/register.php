@@ -48,6 +48,7 @@
     </body>
 
     <script>
+        let usernameIsAvailable = false;
         function debounce(func, timeout = 1000){
             let timer;
             return (...args) => {
@@ -63,9 +64,11 @@
                 let res = JSON.parse(xhr.responseText);
                 if (res.status==404) {
                     // Username not found, hence can be used
+                    usernameIsAvailable = true;
                     alert(res.error);
                 } else if(res.status==200){
                     // Username found, hence cannot be used
+                    usernameIsAvailable = false;
                     alert(res.message);
                 }
                 console.log(res)
@@ -82,25 +85,42 @@
             const emailagain = document.getElementById('emailagain').value;
             const password = document.getElementById('password').value;
             const username = document.getElementById('username').value;
+
+            let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            let usernameRegex = /^[a-zA-Z0-9_]+$/;
             
-            if (email===emailagain){
-                const payload = {
-                    email,
-                    password,
-                    username
-                }
+            if (email===emailagain) {
+                if (emailRegex.test(email)) {
+                    if (usernameRegex.test(username) && usernameIsAvailable) {
+                        if (password.length >= 8) {
+                            const payload = {
+                                email,
+                                password,
+                                username
+                            }
 
-                const xhr = new XMLHttpRequest();
+                            const xhr = new XMLHttpRequest();
 
-                xhr.onload = function() {
-                    if (xhr.status==201){
-                        window.location.href="/login";
+                            xhr.onload = function() {
+                                if (xhr.status==201){
+                                    window.location.href="/login";
+                                }
+                            }
+
+                            xhr.open("POST", "/register");
+                            xhr.setRequestHeader("Content-type", "application/json");
+                            xhr.send(JSON.stringify(payload));
+                        } else {
+                            alert("Password must be at least 8 characters long.");
+                        }
+                    } else {
+                        alert("Invalid username characters")
                     }
+                } else {
+                    alert("Invalid email");
                 }
-
-                xhr.open("POST", "/register");
-                xhr.setRequestHeader("Content-type", "application/json");
-                xhr.send(JSON.stringify(payload));
+            } else{
+                alert("Please enter the same email for confirmation");
             }
         }
     </script>
