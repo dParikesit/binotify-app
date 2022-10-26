@@ -2,6 +2,7 @@
 namespace App\Controller;
 use App\Service\AlbumService;
 use App\Service\SongService;
+use App\Utils\{HTTPException, Response};
 
 final class SongController {
     public function viewDetailSong(){
@@ -17,32 +18,15 @@ final class SongController {
             $song_service = new SongService();
             $query = $_GET["id"];
             $result = $song_service->getSongById($query);
-            $data = $result["Data"];
         
             if ($data) {
-                http_response_code(200);
-                $return = array(
-                    'status' => 200,
-                    'data' => $data,
-                );
-                print_r(json_encode($return));
+                $res = new Response('Success', 200, $result);
+                $res->sendJSON();
             } else {
-                http_response_code(404);
-                $return = array(
-                    'status' => 404,
-                    'error' => 'Song not found'
-                );
-                print_r(json_encode($return));
+                throw new HTTPException('Song not found', 404);
             }
-        } catch (PDOException $e) {
-            $error_code = ($e->getCode() == 23000) ? 400 : 500;
-        
-            http_response_code($error_code);
-            $return = array(
-                'status' => $error_code,
-                'error' => $e->getMessage()
-            );
-            print_r(json_encode($return));
+        } catch (HTTPException $e) {
+            $e->sendJSON();
         }
     }
 
@@ -51,34 +35,17 @@ final class SongController {
         $song_id = isset($_DELETE['song_id']) ? $_DELETE['song_id'] : '';
         
         if (!$song_id){
-            http_response_code(400);
-            $return = array(
-                'status' => 400,
-                'error' => 'Bad request, empty song_id'
-            );
-            print_r(json_encode($return));
-            exit;
+            throw new HTTPException('Empty fields', 400);
         }
 
         try {
             $song_service = new SongService();
             $result = $song_service->delete($song_id);
 
-            http_response_code(200);
-            $return = array(
-                'status' => 200,
-                'message' => $result
-            );
-            print_r(json_encode($return));
-        } catch (PDOException $e) {
-            $error_code = ($e->getCode() == 23000) ? 400 : 500;
-
-            http_response_code($error_code);
-            $return = array(
-                'status' => $error_code,
-                'error' => $e->getMessage()
-            );
-            print_r(json_encode($return));
+            $res = new Response($result, 201);
+            $res->sendJSON();
+        } catch (HTTPException $e) {
+            $e->sendJSON();
         }
     }
 
@@ -87,34 +54,17 @@ final class SongController {
         $song_id = isset($_PATCH['song_id']) ? $_PATCH['song_id'] : '';
 
         if (!$song_id){
-            http_response_code(400);
-            $return = array(
-                'status' => 400,
-                'error' => 'Bad request'
-            );
-            print_r(json_encode($return));
-            exit;
+            throw new HTTPException('Empty fields', 400);
         }
 
         try {
             $song_service = new SongService();
             $result = $song_service->deleteSongFromAlbum($song_id);
 
-            http_response_code(201);
-            $return = array(
-                'status' => 201,
-                'message' => $result
-            );
-            print_r(json_encode($return));
-        } catch (PDOException $e) {
-            $error_code = ($e->getCode() == 23000) ? 400 : 500;
-
-            http_response_code($error_code);
-            $return = array(
-                'status' => $error_code,
-                'error' => $e->getMessage()
-            );
-            print_r(json_encode($return));
+            $res = new Response($result, 201);
+            $res->sendJSON();
+        } catch (HTTPException $e) {
+            $e->sendJSON();
         }
     }
 
@@ -124,13 +74,7 @@ final class SongController {
         $album_id = isset($_PATCH['album_id']) ? $_PATCH['album_id'] : '';
 
         if (!$song_id || !$album_id){
-            http_response_code(400);
-            $return = array(
-                'status' => 400,
-                'error' => 'Bad request'
-            );
-            print_r(json_encode($return));
-            exit;
+            throw new HTTPException('Empty fields', 400);
         }
 
         try {
@@ -142,31 +86,14 @@ final class SongController {
 
             $total_duration =  $song_service->getSongById($song_id)['duration'] + $album_service->getAlbumById($album_id)['total_duration'];
             if ($penyanyi != $penyanyi_compare){
-                http_response_code(400);
-                $return = array(
-                    'status' => 400,
-                    'error' => 'Bad request, Penyanyi song and album is not match'
-                );
-                print_r(json_encode($return));
-                exit;
+                throw new HTTPException('Penyanyi song and album not match', 400);
             }
             $result = $song_service->updateSongToAlbum($song_id, $album_id, $total_duration);
 
-            http_response_code(201);
-            $return = array(
-                'status' => 201,
-                'message' => $result
-            );
-            print_r(json_encode($return));
-        } catch (PDOException $e) {
-            $error_code = ($e->getCode() == 23000) ? 400 : 500;
-
-            http_response_code($error_code);
-            $return = array(
-                'status' => $error_code,
-                'error' => $e->getMessage()
-            );
-            print_r(json_encode($return));
+            $res = new Response($result, 201);
+            $res->sendJSON();
+        } catch (HTTPException $e) {
+            $e->sendJSON();
         }
     }
 
@@ -180,13 +107,7 @@ final class SongController {
         $album_id = isset($_POST['album_id']) ? $_POST['album_id'] : '';
         
         if (!$judul || !$penyanyi || !$tanggal_terbit || !$genre || !$duration){
-            http_response_code(400);
-            $return = array(
-                'status' => 400,
-                'error' => 'Bad request, one of field is empty'
-            );
-            print_r(json_encode($return));
-            exit;
+            throw new HTTPException('Empty fields', 400);
         }
         
         // --- Audio File Upload ---
@@ -223,13 +144,7 @@ final class SongController {
         }
         
         if ($audio_file_error) {
-            http_response_code(400);
-            $return = array(
-                'status' => 400,
-                'error' => $audio_errors
-            );
-            print_r(json_encode($return));
-            exit;
+            throw new HTTPException('Image file error', 400);
         }
         
         $audio_did_upload = move_uploaded_file($audio_file_tmpname, $audio_target_dir.$audio_target_file);
@@ -237,13 +152,7 @@ final class SongController {
             // audio_path in database
             $full_audio_path = URL."/uploads/audios/".$audio_target_file."\n";
         } else {
-            http_response_code(400);
-            $return = array(
-                'status' => 400,
-                'error' => 'Audio file upload error.'
-            );
-            print_r(json_encode($return));
-            exit;
+            throw new HTTPException('Audio file upload error', 400);
         }
         // --- End Audio File Upload ---
         
@@ -281,13 +190,7 @@ final class SongController {
         }
         
         if ($image_file_error) {
-            http_response_code(400);
-            $return = array(
-                'status' => 400,
-                'error' => $image_errors
-            );
-            print_r(json_encode($return));
-            exit;
+            throw new HTTPException("Image file error", 400);
         }
         
         $image_did_upload = move_uploaded_file($image_file_tmpname, $image_target_dir.$image_target_file);
@@ -295,13 +198,7 @@ final class SongController {
             // image_path in database
             $full_image_path = URL."/uploads/images/".$image_target_file."\n";
         } else {
-            http_response_code(400);
-            $return = array(
-                'status' => 400,
-                'error' => 'Image file upload error.'
-            );
-            print_r(json_encode($return));
-            exit;
+            throw new HTTPException('Image file upload error', 400);
         }
         
         try {
@@ -312,32 +209,16 @@ final class SongController {
             if ($album_id != "") {
                 $penyanyi_compare = $album_service->getAlbumById($album_id)['penyanyi'];
                 if ($penyanyi != $penyanyi_compare){
-                    http_response_code(400);
-                    $return = array(
-                        'status' => 400,
-                        'error' => 'Bad request, Penyanyi song and album is not match'
-                    );
-                    print_r(json_encode($return));
-                    exit;
+                    throw new HTTPException('Penyanyi song and album is not match', 400);
                 }
                 $total_duration = $duration + $album_service->getAlbumById($album_id)['total_duration'];
                 $result = $song_service->updateSongToAlbum($song_id, $album_id, $total_duration);
             }
             
-            http_response_code(201);
-            $return = array(
-                'status' => 201,
-                'message' => $result
-            );
-            print_r(json_encode($return));
-        } catch (PDOException $e) {
-            $error_code = ($e->getCode() == 23000) ? 400 : 500;
-            http_response_code($error_code);
-            $return = array(
-                'status' => $error_code,
-                'error' => $e->getMessage()
-            );
-            print_r(json_encode($return));
+            $res = new Response($result, 201);
+            $res->sendJSON();
+        } catch (HTTPException $e) {
+            $e->sendJSON();
         }        
     }
 
@@ -351,13 +232,7 @@ final class SongController {
         $song_id = isset($_PUT['song_id']) ? $_PUT['song_id'] : '';
 
         if (!$song_id || !$judul || !$penyanyi || !$tanggal_terbit || !$genre || !$duration){
-            http_response_code(400);
-            $return = array(
-                'status' => 400,
-                'error' => 'Bad request, one of field is empty'
-            );
-            print_r(json_encode($return));
-            exit;
+            throw new HTTPException('Empty fields', 400);
         }
         // --- Audio File Upload ---
         $audio_errors = [];
@@ -393,13 +268,7 @@ final class SongController {
         }
 
         if ($audio_file_error) {
-            http_response_code(400);
-            $return = array(
-                'status' => 400,
-                'error' => $audio_errors
-            );
-            print_r(json_encode($return));
-            exit;
+            throw new HTTPException('Audio file error', 400);
         }
 
         $audio_did_upload = move_uploaded_file($audio_file_tmpname, $audio_target_dir.$audio_target_file);
@@ -407,13 +276,7 @@ final class SongController {
             // audio_path in database
             $full_audio_path = URL."/uploads/audios/".$audio_target_file."\n";
         } else {
-            http_response_code(400);
-            $return = array(
-                'status' => 400,
-                'error' => 'Audio file upload error.'
-            );
-            print_r(json_encode($return));
-            exit;
+            throw new HTTPException('Audio file upload error', 400);
         }
         // --- End Audio File Upload ---
 
@@ -451,13 +314,7 @@ final class SongController {
         }
 
         if ($image_file_error) {
-            http_response_code(400);
-            $return = array(
-                'status' => 400,
-                'error' => $image_errors
-            );
-            print_r(json_encode($return));
-            exit;
+            throw new HTTPException('Image file error', 400);
         }
 
         $image_did_upload = move_uploaded_file($image_file_tmpname, $image_target_dir.$image_target_file);
@@ -465,34 +322,18 @@ final class SongController {
             // image_path in database
             $full_image_path = URL."/uploads/images/".$image_target_file."\n";
         } else {
-            http_response_code(400);
-            $return = array(
-                'status' => 400,
-                'error' => 'Image file upload error.'
-            );
-            print_r(json_encode($return));
-            exit;
+            throw new HTTPException('Image file upload error', 400);
+
         }
 
         try {
             $song_service = new SongService();
             $result = $song_service->update($song_id, $judul, $penyanyi, $tanggal_terbit, $genre, $duration, $full_audio_path, $full_image_path);
 
-            http_response_code(201);
-            $return = array(
-                'status' => 201,
-                'message' => $result
-            );
-            print_r(json_encode($return));
-        } catch (PDOException $e) {
-            $error_code = ($e->getCode() == 23000) ? 400 : 500;
-
-            http_response_code($error_code);
-            $return = array(
-                'status' => $error_code,
-                'error' => $e->getMessage()
-            );
-            print_r(json_encode($return));
+            $res = new Response($result, 201);
+            $res->sendJSON();
+        } catch (HTTPException $e) {
+            $e->sendJSON();
         }
     }
 
@@ -501,21 +342,10 @@ final class SongController {
             $songs_service = new SongService();
             $result = $songs_service->getSong();
         
-            http_response_code(200);
-            $return = array(
-                'status' => 200,
-                'message' => $result
-            );
-            print_r(json_encode($return));
-        } catch (PDOException $e) {
-            $error_code = ($e->getCode() == 23000) ? 400 : 500;
-        
-            http_response_code($error_code);
-            $return = array(
-                'status' => $error_code,
-                'error' => $e->getMessage()
-            );
-            print_r(json_encode($return));
+            $res = new Response('Success', 200, $result);
+            $res->sendJSON();
+        } catch (HTTPException $e) {
+            $e->sendJSON();
         }
     }
 }
