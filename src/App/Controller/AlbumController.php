@@ -22,11 +22,8 @@ final class AlbumController {
             $query = $_GET["id"];
             $result = $album_service->getAlbumById($query);
         
-            if ($data) {
-                $res = new Response('Success', 200, $result);
-            } else {
-                throw new HTTPException('Album not found', 404);
-            }
+            $res = new Response('Success', 200, $result);
+            $res->sendJSON();
         } catch (HTTPException $e) {
             $e->sendJSON();
         }

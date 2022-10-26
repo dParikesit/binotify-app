@@ -5,43 +5,65 @@
     }
 ?>
 
+<?php include 'navbar.php';?>
+<?php include 'sidebar.php';?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
-        <link rel="stylesheet" href="./layout/assets/css/detail.css" />
+        <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/detailpage.css" />
+        <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/nav.css">
         <title>Binotify</title>
     </head>
 
-    <body>      
-        <div id="main">
+    <body> 
+        <?php
+            $isAdmin = false;
+            navbar(false, "USERNAME");
+        ?>     
+        <div class="flex">
+            <?php
+                sidebar(false);
+            ?>
             <div class="container">
-                <p class="title">Album Detail</p>
-                <p id="error"></p>
+                <h1 class="title">Album Detail</h1>
                 <div class="content">
-                    <div class="content-left">
+                    <div class="user_content">
                         <img src="" alt="cover" id="cover" class="cover">
+                        <div class="content-left">
+                            <a class="judul" id="judul">Title: </a><br>
+                            <a class="penyanyi" id="penyanyi">Artist: </a><br>
+                            <a class="total_duration" id="total_duration">Total Duration: </a><br>
+                        </div>
                     </div>
-                    <div class="content-right">
-                        <a class="judul" id="judul">Title: </a><br>
-                        <a class="penyanyi" id="penyanyi">Artist: </a><br>
-                        <a class="total_duration" id="total_duration">Total Duration: </a><br>
-                    </div>
-                </div<>
-                <div class="content">
-                    <div class="admin_content_album" id="admin_content">
-                        <!-- form for editing field, upload image and audio file -->
+                    <div class="admin_content">
                         <form class="form_edit" id="form_edit" method="PUT" enctype="multipart/form-data">
-                            <input type="text" name="judul" id="judul_edit" placeholder="Title">
-                            <input type="text" name="penyanyi" id="penyanyi_edit" placeholder="Artist">
-                            <input type="file" name="cover_file" id="cover_file_edit" accept="image/jpg, image/jpeg, image/png">
+                        <section>
+                            <label> Title: </label>
+                            <input type="text" name="judul" id="judul_edit" placeholder="Title"><br>
+                        </section>
+                        <section>
+                            <label> Artist: </label>
+                            <input type="text" name="penyanyi" id="penyanyi_edit" placeholder="Artist"><br>
+                        </section>
+                        <section>
+                            <label> Tanggal Terbit: </label>
+                            <input type="text" name="tanggal_terbit" id="tanggal_terbit_edit" placeholder="Release"><br>
+                        </section>
+                        <section>
+                            <label> Genre: </label>
+                            <input type="text" name="genre" id="genre_edit" placeholder="Genre"><br>
+                        </section>
+                            <label> Cover Image: </label>
+                            <input type="file" name="audio_file" id="audio_file_edit" accept="audio/mp3, audio/wav, audio/ogg"><br>
                         </form>
-                        <button type="submit" id="button_submit" class="button" onclick={update(event)}>
+                        <button type="submit" id="button_submit" class="button" onclick={updateAlbum(event)}>
                             Submit
                         </button>
-                        <button type="button" id="button_delete" class="button" onclick={delete(event)}>
+                        <button type="button" id="button_delete" class="button" onclick={deleteAlbum(event)}>
                             Delete
                         </button>
                     </div>
@@ -57,29 +79,29 @@
                     <?php
                         $songs = new App\Service\SongService();
                         $query = $_GET['id'];
-                        $result = $songs->getSongByAlbumId($query)["Data"];
+                        $result = $songs->getSongByAlbumId($query);
                         $count_data = count($result);
                         for($i = 0; $i < $count_data; $i++) {
-                            $data = $result[$i];
-                            echo "<tr class='subcard' onClick={deleteSong(" . $data[0] .  ")}>";
+                            $inc = $result[$i];
+                            echo "<tr class='subcard' onClick={deleteSong(" . $inc[0] .  ")}>";
                             echo "<td class='index'>";
                             echo $i + 1;
                             echo "</td>";
                             echo "<td>";
                             echo "<div class='flex'>";
                             echo "<div class='main-content'>";
-                            echo "<div class='title'>" . $data[1] .  "</div>";
+                            echo "<div class='title'>" . $inc[1] .  "</div>";
                             echo "</div>";
                             echo "</div>";
                             echo "</td>";
                             echo "<td>";
-                            echo "<div class='genre'>" . $data[4] .  "</div>";
+                            echo "<div class='genre'>" . $inc[4] .  "</div>";
                             echo "</td>";
                             echo "<td>";
-                            echo "<div class='duration'>" . $data[5] .  "</div>";
+                            echo "<div class='duration'>" . $inc[5] .  "</div>";
                             echo "</td>";
                             echo "<td>";
-                            echo "<div class='year'>" . substr($data[3], 0, 4) . "</div>";
+                            echo "<div class='year'>" . substr($inc[3], 0, 4) . "</div>";
                             echo "</td>";
                             echo "</tr>";
                         }
@@ -91,7 +113,7 @@
                                 <option value="">Select Song To Add</option>
                                 <?php
                                     $songs = new App\Service\SongService();
-                                    $result = $songs->readAll()["Data"];
+                                    $result = $songs->readAll();
                                     $count_data = count($result);
                                     for($i = 0; $i < $count_data; $i++) {
                                         $data = $result[$i];
@@ -111,28 +133,25 @@
 
     <script>
         const xmlhttp = new XMLHttpRequest();
-        const urlParams = new URLSearchParams(window.location.search);
-        const myParam = urlParams.get('id');
-        xmlhttp.open("GET", "/detailalbum?id=" + myParam);
-        xmlhttp.onreadystatechange = () => {
-            if (xmlhttp.status != 200){
-                const error = JSON.parse(xmlhttp.responseText);
-                document.getElementById('error').innerHTML = error.error;
-                return;
-            }
-            const result = JSON.parse(xmlhttp.responseText);
-            const data = result.data;
-            const image = document.getElementById('cover');
-            image.setAttribute('src', data.image_path);
-            document.getElementById('judul').innerHTML = data.judul;
-            document.getElementById('penyanyit').innerHTML = data.penyanyi;
-            document.getElementById('tanggal_terbit').innerHTML = data.tanggal_terbit;
-            document.getElementById('genre').innerHTML = data.genre;
-            document.getElementById('total_duration').innerHTML = data.total_duration;
-        }
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const id = urlParams.get('id');
+        xmlhttp.open("GET", `/getalbum?id=${id}`);
         xmlhttp.send();
-
-        const update = (e) => {
+        xmlhttp.onload = () => {
+            console.log(xmlhttp.responseText);
+            const result = JSON.parse(xmlhttp.responseText);
+            const album = result.data;
+            // const image = document.getElementById('cover');
+            // image.setAttribute('src', data.image_path);
+            document.getElementById('judul').innerHTML = album.judul;
+            document.getElementById('penyanyi').innerHTML = album.penyanyi;
+            // document.getElementById('tanggal_terbit').innerHTML = data.tanggal_terbit;
+            // document.getElementById('genre').innerHTML = data.genre;
+            document.getElementById('total_duration').innerHTML = album.total_duration;
+        }
+        /*
+        const updateAlbum = (e) => {
             e.preventDefault();
             const judul = document.getElementById('judul_edit').value;
             const penyanyi = document.getElementById('penyanyi_edit').value;
@@ -154,7 +173,7 @@
             xmlhttp.send(JSON.stringify(payload));
         }
 
-        const delete = (e) => {
+        const deleteAlbum = (e) => {
             e.preventDefault();
             const xmlhttp = new XMLHttpRequest();
             xmlhttp.open("DELETE", "deletealbum?id=" + myParam);
@@ -184,6 +203,6 @@
             xmlhttp.send();
 
             window.location.reload();
-        }
+        } */
     </script>
 </html>
