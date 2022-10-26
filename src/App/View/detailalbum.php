@@ -21,12 +21,11 @@
 
     <body> 
         <?php
-            $isAdmin = false;
-            navbar(false, "USERNAME");
-        ?>     
+            navbar($_SESSION["isAdmin"], $_SESSION["username"]);
+        ?>
         <div class="flex">
             <?php
-                sidebar(false);
+                sidebar($_SESSION["isAdmin"]);
             ?>
             <div class="container">
                 <h1 class="title">Album Detail</h1>
@@ -51,7 +50,7 @@
                         </section>
                         <section>
                             <label> Tanggal Terbit: </label>
-                            <input type="text" name="tanggal_terbit" id="tanggal_terbit_edit" placeholder="Release"><br>
+                            <input type="date" name="tanggal_terbit" id="tanggal_terbit_edit" value="2022-10-28"  min="1960-01-01"><br>
                         </section>
                         <section>
                             <label> Genre: </label>
@@ -90,18 +89,18 @@
                             echo "<td>";
                             echo "<div class='flex'>";
                             echo "<div class='main-content'>";
-                            echo "<div class='title'>" . $inc[1] .  "</div>";
+                            echo "<div class='title'>" . $inc["judul"] .  "</div>";
                             echo "</div>";
                             echo "</div>";
                             echo "</td>";
                             echo "<td>";
-                            echo "<div class='genre'>" . $inc[4] .  "</div>";
+                            echo "<div class='genre'>" . $inc["genre"] .  "</div>";
                             echo "</td>";
                             echo "<td>";
-                            echo "<div class='duration'>" . $inc[5] .  "</div>";
+                            echo "<div class='duration'>" . floor($inc["duration"]/60)."m ". ($inc["duration"]%60). "s" .  "</div>";
                             echo "</td>";
                             echo "<td>";
-                            echo "<div class='year'>" . substr($inc[3], 0, 4) . "</div>";
+                            echo "<div class='year'>" . substr($inc["tanggal_terbit"], 0, 4) . "</div>";
                             echo "</td>";
                             echo "</tr>";
                         }
@@ -117,7 +116,10 @@
                                     $count_data = count($result);
                                     for($i = 0; $i < $count_data; $i++) {
                                         $data = $result[$i];
-                                        echo "<option value='$data[0]'>$data[1] - $data[2]</option>";
+                                        if($data["album_id"] != $_GET['id']) {
+                                            echo "<option value='$data[0]'>$data[1] - $data[2]</option>";
+                                        }
+                                        
                                     }
                                 ?>
                             </select>
@@ -141,14 +143,15 @@
         xmlhttp.onload = () => {
             console.log(xmlhttp.responseText);
             const result = JSON.parse(xmlhttp.responseText);
-            const album = result.data;
-            // const image = document.getElementById('cover');
-            // image.setAttribute('src', data.image_path);
-            document.getElementById('judul').innerHTML = album.judul;
-            document.getElementById('penyanyi').innerHTML = album.penyanyi;
-            // document.getElementById('tanggal_terbit').innerHTML = data.tanggal_terbit;
-            // document.getElementById('genre').innerHTML = data.genre;
-            document.getElementById('total_duration').innerHTML = album.total_duration;
+            const album = result.data.album;
+            console.log(album)
+            const image = document.getElementById('cover');
+            image.setAttribute('src', `/images?name=${album.image_path}`);
+            document.getElementById('judul').innerHTML = `Title: ${album.judul}`;
+            document.getElementById('penyanyi').innerHTML = `Singer: ${album.penyanyi}`;
+            // document.getElementById('tanggal_terbit').innerHTML = `Release date: ${album.tanggal_terbit}`;
+            // document.getElementById('genre').innerHTML = `Genre: ${album.genre}`;
+            document.getElementById('total_duration').innerHTML = `Duration: ${Math.floor(album.total_duration/60)}m ${album.total_duration%60}s`;
         }
         /*
         const updateAlbum = (e) => {
