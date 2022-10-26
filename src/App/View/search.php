@@ -31,11 +31,22 @@
                     <th>Tahun</th>
                 </tr>
                 <?php
+                    $page = 0;
+                    $param = $_GET["search"];
+                    $maxdata = 2;
+                    $tahun;
+                    if(ctype_digit($param)) {
+                        $tahun = $param;
+                    } else {
+                        $tahun = 0;
+                    }
+                    $genre = null;
                     $songs = new App\Service\SongService();
-                    $result = $songs->getSong();
-                    $count_data = count($songs->getSong()["Data"]);
+                    $result = $songs->getSongByParam($param, $tahun, $genre, $page, $maxdata);
+                    $count_data = count($songs->getSongByParam($param, $tahun, $genre, $page, $maxdata)["Data"]);
+                    echo $count_data;
                     for($i = 0; $i < $count_data; $i++) {
-                        $data = $songs->getSong()["Data"][$i];
+                        $data = $songs->getSongByParam($param, $tahun, $genre, $page, $maxdata)["Data"][$i];
                         echo "<tr class='subcard' onClick={testButton(" . $data[0] .  ")}>";
                         echo "<td class='index'>";
                         echo $i + 1;
