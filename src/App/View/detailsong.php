@@ -21,12 +21,11 @@
 
     <body>
         <?php
-            $isAdmin = false;
-            navbar(false, "USERNAME");
+            navbar($_SESSION["isAdmin"], $_SESSION["username"]);
         ?>
         <div class="flex">
             <?php
-                sidebar(false);
+                sidebar($_SESSION["isAdmin"]);
             ?>
             
             <div class="container">

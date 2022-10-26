@@ -51,8 +51,7 @@
     </body>
     <script>
         const testButton = (id) => {
-            console.log("Keklik")
-            console.log(id)
+            window.location.href = "/detailalbum?id=" + id;
         }
     </script>
 </html>
