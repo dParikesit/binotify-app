@@ -1,8 +1,8 @@
 <?php
     defined('BASEPATH') OR exit('No direct access to script allowed');
-/*     if (isset($_SESSION["user_id"])) {
+    if (isset($_SESSION["user_id"])) {
         header("Location: "."/");
-    } */
+    }
 ?>
 
 <!DOCTYPE html>
@@ -69,6 +69,9 @@
             xhr.onload = function() {
                 if (xhr.status==200){
                     window.location.href="/";
+                } else{
+                    let res = JSON.parse(xhr.responseText);
+                    alert(res.error)
                 }
             }
 
