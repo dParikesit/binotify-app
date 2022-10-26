@@ -21,6 +21,10 @@ $router->get("/username", function(){
     $home = new UserController();
     $home->checkUsername();
 });
+$router->get("/email", function(){
+    $home = new UserController();
+    $home->checkEmail();
+});
 $router->get("/logout", function(){
     $home = new UserController();
     $home->logout();

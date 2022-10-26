@@ -15,7 +15,7 @@ form {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 2rem;
+    gap: 0.5rem;
     min-width: 50%;
 }
 
@@ -27,7 +27,7 @@ input{
     margin-top: 0.5rem;
     padding-left: 0.75rem;
     width: 100%;
-    height: 3rem;
+    height: 1rem;
     border-radius: 0.25rem;
     border-width: thin;
     border-color: gray;
@@ -61,6 +61,8 @@ button:hover {
 }
 
 p {
+    top: 0;
+    bottom:0;
     font-size: 0.9rem;
 }
 
