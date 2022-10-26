@@ -8,10 +8,8 @@
     margin-left: 3%;
     display: flex;
     flex-wrap: wrap;
-  }
-  
-  .flex-item {
-    flex: 25%;
+    -webkit-flex-wrap: wrap;
+    list-style: none;
   }
 
   @media (max-width: 800px) {
@@ -41,8 +39,10 @@
 .content {
     margin-top: 2%;
     color: #a2a3a3;
+    max-width: 25vmin;
 }
 
 img {
     border-radius: 10px;
+    width: 21.5vmin;
 }
