@@ -14,7 +14,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
-        <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/detailpage.css" />
+        <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/detailpage-1.css" />
         <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/nav.css">
         <title>Binotify</title>
     </head>
@@ -29,20 +29,15 @@
             ?>
             
             <div class="container">
-                <h1 class="title" id="title">Song Detail</h1>
                 <div class="content">
                     <div class="user_content">
-                        <img src="" alt="cover" id="cover" class="cover">
+                        <img src="https://i.scdn.co/image/ab67616d0000b2739abdf14e6058bd3903686148" alt="cover" id="cover" class="cover">
                         <div class="content-left">
-                            <a class="judul" id="judul">Title: </a><br>
-                            <a class="penyanyi" id="penyanyi">Artist: </a><br>
-                            <a class="tanggal_terbit" id="tanggal_terbit">Release: </a><br>
-                            <a class="genre" id="genre">Genre: </a><br>
-                            <a class="duration" id="duration">Duration: </a><br>
-                            <!-- Audio -->
-                            <audio class="audio_source" controls>
-                                <source src="" type="" id="audio">
-                            </audio>
+                            <a class="judul" id="judul"></a><br>
+                            <a class="penyanyi" id="penyanyi"></a><br>
+                            <a class="tanggal_terbit" id="tanggal_terbit"></a>
+                            <a class="genre" id="genre"></a>
+                            <a class="duration" id="duration"></a><br>
                             <!-- Button to see Album -->
                             <button type="button" id="button_album" class="button">
                                 See Album
@@ -83,6 +78,12 @@
                     <?php } ?>
                 </div>
             </div>
+            <div class="play-song">
+            <!-- Audio -->
+            <audio class="audio_source" controls>
+                <source src="" type="" id="audio">
+            </audio>
+        </div>
         </div>
         
     </body>
@@ -100,11 +101,11 @@
             // const image = document.getElementById('cover');
             // image.setAttribute('src', data.image_path);
 
-            document.getElementById('judul').innerHTML = `Title: ${data.judul}`;
-            document.getElementById('penyanyi').innerHTML = `Artist: ${data.penyanyi}`;
-            document.getElementById('tanggal_terbit').innerHTML = `Tanggal Terbit: ${data.tanggal_terbit}`;
-            document.getElementById('genre').innerHTML = `Genre: ${data.genre}`;
-            document.getElementById('duration').innerHTML = `Duration: ${Math.floor(data.duration/60)}m ${data.duration%60}s`;
+            document.getElementById('judul').innerHTML = `${data.judul}`;
+            document.getElementById('penyanyi').innerHTML = `${data.penyanyi}`;
+            document.getElementById('tanggal_terbit').innerHTML = `${data.tanggal_terbit}`;
+            document.getElementById('genre').innerHTML = `${data.genre}`;
+            document.getElementById('duration').innerHTML = `${Math.floor(data.duration/60)}m ${data.duration%60}s`;
             // const audio = document.getElementById('audio');
             // audio.setAttribute('src', data.audio_path);
             // const ext = data.audio_path.split('.').pop();
