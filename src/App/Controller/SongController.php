@@ -33,12 +33,18 @@ final class SongController {
     public function deleteSong(){
         try {
             $song_id = isset($_GET["id"]) ? $_GET["id"] : '';
+            
             if (!$song_id){
                 throw new HTTPException('Empty fields', 400);
             }
             $song_service = new SongService();
+            $album_service = new AlbumService();
             $song = $song_service->getSongById($song_id);
-            $result = $song_service->delete($song_id);
+            $album_id = $song['album_id'];
+            $album = $album_service->getAlbumById($album_id)['album'];
+
+            $total_duration =  $album['total_duration'] - $song['duration'];
+            $result = $song_service->delete($song_id, $album_id, $total_duration);
 
             unlink($_SERVER['DOCUMENT_ROOT']."/uploads/images/".$song["image_path"]);
             unlink($_SERVER['DOCUMENT_ROOT']."/uploads/audios/".$song["audio_path"]);
@@ -54,13 +60,19 @@ final class SongController {
         try {
             $_PATCH = $GLOBALS['_PATCH'];
             $song_id = isset($_PATCH['song_id']) ? $_PATCH['song_id'] : '';
+            $album_id = isset($_PATCH['album_id']) ? $_PATCH['album_id'] : '';
 
             if (!$song_id){
                 throw new HTTPException('Empty fields', 400);
             }
 
             $song_service = new SongService();
-            $result = $song_service->deleteSongFromAlbum($song_id);
+            $album_service = new AlbumService();
+            $album = $album_service->getAlbumById($album_id)["album"];
+            $song = $song_service->getSongById($song_id);
+            $total_duration =  $album['total_duration'] - $song['duration'];
+            echo $total_duration;
+            $result = $song_service->deleteSongFromAlbum($song_id, $album_id, $total_duration);
 
             $res = new Response($result, 200);
             $res->sendJSON();

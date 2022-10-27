@@ -31,12 +31,18 @@ class SongService extends Service{
         }
     }
 
-    public function delete($song_id) {
+    public function delete($song_id, $album_id, $total_duration) {
         try {
             $sql = "DELETE FROM songs WHERE song_id = :song_id";
             $statement = $this->db->prepare($sql);
             $statement->bindParam(':song_id', $song_id, PDO::PARAM_STR);
             $statement->execute();
+
+            $sql2 = "UPDATE albums SET total_duration = :total_duration WHERE album_id = :album_id";
+            $statement2 = $this->db->prepare($sql2);
+            $statement2->bindParam(':total_duration', $total_duration, PDO::PARAM_INT);
+            $statement2->bindParam(':album_id', $album_id, PDO::PARAM_STR);
+            $statement2->execute();
 
             return "Successfully Deleted";
         } catch (PDOException $e) {
@@ -91,12 +97,18 @@ class SongService extends Service{
         }
     }
 
-    public function deleteSongFromAlbum($song_id) {
+    public function deleteSongFromAlbum($song_id, $album_id, $total_duration) {
         try {
             $sql = "UPDATE songs SET album_id=null WHERE song_id = :song_id";
             $statement = $this->db->prepare($sql);
             $statement->bindParam(':song_id', $song_id, PDO::PARAM_STR);
             $statement->execute();
+
+            $sql2 = "UPDATE albums SET total_duration = :total_duration WHERE album_id = :album_id";
+            $statement2 = $this->db->prepare($sql2);
+            $statement2->bindParam(':total_duration', $total_duration, PDO::PARAM_INT);
+            $statement2->bindParam(':album_id', $album_id, PDO::PARAM_STR);
+            $statement2->execute();
 
             return "Successfully Deleted Song from Album";
         } catch (PDOException $e) {

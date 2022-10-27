@@ -82,7 +82,7 @@
                             echo "<div class='year'>" . substr($inc["tanggal_terbit"], 0, 4) . "</div>";
                             echo "</td>";
                             echo "<td class='admin_content'>";
-                            echo "<button type='button' class='button_delete_song' onclick={deleteSong('" . $inc[0] .  "')} > Delete </button>";
+                            echo "<button type='button' class='button_delete_song' onclick={deleteSongFromAlbum('" . $inc[0] .  "')} > Delete </button>";
                             echo "</td>";
                             echo "</tr>";
                         }
@@ -243,9 +243,13 @@
             xmlhttp.send(JSON.stringify(payload));
         }
 
-        const deleteSong = (song_id) => {
+        const deleteSongFromAlbum = (song_id) => {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const id = urlParams.get('id');
             const payload={
-                song_id: song_id
+                song_id: song_id,
+                album_id: id
             }
 
             const xmlhttp = new XMLHttpRequest();
