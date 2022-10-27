@@ -11,12 +11,15 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
-        <link rel="stylesheet" href="./layout/assets/css/register.css" />
+        <link rel="stylesheet" href="./layout/assets/css/register-2.css" />
         <title>Binotify</title>
     </head>
 
     <body>
-        <a href="/"><img src="./layout/assets/img/spotify-text.png"></a>
+        <div class="flex">
+            <img src="./layout/assets/img/binotify.png" width=100>
+            <h1 class="title">Binotify</h1>
+        </div>
         <h1>Sign up for free to start <br/> listening.</h1>
         
         <form method="POST">
@@ -26,11 +29,11 @@
             </section>
             <section>
                 <label for="email"><b>Confirm your email</b></label>
-                <input type="text" id="emailagain" name="email" placeholder="Enter your email again.">
+                <input class="margintop" type="text" id="emailagain" name="email" placeholder="Enter your email again.">
             </section>
             <section>
                 <label for="password"><b>Create a password</b></label>
-                <input type="password" id="password" name="password" placeholder="Create a password.">
+                <input class="margintop" type="password" id="password" name="password" placeholder="Create a password.">
             </section>
             <section>
                 <label for="username"><b>What should we call you?</b></label><p id="errorUsername"></p>
