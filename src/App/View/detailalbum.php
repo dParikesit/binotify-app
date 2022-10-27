@@ -71,6 +71,7 @@
                         <th>Genre</th>
                         <th>Duration</th>
                         <th>Tahun</th>
+                        <th class="admin_content">Delete</th>
                     </tr>
                     <?php
                         $songs = new App\Service\SongService();
@@ -79,7 +80,7 @@
                         $count_data = count($result);
                         for($i = 0; $i < $count_data; $i++) {
                             $inc = $result[$i];
-                            echo "<tr class='subcard' onClick={deleteSong('" . $inc[0] .  "')}>";
+                            echo "<tr class='subcard' onClick={navigateTo('" . $inc[0] .  "')}>";
                             echo "<td class='index'>";
                             echo $i + 1;
                             echo "</td>";
@@ -98,6 +99,9 @@
                             echo "</td>";
                             echo "<td>";
                             echo "<div class='year'>" . substr($inc["tanggal_terbit"], 0, 4) . "</div>";
+                            echo "</td>";
+                            echo "<td class='admin_content'>";
+                            echo "<button type='button' class='button admin_content' onclick={deleteSong('" . $inc[0] .  "')} > Delete </button>";
                             echo "</td>";
                             echo "</tr>";
                         }
@@ -130,7 +134,10 @@
                     if (!$_SESSION["isAdmin"]) { ?>
                         <script>
                             document.getElementById("admin_content").style.display = "none";
-                            document.getElementsByClassName("admin_content")[0].style.display = "none";
+                            var length = document.getElementsByClassName("admin_content").length;
+                            for (var i = 0; i <= length; i++) {
+                                document.getElementsByClassName("admin_content")[i].style.display = "none";
+                            }
                         </script>
                 <?php } ?>
             </div>
@@ -239,6 +246,10 @@
             xmlhttp.send(JSON.stringify(payload));
 
             window.location.reload();
-        } 
+        }
+        
+        const navigateTo = (song_id) => {
+            window.location.href = `/detailsong?id=${song_id}`;
+        }
     </script>
 </html>
