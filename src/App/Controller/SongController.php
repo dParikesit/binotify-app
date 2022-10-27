@@ -254,6 +254,7 @@ final class SongController {
                 if ($audio_did_upload) {
                     // audio_path in database
                     $full_audio_path = $audio_target_file;
+                    unlink($_SERVER['DOCUMENT_ROOT']."/uploads/audios/".$song["audio_path"]);
                 } else {
                     throw new HTTPException("Audio file save error", 400);
                 }
@@ -291,6 +292,7 @@ final class SongController {
                 if ($image_did_upload) {
                     // image_path in database
                     $full_image_path = $image_target_file;
+                    unlink($_SERVER['DOCUMENT_ROOT']."/uploads/images/".$song["image_path"]);
                 } else {
                     throw new HTTPException("Image file save error", 400);
                 }

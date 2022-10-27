@@ -23,7 +23,7 @@
         </div>
         <hr class="solid first-divider">
 
-        <p><b>To continue, login to Spotify.</b></p>
+        <p><b>To continue, login to Binotify.</b></p>
         
         <form method="POST">
             <section>
@@ -37,12 +37,7 @@
             </section>
         </form>
 
-        <div class="submit-container">
-            <!-- <section class="submit-remember">
-                <input type="checkbox" name="rememberme" id="rememberme">
-                <label for="rememberme">Remember me</label>
-            </section> -->
-            
+        <div class="submit-container">            
             <button type="button" onclick={login(event)} ><b>LOG IN</b></button>
         </div>
 
@@ -51,7 +46,7 @@
         <div class="register-redirect">
             <p><b>Don't have an account?</b></p>
             <button onclick={location.href="/register"} class="button-register">
-                SIGN UP FOR SPOTIFY
+                SIGN UP FOR BINOTIFY
             </button>
         </div>
         
