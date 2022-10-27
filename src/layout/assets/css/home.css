@@ -1,3 +1,7 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 body {
     min-height: 100vmin;
     background-color: #1d1d1d;
