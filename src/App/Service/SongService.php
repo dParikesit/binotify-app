@@ -153,11 +153,18 @@ class SongService extends Service{
         }
     }
 
-    public function getSongByParam($param, $tahun, $genre, $page, $maxdata) {
+    public function getSongByParam($param, $tahun, $genre, $order, $sort, $page, $maxdata) {
         try {
-            //$sql = "SELECT * FROM songs WHERE Judul = :Parameter OR Penyanyi = :Parameter OR DATE_PART('year', Tanggal_terbit::date) = :Tahun LIMIT :Maxdata OFFSET :Mindata";
-            // $sql = "SELECT * FROM songs WHERE Judul = :Parameter OR Penyanyi = :Parameter OR DATE_PART('year', Tanggal_terbit::date) = :Tahun LIMIT :Maxdata OFFSET :Mindata";
-            $sql = "SELECT * FROM songs WHERE (Judul = :Parameter OR Penyanyi = :Parameter OR DATE_PART('year', Tanggal_terbit::date) = :Tahun) AND (Genre = :Genre OR :Genre IS NULL) LIMIT :Maxdata OFFSET :Mindata";
+            $sql;
+            if($order == "") {
+                $order = "Judul";
+            }
+            if($sort == "true") {
+                $sql = "SELECT * FROM songs WHERE Judul LIKE :Parameter OR Penyanyi LIKE :Parameter OR DATE_PART('year', Tanggal_terbit::date) = :Tahun OR Genre LIKE :Genre ORDER BY $order ASC LIMIT :Maxdata OFFSET :Mindata";
+            } else {
+                $sql = "SELECT * FROM songs WHERE Judul LIKE :Parameter OR Penyanyi LIKE :Parameter OR DATE_PART('year', Tanggal_terbit::date) = :Tahun OR Genre LIKE :Genre ORDER BY $order DESC LIMIT :Maxdata OFFSET :Mindata";
+            }
+            // $sql = "SELECT * FROM songs WHERE (Judul = :Parameter OR Penyanyi = :Parameter OR DATE_PART('year', Tanggal_terbit::date) = :Tahun) AND (Genre = :Genre OR :Genre IS NULL) LIMIT :Maxdata OFFSET :Mindata";
             $statement = $this->db->prepare($sql);
             $statement->bindParam(':Parameter', $param, PDO::PARAM_STR);
             $statement->bindParam(':Tahun', $tahun, PDO::PARAM_INT);

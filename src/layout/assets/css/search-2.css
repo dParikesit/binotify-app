@@ -35,10 +35,10 @@ tr {
 }
 
 .card {
-    width: 75%;
+    width: 90%;
     height: max-content;
     margin: 0 auto;
-    margin-top: 5%;
+    margin-top: 1%;
 }
 
 
@@ -82,4 +82,33 @@ tr {
 
 .hide {
     display: none;
+}
+
+.filter-bar {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 5%;
+}
+
+.filter {
+    width: 100%;
+}
+
+.label-order, .label-sort {
+    color: white;
+}
+
+.genre, .order, .sort {
+    padding: 2%;
+    border-radius: 20px;
+    border: transparent;
+}
+
+
+.submit {
+    padding: 2%;
+    border-radius: 20px;
+    border: transparent;
+    background-color: #1db954;
+    align-items: right;
 }

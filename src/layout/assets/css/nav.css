@@ -225,3 +225,7 @@ ul {
     border: 0;
     background: url("../img/burger.svg") center/22px no-repeat;
 }
+
+.hide {
+    display: none;
+}
