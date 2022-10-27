@@ -1,7 +1,7 @@
 <?php 
 
 namespace App\Utils;
-require_once "./HTTPException.php";
+require_once "HTTPException.php";
 
 class FileServer {
     public function __construct() {
