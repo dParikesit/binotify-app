@@ -19,7 +19,7 @@ class FileServer {
     }
 
     public function audio(){
-        if ($_SESSION["count"] > 3) {
+        if ($_SESSION["count"] >= 3 && !$_SESSION["user_id"]) {
             return;
         }
 
