@@ -96,6 +96,15 @@
             // xmlhttp.setRequestHeader("Content-type","multipart/form-data; charset=utf-8; boundary=" + Math.random().toString().substr(2));
             // xmlhttp.send(JSON.stringify(payload));
             xmlhttp.send(formData);
+            xmlhttp.onload = () => {
+                if (xmlhttp.status==201){
+                    alert("Album added successfully");
+                    window.location.reload();
+                } else{
+                    let res = JSON.parse(xmlhttp.responseText);
+                    alert(res.error)
+                }
+            }
         }
     </script>
 </html>

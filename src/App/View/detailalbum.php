@@ -97,13 +97,12 @@
                                     $songs = new App\Service\SongService();
                                     $result = $songs->readAll();
                                     $count_data = count($result);
-                                    echo $result;
+                                    echo $count_data;
                                     for($i = 0; $i < $count_data; $i++) {
                                         $data = $result[$i];
-                                        if($data[2] == "") {
+                                        if ($data["album_id"] == null) {
                                             echo "<option value='$data[0]'>$data[1] - $data[2]</option>";
                                         }
-                                        
                                     }
                                 ?>
                             </select>

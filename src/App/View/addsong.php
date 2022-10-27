@@ -70,17 +70,13 @@
                             $result = $songs->readAll();
                             $count_data = count($result);
                             for($i = 0; $i < $count_data; $i++) {
-                                $data = $result[$i];
-                                // if(!isset($data["album_id"])) {
-                                // }
-                                
+                                $data = $result[$i];        
                                 echo "<option value='$data[0]'>$data[1] - $data[2]</option>";
                             }
                         ?>
                     </select>
                 </form>
-                <br>
-                <button type="submit" id="button_submit" class="button" onclick={add(event)}>
+                <button type="submit" id="button_submit" class="button" onclick={addSong(event)}>
                     Submit
                 </button>
             </div>
@@ -103,7 +99,7 @@
                 };
             });
         }
-        const add = async (e) => {
+        const addSong = async(e) => {
             e.preventDefault();
             const judul = document.getElementById('judul').value;
             const penyanyi = document.getElementById('penyanyi').value;
@@ -124,15 +120,16 @@
             formData.append("duration", duration);
             formData.append("album_id", album_id);
 
-
+            console.log(formData);
             const xmlhttp = new XMLHttpRequest();
             xmlhttp.open("POST", "/addsong");
             await xmlhttp.send(formData);
-            await xhr.onload = () => {
-                if (xhr.status==201){
+            xmlhttp.onload = () => {
+                if (xmlhttp.status==201){
                     alert("Song added successfully");
+                    window.location.reload();
                 } else{
-                    let res = JSON.parse(xhr.responseText);
+                    let res = JSON.parse(xmlhttp.responseText);
                     alert(res.error)
                 }
             }
