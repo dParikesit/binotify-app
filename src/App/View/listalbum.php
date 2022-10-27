@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/listalbum.css">
         <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/home.css">
         <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/nav.css">
+        <link rel="icon" type="image/x-icon" href="<?php echo URL; ?>/layout/assets/img/favicon.png">
         <title>Binotify</title>
     </head>
 

@@ -22,6 +22,8 @@ class FileServer {
         $requestedFile = $_GET["name"];
         $file = $this->base_url . "/audios/" . $requestedFile;
 
+        $_SESSION["count"] = $_SESSION["count"] + 1;
+
         $contentType = mime_content_type($file);
         header("Content-type: $contentType");
         header('Content-Disposition: inline');
