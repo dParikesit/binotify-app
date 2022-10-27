@@ -82,7 +82,7 @@ $router->post("/addsong", function(){
     $obj->addSong();
 });
 
-$router->put("/updatesong", function(){
+$router->post("/updatesong", function(){
     $obj = new SongController();
     $obj->updateSong();
 });

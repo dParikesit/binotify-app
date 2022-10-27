@@ -14,7 +14,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
-        <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/detailpage.css" />
+        <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/detail.css" />
         <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/nav.css">
         <link rel="icon" type="image/x-icon" href="<?php echo URL; ?>/layout/assets/img/favicon.png">
         <title>Binotify</title>
@@ -35,11 +35,15 @@
                     <div class="user_content">
                         <img src="" alt="cover" id="cover" class="cover">
                         <div class="content-left">
-                            <a class="judul" id="judul">Title: </a><br>
-                            <a class="penyanyi" id="penyanyi">Artist: </a><br>
+                            <a class="judul" id="judul">Title: </a>
+                            <div class="desc">
+                            <a class="penyanyi" id="penyanyi">Artist: </a>
                             <a class="tanggal_terbit" id="tanggal_terbit">Release: </a><br>
-                            <a class="genre" id="genre">Genre: </a><br>
+                            </div>
+                            <div class="desc">
+                            <a class="genre" id="genre">Genre: </a>
                             <a class="duration" id="duration">Duration: </a><br>
+                            </div>
                             <!-- Audio -->
                             <audio class="audio_source" id="audio" controls>
                                 <source src="" type="" id="audio_source">
@@ -65,9 +69,9 @@
                             <input type="text" name="genre" id="genre_edit" placeholder="Genre"><br>
                         </section>
                             <label> Audio File: </label>
-                            <input type="file" name="cover_file" id="cover_file_edit" accept="audio/mp3, audio/wav, audio/ogg"><br>
+                            <input type="file" name="audio_file" id="audio_file_edit" accept="audio/mp3, audio/wav, audio/ogg"><br>
                             <label> Cover Image: </label>
-                            <input type="file" name="audio_file" id="audio_file_edit" accept="image/jpg, image/jpeg, image/png"><br>
+                            <input type="file" name="cover_file" id="cover_file_edit" accept="image/jpg, image/jpeg, image/png"><br>
                         </form>
                         <button type="button" id="button_submit" class="button" onclick={updateSong(event)}>
                             Submit
@@ -103,11 +107,14 @@
             const image = document.getElementById('cover');
             image.setAttribute('src', `/images?name=${data.image_path}`);
 
-            document.getElementById('judul').innerHTML = `Title: ${data.judul}`;
-            document.getElementById('penyanyi').innerHTML = `Artist: ${data.penyanyi}`;
-            document.getElementById('tanggal_terbit').innerHTML = `Tanggal Terbit: ${data.tanggal_terbit}`;
-            document.getElementById('genre').innerHTML = `Genre: ${data.genre}`;
-            document.getElementById('duration').innerHTML = `Duration: ${Math.floor(data.duration/60)}m ${data.duration%60}s`;
+            document.getElementById('judul').innerHTML = `${data.judul}`;
+            document.getElementById('penyanyi').innerHTML = `${data.penyanyi},`;
+            document.getElementById('tanggal_terbit').innerHTML = `${data.tanggal_terbit}`;
+            document.getElementById('genre').innerHTML = `${data.genre},`;
+            document.getElementById('duration').innerHTML = `${Math.floor(data.duration/60)}m ${data.duration%60}s`;
+            document.getElementById('judul_edit').value = data.judul;
+            document.getElementById('tanggal_terbit_edit').value = data.tanggal_terbit;
+            document.getElementById('genre_edit').value = data.genre;
 
             const audio_source = document.getElementById('audio_source');
             audio_source.setAttribute('src', `/audios?name=${data.audio_path}`);
@@ -149,23 +156,25 @@
             const duration = audio_file ? (await getDuration(audio_file)) : "";
 
             let formData = new FormData();
-            formData.append('song_id', id);
-            judul==="" ? formData.append("judul", judul) : "";
-            tanggal_terbit===""?formData.append("tanggal_terbit", tanggal_terbit) : "";
-            genre===""?formData.append("genre", genre) : "";
-            cover_file===undefined?formData.append("cover_file", cover_file) : "";
-            audio_file===undefined?formData.append("audio_file", audio_file) : "";
-            duration===""?formData.append("duration", duration) : "";
-
-            console.log(formData)
+            judul !== "" ? formData.append("judul", judul) : "";
+            tanggal_terbit !== "" ? formData.append("tanggal_terbit", tanggal_terbit) : "";
+            genre !== "" ? formData.append("genre", genre) : "";
+            cover_file !== undefined ? formData.append("cover_file", cover_file) : "";
+            audio_file !== undefined ? formData.append("audio_file", audio_file) : "";
+            duration !== "" ? formData.append("duration", duration) : 0;
 
             const xhr = new XMLHttpRequest();
-            xhr.open("PUT", "updatesong");
-            await xhr.send(formData);
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const id = urlParams.get('id');
+            formData.append("id", id);
+            xhr.open("POST", `/updatesong`);
+            xhr.send(formData);
 
             xhr.onload = () => {
                 if (xhr.status==200){
-                    window.location.reload();
+                    alert("Song updated successfully");
+                    // window.location.reload();
                 } else{
                     let res = JSON.parse(xhr.responseText);
                     alert(res.error)

@@ -121,11 +121,18 @@
             formData.append("duration", duration);
             formData.append("album_id", album_id);
 
-            console.log(formData)
 
             const xmlhttp = new XMLHttpRequest();
             xmlhttp.open("POST", "/addsong");
-            xmlhttp.send(formData);
+            await xmlhttp.send(formData);
+            xhr.onload = () => {
+                if (xhr.status==200){
+                    window.location.reload();
+                } else{
+                    let res = JSON.parse(xhr.responseText);
+                    alert(res.error)
+                }
+            }
         }
     </script>
 </html>

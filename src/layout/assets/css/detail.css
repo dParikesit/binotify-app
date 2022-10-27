@@ -1,7 +1,3 @@
-* {
-    font-family: Arial, Helvetica, sans-serif;
-}
-
 body {
     font-family: "Helvetica";
     font-weight: 400;
@@ -14,8 +10,8 @@ body {
 }
 
 .cover {
-    width: 100%;
-    height: undefined;
+    max-width: 300px;
+    max-height: 300px;
     border-radius: 0.5vh;
     margin-right: 10vmin;
 }
@@ -83,4 +79,14 @@ section {
 
 .subcard{
     cursor:pointer;
+}
+
+.judul {
+    font-size: 56px;
+    font-weight: 700;
+}
+
+.desc {
+    font-size: 12px;
+    font-weight: 600;
 }

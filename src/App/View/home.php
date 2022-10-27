@@ -39,7 +39,7 @@
                 $count_data = count($songs->getSong());
                 for($i = 0; $i < $count_data; $i++) {
                     $data = $songs->getSong()[$i];
-                    echo "<tr class='subcard' onClick={testButton(" . $data[0] .  ")}>";
+                    echo "<tr class='subcard' onClick={navigateTo(" . $data[0] .  ")}>";
                     echo "<td class='index'>";
                     echo $i + 1;
                     echo "</td>";
@@ -67,9 +67,9 @@
     </body>
     <script>
         // TODO: Integrate function to go to detail song page using id
-        const testButton = (id) => {
-            console.log("Keklik")
-            console.log(id)
+        const navigateTo = (song_id) => {
+            console.log(song_id);
+            window.location.href = `/detailsong?id=${song_id}`;
         }
     </script>
 </html>

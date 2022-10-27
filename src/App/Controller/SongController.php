@@ -210,19 +210,16 @@ final class SongController {
     public function updateSong() {
         try {
             $song_service = new SongService();
-            $_PUT = $GLOBALS["_PUT"];
-            
-            $song_id = isset($_PUT['song_id']) ? $_PUT['song_id'] : '';
+            $song_id = isset($_POST['id']) ? $_POST['id'] : '';
             if (!$song_id){
-                throw new HTTPException('Empty song id', 400);
+                throw new HTTPException(json_encode($_POST), 400);
             }
-
             $song = $song_service->getSongById($song_id);
 
-            $judul = !empty($_PUT['judul']) ? $_PUT['judul'] : $song['judul'];
-            $tanggal_terbit = !empty($_PUT['tanggal_terbit']) ? $_PUT['tanggal_terbit'] : $song['tanggal_terbit'];
-            $genre = !empty($_PUT['genre']) ? $_PUT['genre'] : $song['genre'];
-            $duration = !empty($_PUT['duration']) ? $_PUT['duration'] : $song['duration'];
+            $judul = !empty($_POST['judul']) ? $_POST['judul'] : $song['judul'];
+            $tanggal_terbit = !empty($_POST['tanggal_terbit']) ? $_POST['tanggal_terbit'] : $song['tanggal_terbit'];
+            $genre = !empty($_POST['genre']) ? $_POST['genre'] : $song['genre'];
+            $duration = !empty($_POST['duration']) ? $_POST['duration'] : $song['duration'];
 
             // --- Audio File Upload ---
             $full_audio_path = $song['audio_path'];
@@ -253,19 +250,18 @@ final class SongController {
                 }
                 
                 $audio_did_upload = move_uploaded_file($audio_file_tmpname, $audio_target_dir.$audio_target_file);
+
                 if ($audio_did_upload) {
                     // audio_path in database
                     $full_audio_path = $audio_target_file;
-                    unlink($_SERVER['DOCUMENT_ROOT']."/uploads/audios/".$song["audio_path"]);
                 } else {
                     throw new HTTPException("Audio file save error", 400);
                 }
             }
             
-            
             // Image File
             $full_image_path = $song["image_path"];
-            if(isset($_FILES["image_path"])){
+            if(isset($_FILES["cover_file"])){
                 if (!isset($_FILES['cover_file']['error']) || is_array($_FILES['cover_file']['error'])) {
                     throw new HTTPException("Invalid parameters", 400);
                 } else if ($_FILES['cover_file']['size'] > 10000000) { //10MB
@@ -295,13 +291,13 @@ final class SongController {
                 if ($image_did_upload) {
                     // image_path in database
                     $full_image_path = $image_target_file;
-                    unlink($_SERVER['DOCUMENT_ROOT']."/uploads/images/".$song["image_path"]);
                 } else {
                     throw new HTTPException("Image file save error", 400);
                 }
             }
-            
-            $result = $song_service->update($song_id, $judul, $tanggal_terbit, $genre, $duration, $full_audio_path, $full_image_path);
+            $audio_path = $full_audio_path;
+            $image_path = $full_image_path;
+            $result = $song_service->update($song_id, $judul, $tanggal_terbit, $genre, $duration, $audio_path, $image_path);
 
             $res = new Response($result, 200);
             $res->sendJSON();
