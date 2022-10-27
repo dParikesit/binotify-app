@@ -35,8 +35,10 @@
                         <img src="" alt="cover" id="cover" class="cover">
                         <div class="content-left">
                             <a class="judul" id="judul">Title: </a><br>
-                            <a class="penyanyi" id="penyanyi">Artist: </a><br>
-                            <a class="total_duration" id="total_duration">Total Duration: </a><br>
+                            <div class="desc">
+                                <a class="penyanyi" id="penyanyi">Artist: </a>
+                                <a class="total_duration" id="total_duration">Total Duration: </a><br>
+                            </div>
                         </div>
                     </div>
 
@@ -88,7 +90,7 @@
                             echo "<td>";
                             echo "<div class='flex'>";
                             echo "<div class='main-content'>";
-                            echo "<div class='title'>" . $inc["judul"] .  "</div>";
+                            echo "<div>" . $inc["judul"] .  "</div>";
                             echo "</div>";
                             echo "</div>";
                             echo "</td>";
@@ -159,11 +161,11 @@
             const album = result.data.album;
             const image = document.getElementById('cover');
             image.setAttribute('src', `/images?name=${album.image_path}`);
-            document.getElementById('judul').innerHTML = `Title: ${album.judul}`;
-            document.getElementById('penyanyi').innerHTML = `Artist: ${album.penyanyi}`;
+            document.getElementById('judul').innerHTML = `${album.judul}`;
+            document.getElementById('penyanyi').innerHTML = `${album.penyanyi},`;
             // document.getElementById('tanggal_terbit').innerHTML = `Release date: ${album.tanggal_terbit}`;
             // document.getElementById('genre').innerHTML = `Genre: ${album.genre}`;
-            document.getElementById('total_duration').innerHTML = `Duration: ${Math.floor(album.total_duration/60)}m ${album.total_duration%60}s`;
+            document.getElementById('total_duration').innerHTML = `${Math.floor(album.total_duration/60)}m ${album.total_duration%60}s`;
         }
         
         const updateAlbum = (e) => {

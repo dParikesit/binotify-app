@@ -12,8 +12,8 @@ body {
 .cover {
     max-width: 300px;
     max-height: 300px;
-    border-radius: 0.5vh;
-    margin-right: 10vmin;
+    border-radius: 0.5vmin;
+    margin-right: 5vmin;
 }
 
 .content {
@@ -36,7 +36,6 @@ body {
     display: flex;
     flex-direction: column;
     margin-right: 10vmin;
-    justify-content: space-between;
 }
 
 .admin_content {
@@ -46,7 +45,8 @@ body {
 }
 
 .audio_source {
-    margin-bottom: 3vmin;
+    margin-top: 2vmin;
+    margin-bottom: 1vmin;
 }
 
 section {
@@ -77,6 +77,49 @@ section {
     margin-left: 5vmin;
 }
 
+
+table {
+    border-collapse: collapse;
+    border-spacing: 1vmin;
+}
+
+
+th {
+    text-align: left;
+    border-bottom: 1px solid #a2a3a3;
+    color: #a2a3a3;
+    padding-bottom: 1%;
+    font-weight:lighter;
+}
+
+tr {
+    padding-top: 2%;
+}
+
+.card {
+    width: 100%;
+    height: max-content;
+    margin: 0 auto;
+    margin-top: 5%;
+    margin-left: 5vmin;
+}
+
+
+.subcard:hover {
+    background-color: #535854;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.first-index {
+    text-align: center;
+}
+
+.index {
+    color: #a2a3a3;
+    text-align: center;
+}
+
 .subcard{
     cursor:pointer;
 }
@@ -87,6 +130,7 @@ section {
 }
 
 .desc {
+    margin: 0.5vmin;
     font-size: 12px;
     font-weight: 600;
 }
