@@ -141,7 +141,7 @@
             const result = JSON.parse(xmlhttp.responseText);
             const album = result.data.album;
             const image = document.getElementById('cover');
-            // image.setAttribute('src', `/images?name=${album.image_path}`);
+            image.setAttribute('src', `/images?name=${album.image_path}`);
             document.getElementById('judul').innerHTML = `Title: ${album.judul}`;
             document.getElementById('penyanyi').innerHTML = `Artist: ${album.penyanyi}`;
             // document.getElementById('tanggal_terbit').innerHTML = `Release date: ${album.tanggal_terbit}`;
