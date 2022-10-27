@@ -137,6 +137,22 @@ class SongService extends Service{
         }
     }
 
+    public function getSongNotInAlbumId($album_id) {
+        try {
+            $sql = "SELECT * FROM songs WHERE album_id = null and penyanyi = (SELECT penyanyi FROM albums WHERE album_id = :album_id) ORDER BY judul ASC";
+            $statement = $this->db->prepare($sql);
+            $statement->bindParam(':album_id', $album_id, PDO::PARAM_STR);
+            $statement->execute();
+            $result = $statement->fetchAll();
+
+            return $result;
+        } catch (PDOException $e) {
+            $error_code = ($e->getCode() == 23000) ? 400 : 500;
+            $res = new HTTPException($e->getMessage(), $error_code);
+            $e->sendJSON();
+        }
+    }
+
     public function getSongByAlbumId($album_id) {
         try {
             $sql = "SELECT * FROM songs WHERE album_id = :album_id";
