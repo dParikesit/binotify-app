@@ -72,11 +72,11 @@ class Router
                 exit();
             }
 
-            // if ($this->httpMethod=="PUT"){
-            //     MethodParser::parsePut();
-            // } elseif ($this->httpMethod=="PATCH"){
-            //     MethodParser::parsePatch();
-            // }
+            if ($this->httpMethod=="PUT"){
+                MethodParser::parsePut();
+            } elseif ($this->httpMethod=="PATCH"){
+                MethodParser::parsePatch();
+            }
 
             // Defining controller and method
             $functionName = $this->route['function'];
