@@ -52,3 +52,7 @@ tr:hover{
     margin-bottom: 1%;
     width: 100%;
 }
+
+th, td {
+    font-size: 1vmax;
+}
