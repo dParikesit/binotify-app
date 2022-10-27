@@ -41,8 +41,8 @@
                             <a class="genre" id="genre">Genre: </a><br>
                             <a class="duration" id="duration">Duration: </a><br>
                             <!-- Audio -->
-                            <audio class="audio_source" controls>
-                                <source src="" type="" id="audio">
+                            <audio class="audio_source" id="audio" controls>
+                                <source src="" type="" id="audio_source">
                             </audio>
                             <!-- Button to see Album -->
                             <button type="button" id="button_album" class="button">
@@ -58,18 +58,18 @@
                         </section>
                         <section>
                             <label> Tanggal Terbit: </label>
-                            <input type="text" name="tanggal_terbit" id="tanggal_terbit_edit" placeholder="Release"><br>
+                            <input type="date" name="tanggal_terbit" id="tanggal_terbit_edit"  value="2022-10-28"  min="1960-01-01"><br>
                         </section>
                         <section>
                             <label> Genre: </label>
                             <input type="text" name="genre" id="genre_edit" placeholder="Genre"><br>
                         </section>
                             <label> Audio File: </label>
-                            <input type="file" name="cover_file" id="cover_file_edit" accept="image/jpg, image/jpeg, image/png"><br>
+                            <input type="file" name="cover_file" id="cover_file_edit" accept="audio/mp3, audio/wav, audio/ogg"><br>
                             <label> Cover Image: </label>
-                            <input type="file" name="audio_file" id="audio_file_edit" accept="audio/mp3, audio/wav, audio/ogg"><br>
+                            <input type="file" name="audio_file" id="audio_file_edit" accept="image/jpg, image/jpeg, image/png"><br>
                         </form>
-                        <button type="submit" id="button_submit" class="button" onclick={updateSong(event)}>
+                        <button type="button" id="button_submit" class="button" onclick={updateSong(event)}>
                             Submit
                         </button>
                         <button type="button" id="button_delete" class="button" onclick={deleteSong(event)}>
@@ -93,23 +93,29 @@
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const id = urlParams.get('id');
+        
         xhr.open("GET", `/getsong?id=${id}`);
         xhr.send();
         xhr.onload = () => {
             const result = JSON.parse(xhr.responseText);
             const data = result.data;
-            // const image = document.getElementById('cover');
-            // image.setAttribute('src', data.image_path);
+
+            const image = document.getElementById('cover');
+            image.setAttribute('src', `/images?name=${data.image_path}`);
 
             document.getElementById('judul').innerHTML = `Title: ${data.judul}`;
             document.getElementById('penyanyi').innerHTML = `Artist: ${data.penyanyi}`;
             document.getElementById('tanggal_terbit').innerHTML = `Tanggal Terbit: ${data.tanggal_terbit}`;
             document.getElementById('genre').innerHTML = `Genre: ${data.genre}`;
             document.getElementById('duration').innerHTML = `Duration: ${Math.floor(data.duration/60)}m ${data.duration%60}s`;
-            // const audio = document.getElementById('audio');
-            // audio.setAttribute('src', data.audio_path);
-            // const ext = data.audio_path.split('.').pop();
-            // audio.setAttribute('type', `audio/${ext}`);
+
+            const audio_source = document.getElementById('audio_source');
+            audio_source.setAttribute('src', `/audios?name=${data.audio_path}`);
+            const ext = data.audio_path.split('.').pop();
+            audio_source.setAttribute('type', `audio/${ext}`);
+
+            const audio = document.getElementById('audio');
+            audio.load()
 
             const button = document.getElementById('button_album');
             button.onclick = () => {
@@ -117,30 +123,55 @@
             }
         }
 
-        // const updateSong = (e) => {
-        //     e.preventDefault();
-        //     const judul = document.getElementById('judul_edit').value;
-        //     const penyanyi = document.getElementById('penyanyi_edit').value;
-        //     const tanggal_terbit = document.getElementById('tanggal_terbit_edit').value;
-        //     const genre = document.getElementById('genre_edit').value;
-        //     const cover_file = document.getElementById('cover_file_edit').files[0];
-        //     const audio_file = document.getElementById('audio_file_edit').files[0];
-        //     const duration = parseInt(audio_file.duration);
+        async function getDuration(file) {
+            const url = URL.createObjectURL(file);
 
-        //     let formData = new FormData();
-        //     formData.append("judul", judul);
-        //     formData.append("penyanyi", penyanyi);
-        //     formData.append("tanggal_terbit", tanggal_terbit);
-        //     formData.append("genre", genre);
-        //     formData.append("cover_file", cover_file);
-        //     formData.append("audio_file", audio_file);
-        //     formData.append("duration", duration);
+            return new Promise((resolve) => {
+                const audio = document.createElement("audio");
+                audio.muted = true;
+                const source = document.createElement("source");
+                source.src = url; //--> blob URL
+                audio.preload= "metadata";
+                audio.appendChild(source);
+                audio.onloadedmetadata = function(){
+                    resolve(parseInt(audio.duration))
+                };
+            });
+        }
 
-        //     const xhr = new XMLHttpRequest();
-        //     xhr.open("PUT", `updatesong?id=${id}`);
-        //     xhr.setRequestHeader("Content-type", "application/json");
-        //     xhr.send(formData);
-        // }
+        const updateSong = async(e) => {
+            e.preventDefault();
+            const judul = document.getElementById('judul_edit').value;
+            const tanggal_terbit = document.getElementById('tanggal_terbit_edit').value;
+            const genre = document.getElementById('genre_edit').value;
+            const cover_file = document.getElementById('cover_file_edit').files[0];
+            const audio_file = document.getElementById('audio_file_edit').files[0];
+            const duration = audio_file ? (await getDuration(audio_file)) : "";
+
+            let formData = new FormData();
+            formData.append('song_id', id);
+            judul==="" ? formData.append("judul", judul) : "";
+            tanggal_terbit===""?formData.append("tanggal_terbit", tanggal_terbit) : "";
+            genre===""?formData.append("genre", genre) : "";
+            cover_file===undefined?formData.append("cover_file", cover_file) : "";
+            audio_file===undefined?formData.append("audio_file", audio_file) : "";
+            duration===""?formData.append("duration", duration) : "";
+
+            console.log(formData)
+
+            const xhr = new XMLHttpRequest();
+            xhr.open("PUT", "updatesong");
+            await xhr.send(formData);
+
+            xhr.onload = () => {
+                if (xhr.status==200){
+                    window.location.reload();
+                } else{
+                    let res = JSON.parse(xhr.responseText);
+                    alert(res.error)
+                }
+            }
+        }
 
         const deleteSong = (e) => {
             e.preventDefault();
@@ -151,7 +182,14 @@
             xhr.open("DELETE", `deletesong?id=${id}`);
             xhr.send();
 
-            window.location.href = "/";
+            xhr.onload = () => {
+                if (xhr.status==200){
+                    window.location.href="/listalbum";
+                } else{
+                    let res = JSON.parse(xhr.responseText);
+                    alert(res.error)
+                }
+            }
         }
     </script>
 </html>
