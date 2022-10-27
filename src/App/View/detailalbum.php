@@ -38,6 +38,7 @@
                             <a class="total_duration" id="total_duration">Total Duration: </a><br>
                         </div>
                     </div>
+
                     <div class="admin_content">
                         <form class="form_edit" id="form_edit" method="PUT" enctype="multipart/form-data">
                         <section>
@@ -102,7 +103,8 @@
                         }
                     ?>
                 </table>
-                <div>
+
+                <div id="admin_content">
                         <form class="form_edit" id="form_edit" method="PUT" enctype="multipart/form-data">
                             <select class="selection" name="song_id" id="song_id">
                                 <option value="">Select Song To Add</option>
@@ -124,6 +126,13 @@
                             Submit
                         </button>
                 </div>
+                <?php 
+                    if (!$_SESSION["isAdmin"]) { ?>
+                        <script>
+                            document.getElementById("admin_content").style.display = "none";
+                            document.getElementsByClassName("admin_content")[0].style.display = "none";
+                        </script>
+                <?php } ?>
             </div>
         </div>
         
