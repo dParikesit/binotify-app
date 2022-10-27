@@ -1,9 +1,10 @@
-* {
-    font-family: Arial, Helvetica, sans-serif;
+body {
+    font-family: 'Helvetica';
+    background-color: #1d1d1d;
 }
 
-body{
-    font-family: 'Helvetica', 'Arial', sans-serif;
+.users-list {
+    display: flex;
 }
 
 table{
@@ -13,19 +14,21 @@ table{
     margin-left:3rem;
 }
 
-th{
+th {
     background-color: #1ed760;
     color: black;
-    padding-top:1rem;
-    padding-bottom: 1rem;
+    padding: 2vmin;
+    text-align: center;
 }
 
-td{
-    padding:0.5rem;
+td {
+    padding: 1.5vmin;
     padding-left:1rem;
+    text-align: center;
 }
 
-tr{
+tr {
+    border-bottom: 1px solid #a2a3a3;
     transition-duration: 0.1s;
 }
 
@@ -42,4 +45,9 @@ tr:hover{
 
 .email{
     text-align:right
+}
+
+.container {
+    margin-top: 1%;
+    margin-bottom: 1%;
 }
