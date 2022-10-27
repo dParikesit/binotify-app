@@ -42,25 +42,6 @@
                         </div>
                     </div>
 
-                    <div class="admin_content">
-                        <form class="form_edit" id="form_edit" method="PUT" enctype="multipart/form-data">
-                        
-                        <label> Title : </label>
-                        <input type="text" name="judul" id="judul_edit" placeholder="Title"><br>
-                        <label> Tanggal Terbit : </label>
-                        <input type="date" name="tanggal_terbit" id="tanggal_terbit_edit" value="2022-10-28"  min="1960-01-01"><br>
-                        <label> Genre : </label>
-                        <input type="text" name="genre" id="genre_edit" placeholder="Genre"><br>
-                        <label> Cover Image : </label>
-                        <input type="file" name="cover_file" id="cover_file_edit" accept="image/jpg, image/jpeg, image/png"><br>
-                        </form>
-                        <button type="submit" id="button_save" class="button_save" onclick={updateAlbum(event)}>
-                            Save Changes
-                        </button>
-                        <button type="button" id="button_delete" class="button_delete" onclick={deleteAlbum(event)}>
-                            Delete
-                        </button>
-                    </div>
                 </div>
                 <div class="background-back">
                 <table class="card">
@@ -101,16 +82,15 @@
                             echo "<div class='year'>" . substr($inc["tanggal_terbit"], 0, 4) . "</div>";
                             echo "</td>";
                             echo "<td class='admin_content'>";
-                            echo "<button type='button' class='button_delete_song admin_content' onclick={deleteSong('" . $inc[0] .  "')} > Delete </button>";
+                            echo "<button type='button' class='button_delete_song' onclick={deleteSong('" . $inc[0] .  "')} > Delete </button>";
                             echo "</td>";
                             echo "</tr>";
                         }
                     ?>
                 </table>
-                </div>
 
-                <div id="admin_content" class="add_song">
-                        <form class="form_edit" id="form_edit" method="PUT" enctype="multipart/form-data">
+                <div id="admin_content" class="add_song flex">
+                        <form class="form_edit_top" id="form_edit" method="PUT" enctype="multipart/form-data">
                             <select class="selection" name="song_id" id="song_id">
                                 <option value="">Select Song To Add</option>
                                 <?php
@@ -129,9 +109,34 @@
                             </select>
                         </form>
                         <button type="submit" id="button_submit" class="button" onclick={updateSongToAlbum(event)}>
-                            Submit
+                            Add song
                         </button>
                 </div>
+
+                <div class="admin_content">
+                    <div class="edit-form">
+                        <h1>Edit Album</h1>
+                        <form class="form_edit_bottom" id="form_edit" method="PUT" enctype="multipart/form-data">
+                        
+                        <label> Title : </label>
+                        <input class="form_edit_bottom_input" type="text" name="judul" id="judul_edit" placeholder="Title"><br>
+                        <label> Tanggal Terbit : </label>
+                        <input class="form_edit_bottom_input" type="date" name="tanggal_terbit" id="tanggal_terbit_edit" value="2022-10-28"  min="1960-01-01"><br>
+                        <label> Genre : </label>
+                        <input class="form_edit_bottom_input" type="text" name="genre" id="genre_edit" placeholder="Genre"><br>
+                        <label> Cover Image : </label>
+                        <input class="form_edit_bottom_input" type="file" name="cover_file" id="cover_file_edit" accept="image/jpg, image/jpeg, image/png"><br>
+                        </form>
+                        <button type="submit" id="button_save" class="button_save" onclick={updateAlbum(event)}>
+                            Save Changes
+                        </button>
+                        <button type="button" id="button_delete" class="button_delete" onclick={deleteAlbum(event)}>
+                            Delete
+                        </button>
+                    </div>
+                </div>
+                </div>
+
                 <?php 
                     if (!isset($_SESSION["user_id"]) || (isset($_SESSION["user_id"]) && !$_SESSION["isAdmin"])) { ?>
                         <script>
