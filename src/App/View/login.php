@@ -16,7 +16,10 @@
     </head>
 
     <body>
-        <a href="/"><img src="./layout/assets/img/spotify-text.png"></a>
+        <div class="flex">
+            <img src="./layout/assets/img/binotify.png" width=100>
+            <h1 class="title">Binotify</h1>
+        </div>
         <hr class="solid first-divider">
 
         <p><b>To continue, login to Spotify.</b></p>

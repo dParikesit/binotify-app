@@ -1,3 +1,7 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 body {
     min-height: 100vmin;
     background-color: #1d1d1d;
@@ -35,10 +39,10 @@ tr {
 }
 
 .card {
-    width: 75%;
+    width: 90%;
     height: max-content;
     margin: 0 auto;
-    margin-top: 5%;
+    margin-top: 1%;
 }
 
 
@@ -82,4 +86,74 @@ tr {
 
 .hide {
     display: none;
+}
+
+.filter-bar {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 5%;
+}
+
+.filter {
+    width: 100%;
+}
+
+.label-order, .label-sort {
+    color: white;
+}
+
+.genre, .order, .sort {
+    padding: 1.5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    border-radius: 20px;
+    border: transparent;
+    font-size: 2vmin;
+    margin-right: 2%;
+}
+
+.submit {
+    padding: 1.5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    border-radius: 20px;
+    font-size: 2vmin;
+    border: transparent;
+    background-color: #1db954;
+    float: right;
+}
+
+.floatright {
+    float: right;
+    margin-right: 8%;
+    margin-top: 1%;
+}
+
+.leftbutton {
+  margin-right: 2vmax;
+}
+
+.before, .after {
+    padding: 1.5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    border-radius: 20px;
+    font-size: 2vmax;
+    border: transparent;
+    background-color: transparent;
+    float: right;
+    color: #a2a3a3;
+}
+
+.before:hover {
+    color: white;
+}
+
+.after:hover {
+    color: white;
+}
+
+.wrapping-content {
+    margin-top: 1%;
+    margin-bottom: 1%;
 }

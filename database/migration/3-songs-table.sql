@@ -7,5 +7,5 @@ CREATE TABLE IF NOT EXISTS songs (
     Duration INTEGER NOT NULL,
     Audio_path VARCHAR(256) NOT NULL,
     Image_path VARCHAR(256) NOT NULL,
-    album_id uuid REFERENCES albums (album_id) ON UPDATE CASCADE on DELETE CASCADE
+    album_id uuid REFERENCES albums (album_id) ON UPDATE CASCADE on DELETE SET NULL
 );

@@ -53,7 +53,7 @@
                             <input type="text" name="genre" id="genre_edit" placeholder="Genre"><br>
                         </section>
                             <label> Cover Image: </label>
-                            <input type="file" name="audio_file" id="audio_file_edit" accept="audio/mp3, audio/wav, audio/ogg"><br>
+                            <input type="file" name="cover_file" id="cover_file_edit" accept="image/jpg, image/jpeg, image/png"><br>
                         </form>
                         <button type="submit" id="button_submit" class="button" onclick={updateAlbum(event)}>
                             Submit
@@ -78,7 +78,7 @@
                         $count_data = count($result);
                         for($i = 0; $i < $count_data; $i++) {
                             $inc = $result[$i];
-                            echo "<tr class='subcard' onClick={deleteSong(" . $inc[0] .  ")}>";
+                            echo "<tr class='subcard' onClick={deleteSong('" . $inc[0] .  "')}>";
                             echo "<td class='index'>";
                             echo $i + 1;
                             echo "</td>";
@@ -112,7 +112,7 @@
                                     $count_data = count($result);
                                     for($i = 0; $i < $count_data; $i++) {
                                         $data = $result[$i];
-                                        if($data["album_id"] != $_GET['id']) {
+                                        if($data["album_id"] == "") {
                                             echo "<option value='$data[0]'>$data[1] - $data[2]</option>";
                                         }
                                         
@@ -134,6 +134,7 @@
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const id = urlParams.get('id');
+
         xmlhttp.open("GET", `/getalbum?id=${id}`);
         xmlhttp.send();
         xmlhttp.onload = () => {
@@ -142,64 +143,93 @@
             const image = document.getElementById('cover');
             image.setAttribute('src', `/images?name=${album.image_path}`);
             document.getElementById('judul').innerHTML = `Title: ${album.judul}`;
-            document.getElementById('penyanyi').innerHTML = `Singer: ${album.penyanyi}`;
+            document.getElementById('penyanyi').innerHTML = `Artist: ${album.penyanyi}`;
             // document.getElementById('tanggal_terbit').innerHTML = `Release date: ${album.tanggal_terbit}`;
             // document.getElementById('genre').innerHTML = `Genre: ${album.genre}`;
             document.getElementById('total_duration').innerHTML = `Duration: ${Math.floor(album.total_duration/60)}m ${album.total_duration%60}s`;
         }
-        /*
+        
         const updateAlbum = (e) => {
             e.preventDefault();
             const judul = document.getElementById('judul_edit').value;
-            const penyanyi = document.getElementById('penyanyi_edit').value;
             const tanggal_terbit = document.getElementById('tanggal_terbit_edit').value;
             const genre = document.getElementById('genre_edit').value;
-            const cover_file = document.getElementById('cover_file_edit').files[0]
-            // need to handle get total duration from all song
-            // const payload = {
-            //     judul,
-            //     penyanyi,
-            //     tanggal_terbit,
-            //     genre,
-            //     cover_file,
-            //     duration,
-            // }
+            const cover_file = document.getElementById('cover_file_edit').files[0];
+
+            const formData = new FormData();
+            formData.append('id', id);
+            formData.append('judul', judul);
+            formData.append('tanggal_terbit', tanggal_terbit);
+            formData.append('genre', genre);
+            formData.append('cover_file', cover_file);
+
             const xmlhttp = new XMLHttpRequest();
-            xmlhttp.open("PUT", "updatealbum?id=" + myParam);
-            xmlhttp.setRequestHeader("Content-type", "application/json");
-            xmlhttp.send(JSON.stringify(payload));
+            xmlhttp.open("PUT", "updatealbum");
+            xmlhttp.send(formData);
         }
 
         const deleteAlbum = (e) => {
             e.preventDefault();
             const xmlhttp = new XMLHttpRequest();
-            xmlhttp.open("DELETE", "deletealbum?id=" + myParam);
-            xmlhttp.send();
+            
+            xmlhttp.onload = () => {
+                if (xhr.status==201){
+                    window.location.href="/listalbum";
+                } else{
+                    let res = JSON.parse(xhr.responseText);
+                    alert(res.error)
+                }
+            }
 
-            window.location.href = "/index.php";
+            xmlhttp.open("DELETE", "deletealbum?id=" + id);
+            xmlhttp.send();
         }
 
         const updateSongToAlbum = (e) => {
             e.preventDefault();
             const song_id = document.getElementById('song_id').value;
-            // need to get duration from song and album
-            // const payload = {
-            //     song_id,
-            //     album_id,
-            //     total_duration
-            // }
+
+            const payload={
+                album_id: id,
+                song_id: song_id
+            }
+            
             const xmlhttp = new XMLHttpRequest();
-            xmlhttp.open("PUT", "updatesongtoalbum?id=" + myParam);
+
+            xmlhttp.onload = () => {
+                if (xmlhttp.status==200){
+                    window.location.reload();
+                } else{
+                    let res = JSON.parse(xmlhttp.responseText);
+                    alert(res.error)
+                }
+            }
+
+            xmlhttp.open("PATCH", "updatesongtoalbum");
             xmlhttp.setRequestHeader("Content-type", "application/json");
             xmlhttp.send(JSON.stringify(payload));
         }
 
-        const deleteSong = (id) => {
+        const deleteSong = (song_id) => {
+            const payload={
+                song_id: song_id
+            }
+
             const xmlhttp = new XMLHttpRequest();
-            xmlhttp.open("PUT", "deletesongfromalbum?id=" + id);
-            xmlhttp.send();
+
+            xmlhttp.onload = () => {
+                if (xmlhttp.status==200){
+                    window.location.reload();
+                } else{
+                    let res = JSON.parse(xmlhttp.responseText);
+                    alert(res.error)
+                }
+            }
+
+            xmlhttp.open("PATCH", "deletesongfromalbum");
+            xmlhttp.send(JSON.stringify(payload));
 
             window.location.reload();
-        } */
+        } 
     </script>
 </html>
