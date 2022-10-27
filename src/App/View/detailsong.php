@@ -30,10 +30,9 @@
             ?>
             
             <div class="container">
-                <h1 class="title" id="title">Song Detail</h1>
                 <div class="content">
                     <div class="user_content">
-                        <img src="" alt="cover" id="cover" class="cover">
+                        <img src="https://i.scdn.co/image/ab67616d0000b2739abdf14e6058bd3903686148" alt="cover" id="cover" class="cover">
                         <div class="content-left">
                             <a class="judul" id="judul">Title: </a>
                             <div class="desc">
@@ -88,6 +87,12 @@
                     <?php } ?>
                 </div>
             </div>
+<!--             <div class="play-song">
+           Audio
+            <audio class="audio_source" controls>
+                <source src="" type="" id="audio">
+            </audio> -->
+        </div>
         </div>
         
     </body>
