@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Router;
+use App\Utils\PUTParser;
 
 class Router
 {
@@ -69,6 +70,10 @@ class Router
                 }
                 include $this->notFoundView;
                 exit();
+            }
+
+            if ($this->httpMethod=="PUT"){
+                PUTParser::parsePut();
             }
 
             // Defining controller and method
