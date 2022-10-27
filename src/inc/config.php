@@ -3,7 +3,7 @@
 error_reporting(E_ALL);
 
 session_start();
-$_SESSION["count"]=0;
+$_SESSION["count"] = 0;
 
 define("ROOT", dirname(__DIR__).DIRECTORY_SEPARATOR);
 
