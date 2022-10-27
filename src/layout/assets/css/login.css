@@ -8,7 +8,8 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
-    margin: 5vmin;
+    margin: 0 auto;
+    margin-top: 5vmin;
 }
 
 img {
@@ -52,7 +53,7 @@ button {
     border-radius: 2rem;
     border-width: 0;
     background-color: #1bd760;
-    font-size: 1rem;
+    font-size: 2.5vmin;
 }
 
 button:hover {
@@ -116,7 +117,7 @@ div>p {
 }
 
 .first-divider {
-    min-width: 100vw;
+    width: 90%;
 }
 
 .second-divider {
