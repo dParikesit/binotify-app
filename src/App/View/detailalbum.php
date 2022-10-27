@@ -166,7 +166,16 @@
             image.setAttribute('src', `/images?name=${album.image_path}`);
             document.getElementById('judul').innerHTML = `${album.judul}`;
             document.getElementById('penyanyi').innerHTML = `${album.penyanyi},`;
-            document.getElementById('total_duration').innerHTML = `${Math.floor(album.total_duration/60)}m ${album.total_duration%60}s`;
+            if (album.total_duration>3600) {
+                hour = Math.floor(album.total_duration/3600)
+                minute = Math.floor((album.total_duration%3600)/60)
+                second = Math.floor((album.total_duration%3600)%60)
+                document.getElementById('total_duration').innerHTML = `${hour}h ${minute}m ${second}s`;
+            } else {
+                minute = Math.floor((album.total_duration%3600)/60)
+                second = Math.floor((album.total_duration%3600)%60)
+                document.getElementById('total_duration').innerHTML = `${minute}m ${second}s`;
+            }
             document.getElementById('judul_edit').value = album.judul;
             document.getElementById('tanggal_terbit_edit').value = album.tanggal_terbit;
             document.getElementById('genre_edit').value = album.genre;
