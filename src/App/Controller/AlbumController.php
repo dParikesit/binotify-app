@@ -43,7 +43,7 @@ final class AlbumController {
 
             unlink($_SERVER['DOCUMENT_ROOT']."/uploads/images/".$image_path);
 
-            $res = new Response($result, 201);
+            $res = new Response($result, 200);
             $res->sendJSON();
         } catch (HTTPException $e) {
             $e->sendJSON();
@@ -120,12 +120,12 @@ final class AlbumController {
             }
 
             $old_album = $album_service->getAlbumById($album_id)["album"];
-            $judul = isset($_PUT['judul']) ? $_PUT['judul'] : $old_album['judul'];
-            $genre = isset($_PUT['genre']) ? $_PUT['genre'] : $old_album['genre'];
-            $tanggal_terbit = isset($_PUT['tanggal_terbit']) ? $_PUT['tanggal_terbit'] : $old_album['tanggal_terbit'];
+            $judul = !empty($_PUT['judul']) ? $_PUT['judul'] : $old_album['judul'];
+            $genre = !empty($_PUT['genre']) ? $_PUT['genre'] : $old_album['genre'];
+            $tanggal_terbit = !empty($_PUT['tanggal_terbit']) ? $_PUT['tanggal_terbit'] : $old_album['tanggal_terbit'];
             
             // Image File
-            $full_image_path = "";
+            $full_image_path = $old_album['image_path'];
             if(isset($_FILES["cover_file"])){
                 if (!isset($_FILES['cover_file']['error']) || is_array($_FILES['cover_file']['error'])) {
                     throw new HTTPException("Invalid parameters", 400);
@@ -160,13 +160,11 @@ final class AlbumController {
                 } else {
                     throw new HTTPException("Image file save error", 400);
                 }
-            } else{
-                $full_image_path = $old_album['image_path'];
             }
             
             $result = $album_service->update($album_id, $judul, $full_image_path, $tanggal_terbit, $genre);
         
-            $res = new Response($result, 201);
+            $res = new Response($result, 200);
             $res->sendJSON();
         } catch (HTTPException $e) {
             $e->sendJSON();

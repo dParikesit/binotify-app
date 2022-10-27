@@ -170,10 +170,10 @@
 
         const deleteAlbum = (e) => {
             e.preventDefault();
-            const xmlhttp = new XMLHttpRequest();
+            const xhr = new XMLHttpRequest();
             
-            xmlhttp.onload = () => {
-                if (xhr.status==201){
+            xhr.onload = () => {
+                if (xhr.status==200){
                     window.location.href="/listalbum";
                 } else{
                     let res = JSON.parse(xhr.responseText);
@@ -181,8 +181,8 @@
                 }
             }
 
-            xmlhttp.open("DELETE", "deletealbum?id=" + id);
-            xmlhttp.send();
+            xhr.open("DELETE", "deletealbum?id=" + id);
+            xhr.send();
         }
 
         const updateSongToAlbum = (e) => {
