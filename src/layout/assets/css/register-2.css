@@ -109,3 +109,13 @@ a {
 .margintop {
     margin-top: 3vmin;
 }
+
+.wrong {
+    outline:none;
+    border-color: red;
+}
+
+.right {
+    outline:none;
+    border-color: green;
+}
