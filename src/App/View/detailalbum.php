@@ -53,7 +53,7 @@
                             <input type="text" name="genre" id="genre_edit" placeholder="Genre"><br>
                         </section>
                             <label> Cover Image: </label>
-                            <input type="file" name="audio_file" id="audio_file_edit" accept="audio/mp3, audio/wav, audio/ogg"><br>
+                            <input type="file" name="cover_file" id="cover_file_edit" accept="image/jpg, image/jpeg, image/png"><br>
                         </form>
                         <button type="submit" id="button_submit" class="button" onclick={updateAlbum(event)}>
                             Submit
@@ -141,7 +141,7 @@
             const result = JSON.parse(xmlhttp.responseText);
             const album = result.data.album;
             const image = document.getElementById('cover');
-            // image.setAttribute('src', `/images?name=${album.image_path}`);
+            image.setAttribute('src', `/images?name=${album.image_path}`);
             document.getElementById('judul').innerHTML = `Title: ${album.judul}`;
             document.getElementById('penyanyi').innerHTML = `Artist: ${album.penyanyi}`;
             // document.getElementById('tanggal_terbit').innerHTML = `Release date: ${album.tanggal_terbit}`;
@@ -155,27 +155,23 @@
             const tanggal_terbit = document.getElementById('tanggal_terbit_edit').value;
             const genre = document.getElementById('genre_edit').value;
             const cover_file = document.getElementById('cover_file_edit').files[0];
-            // need to handle get total duration from all song
-            // const payload = {
-            //     judul,
-            //     penyanyi,
-            //     tanggal_terbit,
-            //     genre,
-            //     cover_file,
-            //     duration,
-            // }
+
+            const formData = new FormData();
+            formData.append('id', id);
+            formData.append('judul', judul);
+            formData.append('tanggal_terbit', tanggal_terbit);
+            formData.append('genre', genre);
+            formData.append('cover_file', cover_file);
+
             const xmlhttp = new XMLHttpRequest();
-            xmlhttp.open("PUT", "updatealbum?id=" + myParam);
-            xmlhttp.setRequestHeader("Content-type", "application/json");
-            xmlhttp.send(JSON.stringify(payload));
+            xmlhttp.open("PUT", "updatealbum");
+            xmlhttp.send(formData);
         }
 
         const deleteAlbum = (e) => {
             e.preventDefault();
             const xmlhttp = new XMLHttpRequest();
             xmlhttp.open("DELETE", "deletealbum?id=" + id);
-            // xmlhttp.setRequestHeader("Content-type", "application/json");
-            // xmlhttp.send(JSON.stringify({id}));
             xmlhttp.send();
 
             // window.location.href = "/index.php";

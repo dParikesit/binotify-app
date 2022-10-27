@@ -44,14 +44,12 @@ class AlbumService extends Service{
         }
     }
 
-    public function update($album_id, string $judul, string $penyanyi, int $total_duration, string $image_path, string $tanggal_terbit, string $genre) {
+    public function update($album_id, string $judul, string $image_path, string $tanggal_terbit, string $genre) {
         try {
-            $sql = "UPDATE albums SET judul = :judul, penyanyi = :penyanyi, total_duration= :total_duration ,image_path = :image_path, tanggal_terbit = :tanggal_terbit, genre = :genre WHERE album_id = :album_id";
+            $sql = "UPDATE albums SET judul = :judul, image_path = :image_path, tanggal_terbit = :tanggal_terbit, genre = :genre WHERE album_id = :album_id";
             $statement = $this->db->prepare($sql);
             $statement->bindParam(':album_id', $album_id, PDO::PARAM_STR);
             $statement->bindParam(':judul', $judul, PDO::PARAM_STR);
-            $statement->bindParam(':penyanyi', $penyanyi, PDO::PARAM_STR);
-            $statement->bindParam(':total_duration', $total_duration, PDO::PARAM_INT);
             $statement->bindParam(':image_path', $image_path, PDO::PARAM_STR);
             $statement->bindParam(':tanggal_terbit', $tanggal_terbit, PDO::PARAM_STR);
             $statement->bindParam(':genre', $genre, PDO::PARAM_STR);

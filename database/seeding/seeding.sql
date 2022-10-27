@@ -14,4 +14,4 @@ INSERT INTO songs(Judul, Penyanyi, Tanggal_terbit, Genre, Duration, Audio_path, 
 VALUES ('Rap God-1', 'Mamah Dedeh', '2018-04-03', 'ROCK', 200, 'RapGod.mp3', 'ForeverAlone.jpg', '62d67891-b39e-4b7e-95e0-c94003ef5edf'),
 ('Rap God-2', 'Mamah Dedeh', '2002-04-03', 'ROCK', 200, 'RapGod.mp3', 'ForeverAlone.jpg', '62d67891-b39e-4b7e-95e0-c94003ef5edf'),
 ('Rap God-3', 'Mamah Dedeh', '2012-04-03', 'ROCK', 200, 'RapGod.mp3', 'ForeverAlone.jpg', '62d67891-b39e-4b7e-95e0-c94003ef5edf'),
-('Rap God-4', 'Mamah Dedeh', '2020-04-03', 'ROCK', 200, 'RapGod.mp3', 'ForeverAlone.jpg', 'f5849461-7375-437c-b62c-724c13afb95e');
+('Rap God-4', 'Mamah Dedeh', '2020-04-03', 'ROCK', 200, 'RapGod.mp3', 'ForeverAlone.jpg', null);
