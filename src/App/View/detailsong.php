@@ -75,6 +75,12 @@
                             Delete
                         </button>    
                     </div>
+                    <?php 
+                    if (!$_SESSION["isAdmin"]) { ?>
+                        <script>
+                            document.getElementById("admin_content").style.display = "none";
+                        </script>
+                    <?php } ?>
                 </div>
             </div>
         </div>
