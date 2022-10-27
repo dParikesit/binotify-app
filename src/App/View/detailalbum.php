@@ -11,7 +11,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
-        <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/detail.css" />
+        <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/detailalbum.css" />
         <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/nav.css">
         <link rel="icon" type="image/x-icon" href="<?php echo URL; ?>/layout/assets/img/favicon.png">
         <title>Binotify</title>
@@ -29,11 +29,11 @@
                 sidebar($isAdmin);
             ?>
             <div class="container">
-                <h1 class="title">Album Detail</h1>
                 <div class="content">
                     <div class="user_content">
                         <img src="" alt="cover" id="cover" class="cover">
                         <div class="content-left">
+                            <a class="title-album" id="">Album </a><br>
                             <a class="judul" id="judul">Title: </a><br>
                             <div class="desc">
                                 <a class="penyanyi" id="penyanyi">Artist: </a>
@@ -62,6 +62,7 @@
                         </button>
                     </div>
                 </div>
+                <div class="background-back">
                 <table class="card">
                     <tr>
                         <th class="first-index">#</th>
@@ -78,14 +79,15 @@
                         $count_data = count($result);
                         for($i = 0; $i < $count_data; $i++) {
                             $inc = $result[$i];
-                            echo "<tr class='subcard'>";
+                            echo "<tr class='subcard' onClick={navigateTo('" . $inc[0] .  "')}>";
                             echo "<td class='index'>";
                             echo $i + 1;
                             echo "</td>";
                             echo "<td>";
                             echo "<div class='flex'>";
                             echo "<div class='main-content'>";
-                            echo "<div onClick={navigateTo('" . $inc[0] .  "')}>" . $inc["judul"] .  "</div>";
+                            echo "<div class='main-content-title'>" . $inc["judul"] .  "</div>";
+                            echo "<div class='main-content-penyanyi'>" . $inc["penyanyi"] .  "</div>";
                             echo "</div>";
                             echo "</div>";
                             echo "</td>";
@@ -105,6 +107,7 @@
                         }
                     ?>
                 </table>
+                </div>
 
                 <div id="admin_content" class="add_song">
                         <form class="form_edit" id="form_edit" method="PUT" enctype="multipart/form-data">
