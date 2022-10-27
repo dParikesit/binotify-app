@@ -7,7 +7,12 @@ function sidebar($isAdmin){
     <li class=\"nav__item\"><a href=\"/addalbum\">Tambah Album</a></li>
     <li class=\"nav__item\"><a href=\"/users\">Daftar User</a></li>";
     $element3 = "<li class=\"nav__item\"><a href=\"/listalbum\">Daftar Album</a></li>
-    <li class=\"nav__item\"><a href=\"/logout\">Keluar</a></li>
+    <li class=\"nav__item\"><a href=\"/logout\">Logout</a></li>
+  </ul>
+</nav>
+</div>";
+    $element4 = "<li class=\"nav__item\"><a href=\"/listalbum\">Daftar Album</a></li>
+    <li class=\"nav__item\"><a href=\"/login\">Login</a></li>
   </ul>
 </nav>
 </div>";
@@ -26,12 +31,16 @@ function sidebar($isAdmin){
       </nav>
   </div>
     ";
-
-    if ($isAdmin == true) {
+    if (isset($_SESSION["user_id"])) {
+      if ($isAdmin == true) {
         echo $element1.$element2.$element3;
-    } else {
+      } else {
         echo $element1.$element3;
+      }
+    } else {
+      echo $element1.$element4;
     }
+    
 }
 
 ?>
