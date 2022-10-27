@@ -93,7 +93,7 @@ class SongService extends Service{
 
     public function deleteSongFromAlbum($song_id) {
         try {
-            $sql = "UPDATE songs SET album_id=:null WHERE song_id = :song_id";
+            $sql = "UPDATE songs SET album_id=null WHERE song_id = :song_id";
             $statement = $this->db->prepare($sql);
             $statement->bindParam(':song_id', $song_id, PDO::PARAM_STR);
             $statement->execute();

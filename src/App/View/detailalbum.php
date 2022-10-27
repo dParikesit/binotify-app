@@ -78,7 +78,7 @@
                         $count_data = count($result);
                         for($i = 0; $i < $count_data; $i++) {
                             $inc = $result[$i];
-                            echo "<tr class='subcard' onClick={deleteSong(" . $inc[0] .  ")}>";
+                            echo "<tr class='subcard' onClick={deleteSong('" . $inc[0] .  "')}>";
                             echo "<td class='index'>";
                             echo $i + 1;
                             echo "</td>";
@@ -200,7 +200,7 @@
                 if (xmlhttp.status==200){
                     window.location.reload();
                 } else{
-                    let res = JSON.parse(xhr.responseText);
+                    let res = JSON.parse(xmlhttp.responseText);
                     alert(res.error)
                 }
             }
@@ -210,10 +210,24 @@
             xmlhttp.send(JSON.stringify(payload));
         }
 
-        const deleteSong = (id) => {
+        const deleteSong = (song_id) => {
+            const payload={
+                song_id: song_id
+            }
+
             const xmlhttp = new XMLHttpRequest();
-            xmlhttp.open("PUT", "deletesongfromalbum?id=" + id);
-            xmlhttp.send();
+
+            xmlhttp.onload = () => {
+                if (xmlhttp.status==200){
+                    window.location.reload();
+                } else{
+                    let res = JSON.parse(xmlhttp.responseText);
+                    alert(res.error)
+                }
+            }
+
+            xmlhttp.open("PATCH", "deletesongfromalbum");
+            xmlhttp.send(JSON.stringify(payload));
 
             window.location.reload();
         } 

@@ -46,18 +46,18 @@ final class SongController {
     }
 
     public function deleteSongFromAlbum() {
-        $_PATCH = json_decode(file_get_contents('php://input'), true);
-        $song_id = isset($_PATCH['song_id']) ? $_PATCH['song_id'] : '';
-
-        if (!$song_id){
-            throw new HTTPException('Empty fields', 400);
-        }
-
         try {
+            $_PATCH = $GLOBALS['_PATCH'];
+            $song_id = isset($_PATCH['song_id']) ? $_PATCH['song_id'] : '';
+
+            if (!$song_id){
+                throw new HTTPException('Empty fields', 400);
+            }
+
             $song_service = new SongService();
             $result = $song_service->deleteSongFromAlbum($song_id);
 
-            $res = new Response($result, 201);
+            $res = new Response($result, 200);
             $res->sendJSON();
         } catch (HTTPException $e) {
             $e->sendJSON();
