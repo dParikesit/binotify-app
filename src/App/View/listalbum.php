@@ -1,8 +1,5 @@
 <?php
     defined('BASEPATH') OR exit('No direct access to script allowed');
-    if (!isset($_SESSION["user_id"])) {
-        header("Location: "."/login");
-    }
 ?>
 <?php include 'navbar.php';?>
 <?php include 'sidebar.php';?>
@@ -22,11 +19,14 @@
 
     <body>
         <?php
-            navbar($_SESSION["isAdmin"], $_SESSION["username"]);
+            $isAdmin = isset($_SESSION["isAdmin"]) ? $_SESSION["isAdmin"] : false;
+            $username = isset($_SESSION["username"]) ? $_SESSION["username"] : "";
+            navbar($isAdmin, $username);
         ?>
         <div class="flex">
             <?php
-                sidebar($_SESSION["isAdmin"]);
+                $isAdmin = isset($_SESSION["isAdmin"]) ? $_SESSION["isAdmin"] : false;
+                sidebar($isAdmin);
             ?>
             <div class="flex-container">
                 <?php

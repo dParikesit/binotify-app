@@ -1,8 +1,5 @@
 <?php
     defined('BASEPATH') OR exit('No direct access to script allowed');
-    if (!isset($_SESSION["user_id"])) {
-        header("Location: "."/login");
-    }
 ?>
 
 <?php include 'navbar.php';?>
@@ -22,11 +19,14 @@
 
     <body> 
         <?php
-            navbar($_SESSION["isAdmin"], $_SESSION["username"]);
+            $isAdmin = isset($_SESSION["isAdmin"]) ? $_SESSION["isAdmin"] : false;
+            $username = isset($_SESSION["username"]) ? $_SESSION["username"] : "";
+            navbar($isAdmin, $username);
         ?>
         <div class="flex">
             <?php
-                sidebar($_SESSION["isAdmin"]);
+                $isAdmin = isset($_SESSION["isAdmin"]) ? $_SESSION["isAdmin"] : false;
+                sidebar($isAdmin);
             ?>
             <div class="container">
                 <h1 class="title">Album Detail</h1>
@@ -44,25 +44,20 @@
 
                     <div class="admin_content">
                         <form class="form_edit" id="form_edit" method="PUT" enctype="multipart/form-data">
-                        <section>
-                            <label> Title: </label>
-                            <input type="text" name="judul" id="judul_edit" placeholder="Title"><br>
-                        </section>
-                        <section>
-                            <label> Tanggal Terbit: </label>
-                            <input type="date" name="tanggal_terbit" id="tanggal_terbit_edit" value="2022-10-28"  min="1960-01-01"><br>
-                        </section>
-                        <section>
-                            <label> Genre: </label>
-                            <input type="text" name="genre" id="genre_edit" placeholder="Genre"><br>
-                        </section>
-                            <label> Cover Image: </label>
-                            <input type="file" name="cover_file" id="cover_file_edit" accept="image/jpg, image/jpeg, image/png"><br>
+                        
+                        <label> Title : </label>
+                        <input type="text" name="judul" id="judul_edit" placeholder="Title"><br>
+                        <label> Tanggal Terbit : </label>
+                        <input type="date" name="tanggal_terbit" id="tanggal_terbit_edit" value="2022-10-28"  min="1960-01-01"><br>
+                        <label> Genre : </label>
+                        <input type="text" name="genre" id="genre_edit" placeholder="Genre"><br>
+                        <label> Cover Image : </label>
+                        <input type="file" name="cover_file" id="cover_file_edit" accept="image/jpg, image/jpeg, image/png"><br>
                         </form>
-                        <button type="submit" id="button_submit" class="button" onclick={updateAlbum(event)}>
-                            Submit
+                        <button type="submit" id="button_save" class="button_save" onclick={updateAlbum(event)}>
+                            Save Changes
                         </button>
-                        <button type="button" id="button_delete" class="button" onclick={deleteAlbum(event)}>
+                        <button type="button" id="button_delete" class="button_delete" onclick={deleteAlbum(event)}>
                             Delete
                         </button>
                     </div>
@@ -83,14 +78,14 @@
                         $count_data = count($result);
                         for($i = 0; $i < $count_data; $i++) {
                             $inc = $result[$i];
-                            echo "<tr class='subcard' onClick={navigateTo('" . $inc[0] .  "')}>";
+                            echo "<tr class='subcard'>";
                             echo "<td class='index'>";
                             echo $i + 1;
                             echo "</td>";
                             echo "<td>";
                             echo "<div class='flex'>";
                             echo "<div class='main-content'>";
-                            echo "<div>" . $inc["judul"] .  "</div>";
+                            echo "<div onClick={navigateTo('" . $inc[0] .  "')}>" . $inc["judul"] .  "</div>";
                             echo "</div>";
                             echo "</div>";
                             echo "</td>";
@@ -104,14 +99,14 @@
                             echo "<div class='year'>" . substr($inc["tanggal_terbit"], 0, 4) . "</div>";
                             echo "</td>";
                             echo "<td class='admin_content'>";
-                            echo "<button type='button' class='button admin_content' onclick={deleteSong('" . $inc[0] .  "')} > Delete </button>";
+                            echo "<button type='button' class='button_delete_song admin_content' onclick={deleteSong('" . $inc[0] .  "')} > Delete </button>";
                             echo "</td>";
                             echo "</tr>";
                         }
                     ?>
                 </table>
 
-                <div id="admin_content">
+                <div id="admin_content" class="add_song">
                         <form class="form_edit" id="form_edit" method="PUT" enctype="multipart/form-data">
                             <select class="selection" name="song_id" id="song_id">
                                 <option value="">Select Song To Add</option>
@@ -134,7 +129,7 @@
                         </button>
                 </div>
                 <?php 
-                    if (!$_SESSION["isAdmin"]) { ?>
+                    if (!isset($_SESSION["user_id"]) || (isset($_SESSION["user_id"]) && !$_SESSION["isAdmin"])) { ?>
                         <script>
                             document.getElementById("admin_content").style.display = "none";
                             var length = document.getElementsByClassName("admin_content").length;
@@ -259,7 +254,6 @@
             xmlhttp.open("PATCH", "deletesongfromalbum");
             xmlhttp.send(JSON.stringify(payload));
 
-            window.location.reload();
         }
         
         const navigateTo = (song_id) => {

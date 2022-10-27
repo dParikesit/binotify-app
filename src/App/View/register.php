@@ -33,15 +33,15 @@
                 <input  type="text" class="unique" id="email" name="email" onkeyup={processChange()} placeholder="Enter your email.">
             </section>
             <section>
-                <label for="password"><b>Create a password</b></label>
-                <input class="margintop" type="password" id="password" name="password" placeholder="Create a password.">
-            </section>
-            <section>
                 <label for="username"><b>What should we call you?</b></label><p id="errorUsername"></p>
                 <input type="text" id="username" class="unique" name="username" onkeyup={processChange()} placeholder="Enter a username.">
             </section>
+            <section>
+                <label for="password"><b>Create a password</b></label>
+                <input class="margintop" type="password" id="password" name="password" placeholder="Create a password.">
+            </section>
         </form>
-        <p>By clicking on sign-up, you agree to Spotify's Terms and Conditions of Use.</p>
+        <p>By clicking on sign-up, you agree to Binotify's Terms and Conditions of Use.</p>
         <button type="button" onclick={register(event)} ><b>Sign up</b></button>
         <p>Have account? <a href="/login" class="button-text">Log in</a> </p>
         
