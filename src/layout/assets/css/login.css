@@ -13,7 +13,7 @@ body {
 }
 
 img {
-    width: 25vmin;
+    width: 15vmin;
 }
 
 form {
@@ -146,5 +146,11 @@ input[type=checkbox]{
     margin-right: 10px;
 }
 
+.flex {
+    display: flex;
+}
 
-
+.title {
+    font-size: 5vmin;
+    margin-top: 13%;
+}
