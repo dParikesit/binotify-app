@@ -1,5 +1,8 @@
 <?php
     defined('BASEPATH') OR exit('No direct access to script allowed');
+    if (!isset($_SESSION["user_id"])) {
+        header("Location: "."/login");
+    }
 ?>
 <?php include 'navbar.php';?>
 <?php include 'sidebar.php';?>
@@ -11,21 +14,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
         <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/search.css">
-        <link rel="icon" type="image/x-icon" href="<?php echo URL; ?>/layout/assets/img/favicon.png">
         <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/nav.css">
         <title>Binotify</title>
     </head>
 
     <body>
         <?php
-            $isAdmin = isset($_SESSION["isAdmin"]) ? $_SESSION["isAdmin"] : false;
-            $username = isset($_SESSION["username"]) ? $_SESSION["username"] : "";
-            navbar($isAdmin, $username);
+            navbar($_SESSION["isAdmin"], $_SESSION["username"]);
         ?>
         <div class="flex">
             <?php
-                $isAdmin = isset($_SESSION["isAdmin"]) ? $_SESSION["isAdmin"] : false;
-                sidebar($isAdmin);
+                sidebar($_SESSION["isAdmin"]);
             ?>
             <div class="main-content">
                 <div class="flex filter-bar">
@@ -93,7 +92,7 @@
                         echo $count_data;
                         for($i = 0; $i < $count_data; $i++) {
                             $data = $songs->getSongByParam($param, $tahun, $genre, $order, $sort, $page, $maxdata)[$i];
-                            echo "<tr class='subcard' onClick={testButton(" . $data[0] .  ")}>";
+                            echo "<tr class='subcard' onClick={navigateTo('" . $data[0] .  "')}>";
                             echo "<td class='index'>";
                             echo $i + 1 + $page;
                             echo "</td>";
@@ -226,5 +225,8 @@
     </body>
 
     <script>
+        const navigateTo = (song_id) => {
+            window.location.href = `/detailsong?id=${song_id}`;
+        }
     </script>
 </html>
