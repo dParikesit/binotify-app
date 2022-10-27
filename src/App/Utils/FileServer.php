@@ -19,9 +19,12 @@ class FileServer {
     }
 
     public function audio(){
+        if ($_SESSION["count"] > 3) {
+            return;
+        }
+
         $requestedFile = $_GET["name"];
         $file = $this->base_url . "/audios/" . $requestedFile;
-
         $_SESSION["count"] = $_SESSION["count"] + 1;
 
         $contentType = mime_content_type($file);
