@@ -1,8 +1,8 @@
 -- Create username iniuser password 1234User
 -- Create username iniadmin password 1234Admin
-INSERT INTO users(email, password, username,isadmin) 
-VALUES ('user@gmail.com','$2y$10$uRlGOMznczBOJDsFxQTAGONHxdmEsPonvvHJrRiDm/eGDsqVsua/K','iniuser',false),
-('admin@gmail.com','$2y$10$CpZ4uh/fW7C4m6CSUS3wieLcx7o4xjdvQff7pRndYyL2Pc9WpKR5C','iniadmin',true);
+INSERT INTO users(name, email, password, username,isadmin) 
+VALUES ('user','user@gmail.com','$2y$10$uRlGOMznczBOJDsFxQTAGONHxdmEsPonvvHJrRiDm/eGDsqVsua/K','iniuser',false),
+('admin','admin@gmail.com','$2y$10$CpZ4uh/fW7C4m6CSUS3wieLcx7o4xjdvQff7pRndYyL2Pc9WpKR5C','iniadmin',true);
 
 INSERT INTO albums(album_id, Judul, Penyanyi, Total_duration, Image_path, Tanggal_terbit, Genre)
 VALUES ('62d67891-b39e-4b7e-95e0-c94003ef5edf','JUDUL-1', 'Mamah Dedeh', 100, 'ForeverAlone.jpg', '2022-04-03', 'GENRE-1'),

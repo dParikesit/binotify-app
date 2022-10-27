@@ -25,12 +25,12 @@
         
         <form method="POST">
             <section>
-                <label for="email"><b>What's your email?</b></label><p id="errorEmail"></p>
-                <input type="text" id="email" name="email" onkeyup={processChange()} placeholder="Enter your email.">
+                <label for="name"><b>What's your name?</b></label>
+                <input type="text" id="name" name="name" placeholder="Enter your name">
             </section>
             <section>
-                <label for="email"><b>Confirm your email</b></label>
-                <input class="margintop" type="text" id="emailagain" name="email" placeholder="Enter your email again.">
+                <label for="email"><b>What's your email?</b></label><p id="errorEmail"></p>
+                <input class="margintop" type="text" id="email" name="email" onkeyup={processChange()} placeholder="Enter your email.">
             </section>
             <section>
                 <label for="password"><b>Create a password</b></label>
@@ -106,8 +106,8 @@
 
         const register = (e) => {
             e.preventDefault();
+            const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
-            const emailagain = document.getElementById('emailagain').value;
             const password = document.getElementById('password').value;
             const username = document.getElementById('username').value;
 
@@ -119,6 +119,7 @@
                     if (usernameRegex.test(username) && usernameIsAvailable) {
                         if (password.length >= 8) {
                             const payload = {
+                                name,
                                 email,
                                 password,
                                 username

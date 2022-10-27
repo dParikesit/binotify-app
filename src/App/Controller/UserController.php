@@ -18,18 +18,19 @@ final class UserController {
 
     public function register(){
         $_POST = json_decode(file_get_contents('php://input'), true);
+        $name = isset($_POST['name']) ? $_POST['name'] : '';
         $email = isset($_POST['email']) ? $_POST['email'] : '';
         $password = isset($_POST['password']) ? $_POST['password'] : '' ;
         $username = isset($_POST['username']) ? $_POST['username'] : '';
 
         try {
-            if (!$username || !$password || !$email){
+            if (!$name || !$username || !$password || !$email){
                 throw new HTTPException('Empty fields', 400);
             }
 
             $users_service = new UserService();
             $hashed_pass = password_hash($password, PASSWORD_DEFAULT);
-            $result = $users_service->create($email, $hashed_pass, $username);
+            $result = $users_service->create($name, $email, $hashed_pass, $username);
 
             $res = new Response($result, 201);
             $res->sendJSON();

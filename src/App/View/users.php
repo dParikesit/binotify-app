@@ -34,6 +34,7 @@
             <h1 class="list-of-users">List of Users</h1>
             <table>
                 <tr>
+                    <th>Name</th>
                     <th>Username</th>
                     <th>E-mail</th>
                 </tr>
@@ -44,8 +45,9 @@
                     for($i = 0; $i < $count_data; $i++) {
                         $data = $result[$i];
                         echo "<tr class='subcard'>";
-                        echo "<td class='username'>" . $data[3] . "</td>";
-                        echo "<td class='email'>" . $data[1] . "</td>";
+                        echo "<td class='username'>" . $data[1] . "</td>";
+                        echo "<td class='username'>" . $data[4] . "</td>";
+                        echo "<td class='email'>" . $data[2] . "</td>";
                         echo "</tr>";
                     }
                 ?>
