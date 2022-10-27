@@ -20,21 +20,18 @@ class FileServer {
     }
 
     public function audio(){
-        if ($_SESSION["count"] >= 3 && !$_SESSION["user_id"]) {
-            $res = new Response("You have reached the maximum number of downloads", 403);
-            $res->sendJSON();
-            return;
-        } else{
+        session_start();
+        if ($_SESSION["count"] < 3 || isset($_SESSION["user_id"])) {
+            $_SESSION["count"] += 1;
             $requestedFile = $_GET["name"];
             $file = $this->base_url . "/audios/" . $requestedFile;
-            $_SESSION["count"] += 1;
 
             $contentType = mime_content_type($file);
             header("Content-type: $contentType");
             header('Content-Disposition: inline');
             header('Cache-Control: max-age=2600000');
             readfile($file);
-        } 
+        }
     }
 }
 
