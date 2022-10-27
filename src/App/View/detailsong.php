@@ -1,5 +1,8 @@
 <?php
     defined('BASEPATH') OR exit('No direct access to script allowed');
+    if(!isset($_SESSION["user_id"]) && isset($_SESSION["count"]) && $_SESSION["count"] >= 3) {
+        echo "<script type='text/javascript'>alert('You have reached non authenticated user limit');</script>";
+    }
 ?>
 
 <?php include 'navbar.php';?>
