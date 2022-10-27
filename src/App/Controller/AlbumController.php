@@ -30,22 +30,26 @@ final class AlbumController {
     }
 
     public function deleteAlbum(){
-        $_DELETE = json_decode(file_get_contents('php://input'), true);
-        $album_id = isset($_DELETE['album_id']) ? $_DELETE['album_id'] : '';
-
-        if (!$album_id){
-            throw new HTTPException('Empty fields', 400);
-        }
-
-
         try {
+            $album_id = isset($_GET['id']) ? $_GET['id'] : '';
+
+            if (!$album_id){
+                throw new HTTPException($album_id, 400);
+            }
+
             $album_service = new AlbumService();
+            $image_path = $album_service->getAlbumById($album_id)["album"]['image_path'];
             $result = $album_service->delete($album_id);
+
+            unlink($_SERVER['DOCUMENT_ROOT']."/uploads/images/".$image_path);
 
             $res = new Response($result, 201);
             $res->sendJSON();
         } catch (HTTPException $e) {
             $e->sendJSON();
+        } catch (\Exception $e) {
+            $res = new HTTPException($e->getMessage(), 500);
+            $res->sendJSON();
         }
     }
 

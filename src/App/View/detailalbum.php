@@ -45,10 +45,6 @@
                             <input type="text" name="judul" id="judul_edit" placeholder="Title"><br>
                         </section>
                         <section>
-                            <label> Artist: </label>
-                            <input type="text" name="penyanyi" id="penyanyi_edit" placeholder="Artist"><br>
-                        </section>
-                        <section>
                             <label> Tanggal Terbit: </label>
                             <input type="date" name="tanggal_terbit" id="tanggal_terbit_edit" value="2022-10-28"  min="1960-01-01"><br>
                         </section>
@@ -116,7 +112,7 @@
                                     $count_data = count($result);
                                     for($i = 0; $i < $count_data; $i++) {
                                         $data = $result[$i];
-                                        if($data["album_id"] != $_GET['id']) {
+                                        if($data["album_id"] == "") {
                                             echo "<option value='$data[0]'>$data[1] - $data[2]</option>";
                                         }
                                         
@@ -138,27 +134,27 @@
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const id = urlParams.get('id');
+
         xmlhttp.open("GET", `/getalbum?id=${id}`);
         xmlhttp.send();
         xmlhttp.onload = () => {
             const result = JSON.parse(xmlhttp.responseText);
             const album = result.data.album;
             const image = document.getElementById('cover');
-            image.setAttribute('src', `/images?name=${album.image_path}`);
+            // image.setAttribute('src', `/images?name=${album.image_path}`);
             document.getElementById('judul').innerHTML = `Title: ${album.judul}`;
-            document.getElementById('penyanyi').innerHTML = `Singer: ${album.penyanyi}`;
+            document.getElementById('penyanyi').innerHTML = `Artist: ${album.penyanyi}`;
             // document.getElementById('tanggal_terbit').innerHTML = `Release date: ${album.tanggal_terbit}`;
             // document.getElementById('genre').innerHTML = `Genre: ${album.genre}`;
             document.getElementById('total_duration').innerHTML = `Duration: ${Math.floor(album.total_duration/60)}m ${album.total_duration%60}s`;
         }
-        /*
+        
         const updateAlbum = (e) => {
             e.preventDefault();
             const judul = document.getElementById('judul_edit').value;
-            const penyanyi = document.getElementById('penyanyi_edit').value;
             const tanggal_terbit = document.getElementById('tanggal_terbit_edit').value;
             const genre = document.getElementById('genre_edit').value;
-            const cover_file = document.getElementById('cover_file_edit').files[0]
+            const cover_file = document.getElementById('cover_file_edit').files[0];
             // need to handle get total duration from all song
             // const payload = {
             //     judul,
@@ -177,10 +173,12 @@
         const deleteAlbum = (e) => {
             e.preventDefault();
             const xmlhttp = new XMLHttpRequest();
-            xmlhttp.open("DELETE", "deletealbum?id=" + myParam);
+            xmlhttp.open("DELETE", "deletealbum?id=" + id);
+            // xmlhttp.setRequestHeader("Content-type", "application/json");
+            // xmlhttp.send(JSON.stringify({id}));
             xmlhttp.send();
 
-            window.location.href = "/index.php";
+            // window.location.href = "/index.php";
         }
 
         const updateSongToAlbum = (e) => {
@@ -204,6 +202,6 @@
             xmlhttp.send();
 
             window.location.reload();
-        } */
+        } 
     </script>
 </html>
