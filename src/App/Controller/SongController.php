@@ -65,28 +65,32 @@ final class SongController {
     }
 
     public function updateSongToAlbum() {
-        $_PATCH = json_decode(file_get_contents('php://input'), true);
-        $song_id = isset($_PATCH['song_id']) ? $_PATCH['song_id'] : '';
-        $album_id = isset($_PATCH['album_id']) ? $_PATCH['album_id'] : '';
-
-        if (!$song_id || !$album_id){
-            throw new HTTPException('Empty fields', 400);
-        }
-
         try {
+            $_PATCH = $GLOBALS['_PATCH'];
+            $song_id = isset($_PATCH['song_id']) ? $_PATCH['song_id'] : '';
+            $album_id = isset($_PATCH['album_id']) ? $_PATCH['album_id'] : '';
+
+            if (!$song_id || !$album_id){
+                throw new HTTPException(json_encode($_PATCH), 400);
+            }
+
             $song_service = new SongService();
             $album_service = new AlbumService();
-            
-            $penyanyi = $song_service->getSongById($song_id)['penyanyi'];
-            $penyanyi_compare = $album_service->getAlbumById($album_id)['penyanyi'];
 
-            $total_duration =  $song_service->getSongById($song_id)['duration'] + $album_service->getAlbumById($album_id)['total_duration'];
+            $album = $album_service->getAlbumById($album_id)["album"];
+            $song = $song_service->getSongById($song_id);
+            
+            $penyanyi = $song['penyanyi'];
+            $penyanyi_compare = $album['penyanyi'];
+
             if ($penyanyi != $penyanyi_compare){
                 throw new HTTPException('Penyanyi song and album not match', 400);
             }
+
+            $total_duration =  $song['duration'] + $album['total_duration'];
             $result = $song_service->updateSongToAlbum($song_id, $album_id, $total_duration);
 
-            $res = new Response($result, 201);
+            $res = new Response($result, 200);
             $res->sendJSON();
         } catch (HTTPException $e) {
             $e->sendJSON();

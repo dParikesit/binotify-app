@@ -141,7 +141,7 @@
             const result = JSON.parse(xmlhttp.responseText);
             const album = result.data.album;
             const image = document.getElementById('cover');
-            image.setAttribute('src', `/images?name=${album.image_path}`);
+            // image.setAttribute('src', `/images?name=${album.image_path}`);
             document.getElementById('judul').innerHTML = `Title: ${album.judul}`;
             document.getElementById('penyanyi').innerHTML = `Artist: ${album.penyanyi}`;
             // document.getElementById('tanggal_terbit').innerHTML = `Release date: ${album.tanggal_terbit}`;
@@ -171,23 +171,41 @@
         const deleteAlbum = (e) => {
             e.preventDefault();
             const xmlhttp = new XMLHttpRequest();
+            
+            xmlhttp.onload = () => {
+                if (xhr.status==201){
+                    window.location.href="/listalbum";
+                } else{
+                    let res = JSON.parse(xhr.responseText);
+                    alert(res.error)
+                }
+            }
+
             xmlhttp.open("DELETE", "deletealbum?id=" + id);
             xmlhttp.send();
-
-            // window.location.href = "/index.php";
         }
 
         const updateSongToAlbum = (e) => {
             e.preventDefault();
             const song_id = document.getElementById('song_id').value;
-            // need to get duration from song and album
-            // const payload = {
-            //     song_id,
-            //     album_id,
-            //     total_duration
-            // }
+
+            const payload={
+                album_id: id,
+                song_id: song_id
+            }
+            
             const xmlhttp = new XMLHttpRequest();
-            xmlhttp.open("PUT", "updatesongtoalbum?id=" + myParam);
+
+            xmlhttp.onload = () => {
+                if (xmlhttp.status==200){
+                    window.location.reload();
+                } else{
+                    let res = JSON.parse(xhr.responseText);
+                    alert(res.error)
+                }
+            }
+
+            xmlhttp.open("PATCH", "updatesongtoalbum");
             xmlhttp.setRequestHeader("Content-type", "application/json");
             xmlhttp.send(JSON.stringify(payload));
         }
