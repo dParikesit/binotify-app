@@ -28,7 +28,9 @@
                 $isAdmin = isset($_SESSION["isAdmin"]) ? $_SESSION["isAdmin"] : false;
                 sidebar($isAdmin);
             ?>
-            
+            <?php 
+                echo $_SESSION["count"];
+            ?>
             <div class="container">
                 <div class="content">
                     <div class="user_content">
