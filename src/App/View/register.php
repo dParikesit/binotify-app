@@ -30,7 +30,7 @@
             </section>
             <section>
                 <label for="email"><b>What's your email?</b></label><p id="errorEmail"></p>
-                <input  type="text" id="email" name="email" onkeyup={processChange()} placeholder="Enter your email.">
+                <input  type="text" class="unique" id="email" name="email" onkeyup={processChange()} placeholder="Enter your email.">
             </section>
             <section>
                 <label for="password"><b>Create a password</b></label>
@@ -38,7 +38,7 @@
             </section>
             <section>
                 <label for="username"><b>What should we call you?</b></label><p id="errorUsername"></p>
-                <input type="text" id="username" name="username" onkeyup={processChange()} placeholder="Enter a username.">
+                <input type="text" id="username" class="unique" name="username" onkeyup={processChange()} placeholder="Enter a username.">
             </section>
         </form>
         <p>By clicking on sign-up, you agree to Spotify's Terms and Conditions of Use.</p>
@@ -69,12 +69,18 @@
                 if (res.status==404) {
                     // Username not found, hence can be used
                     usernameIsAvailable = true;
-                    document.getElementById('username').style.border = "1px solid green";
+                    document.getElementById('username').style.border = "2px solid green";
+                    document.getElementById('username').addEventListener('blur', function(){
+                        this.classList.toggle("right");
+                    });
                     document.getElementById('errorUsername').innerHTML = '';
                 } else if(res.status==200){
                     // Username found, hence cannot be used
                     usernameIsAvailable = false;
-                    document.getElementById('username').style.border = "1px solid red";
+                    document.getElementById('username').style.border = "2px solid red";
+                    document.getElementById('username').addEventListener('blur', function(){
+                        this.classList.toggle("wrong");
+                    });
                     document.getElementById('errorUsername').innerHTML = "Username already exists";
                 }
             }
@@ -85,12 +91,18 @@
                 if (res2.status==404) {
                     // Email not found, hence can be used
                     emailIsAvailable = true;
-                    document.getElementById('email').style.border = "1px solid green";
+                    document.getElementById('email').style.border = "2px solid green";
+                    document.getElementById('email').addEventListener('blur', function(){
+                        this.classList.toggle("right");
+                    });
                     document.getElementById('errorEmail').innerHTML = '';
                 } else if(res2.status==200){
                     // Email found, hence cannot be used
                     emailIsAvailable = false;
-                    document.getElementById('email').style.border = "1px solid red";
+                    document.getElementById('email').style.border = "2px solid red";
+                    document.getElementById('email').addEventListener('blur', function(){
+                        this.classList.toggle("wrong");
+                    });
                     document.getElementById('errorEmail').innerHTML = "Email already exists";
                 }
             }
