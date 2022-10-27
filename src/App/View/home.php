@@ -1,8 +1,8 @@
 <?php
     defined('BASEPATH') OR exit('No direct access to script allowed');
-/*     if (!isset($_SESSION["user_id"])) {
+    if (!isset($_SESSION["user_id"])) {
         header("Location: "."/login");
-    } */
+    }
 ?>
 <?php include 'navbar.php';?>
 <?php include 'sidebar.php';?>
@@ -20,12 +20,11 @@
 
     <body>
         <?php
-            $isAdmin = false;
-            navbar(false, "USERNAME");
+            navbar($_SESSION["isAdmin"], $_SESSION["username"]);
         ?>
         <div class="flex">
             <?php
-                sidebar(false);
+                sidebar($_SESSION["isAdmin"]);
             ?>
             <table class="card">
             <tr>
@@ -46,7 +45,7 @@
                     echo "<td>";
                     echo "<div class='flex content-table'>";
                     // echo "<img src='" . $data[7] .  "' width='50' alt='song' />";
-                    echo "<img src='https://i.scdn.co/image/ab67616d0000b2739abdf14e6058bd3903686148' width='50' alt='song' />";
+                    echo "<img src='"."/images?name=". $data["image_path"] . "' width='50' alt='song' />";
                     echo "<div class='main-content'>";
                     echo "<div class='title'>" . $data[1] .  "</div>";
                     echo "<div class='writer'>" . $data[2] . "</div>";

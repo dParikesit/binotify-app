@@ -1,4 +1,9 @@
-<?php defined('BASEPATH') OR exit('No direct access to script allowed'); ?>
+<?php
+    defined('BASEPATH') OR exit('No direct access to script allowed');
+    if (!isset($_SESSION["user_id"])) {
+        header("Location: "."/login");
+    }
+?>
 <?php include 'navbar.php';?>
 <?php include 'sidebar.php';?>
 
@@ -16,12 +21,11 @@
 
     <body>
         <?php
-            $isAdmin = false;
-            navbar(false, "USERNAME");
+            navbar($_SESSION["isAdmin"], $_SESSION["username"]);
         ?>
         <div class="flex">
             <?php
-                sidebar(false);
+                sidebar($_SESSION["isAdmin"]);
             ?>
             <div class="flex-container">
                 <?php
@@ -29,15 +33,14 @@
                     $count_data = count($albums->readAll());
                     for($i = 0; $i < $count_data; $i++) {
                         $data = $albums->readAll()[$i];
-                        echo "<div class='flex-item' onClick={testButton(" . $data[0] .  ")}>";
+                        echo "<div class='flex-item' onClick={testButton('" . $data["album_id"] .  "')}>";
                         echo "<div class='card'>";
-                        // echo "<img src='" . $data["Image_path"] . "' width='225' />";
-                        echo "<img src='https://i.scdn.co/image/ab67616d0000b2739abdf14e6058bd3903686148' />";
+                        echo "<img src='"."/images?name=". $data["image_path"] . "' width='225' />";
                         echo "<div class='title'>";
-                        echo $data[1];
+                        echo $data["judul"];
                         echo "</div>";
                         echo "<div class='content'>";
-                        echo substr($data[5], 0, 4) . " . " . $data[2] . " . " . $data[6];
+                        echo substr($data["tanggal_terbit"], 0, 4) . " . " . $data["penyanyi"] . " . " . $data["genre"];
                         echo "</div>";
                         echo "</div>";
                         echo "</div>";
@@ -47,10 +50,8 @@
         </div>
     </body>
     <script>
-        // TODO: Integrate function to go to detail song page using id
         const testButton = (id) => {
-            console.log("Keklik")
-            console.log(id)
+            window.location.href = "/detailalbum?id=" + id;
         }
     </script>
 </html>

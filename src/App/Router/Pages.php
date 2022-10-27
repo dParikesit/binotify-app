@@ -15,6 +15,11 @@ $router->get("/images", function(){
     $obj->image();
 });
 
+$router->get("/audios", function(){
+    $obj = new FileServer();
+    $obj->audio();
+});
+
 // AUTH
 $router->get("/login", function(){
     $obj = new UserController();
@@ -62,6 +67,11 @@ $router->get("/detailsong", function(){
     $obj->viewDetailSong();
 });
 
+$router->get("/getsong", function(){
+    $obj = new SongController();
+    $obj->detailSong();
+});
+
 $router->get("/addsong", function(){
     $obj = new SongController();
     $obj->viewAddSong();
@@ -97,6 +107,11 @@ $router->patch("/deletesongfromalbum", function(){
 $router->get("/detailalbum", function(){
     $obj = new AlbumController();
     $obj->viewDetailAlbum();
+});
+
+$router->get("/getalbum", function(){
+    $obj = new AlbumController();
+    $obj->detailAlbum();
 });
 
 $router->get("/addalbum", function(){

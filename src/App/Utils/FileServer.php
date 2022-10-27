@@ -17,6 +17,17 @@ class FileServer {
         header('Cache-Control: max-age=2600000');
         readfile($file);
     }
+
+    public function audio(){
+        $requestedFile = $_GET["name"];
+        $file = $this->base_url . "/audios/" . $requestedFile;
+
+        $contentType = mime_content_type($file);
+        header("Content-type: $contentType");
+        header('Content-Disposition: inline');
+        header('Cache-Control: max-age=2600000');
+        readfile($file);
+    }
 }
 
 ?>

@@ -16,29 +16,25 @@ final class SongController {
     public function detailSong() {
         try {
             $song_service = new SongService();
-            $query = $_GET["id"];
-            $result = $song_service->getSongById($query);
-        
-            if ($data) {
-                $res = new Response('Success', 200, $result);
-                $res->sendJSON();
-            } else {
-                throw new HTTPException('Song not found', 404);
+            $query = isset($_GET['id']) ? $_GET['id'] : '';
+            if (!$query) {
+                throw new HTTPException('Empty fields', 400);
             }
+            $result = $song_service->getSongById($query);
+
+            $res = new Response('Success', 200, $result);
+            $res->sendJSON();
         } catch (HTTPException $e) {
             $e->sendJSON();
         }
     }
 
     public function deleteSong(){
-        $_DELETE = json_decode(file_get_contents('php://input'), true);
-        $song_id = isset($_DELETE['song_id']) ? $_DELETE['song_id'] : '';
-        
-        if (!$song_id){
-            throw new HTTPException('Empty fields', 400);
-        }
-
         try {
+            $song_id = isset($_DELETE['song_id']) ? $_DELETE['song_id'] : '';
+            if (!$song_id){
+                throw new HTTPException('Empty fields', 400);
+            }
             $song_service = new SongService();
             $result = $song_service->delete($song_id);
 
@@ -215,17 +211,12 @@ final class SongController {
             throw new HTTPException('Empty fields', 400);
         }
         // --- Audio File Upload ---
-        $audio_errors = [];
-        $audio_file_error = false;
         if (!isset($_FILES['audio_file']['error']) || is_array($_FILES['audio_file']['error'])) {
-            $audio_errors[] = 'Invalid parameters.';
-            $audio_file_error = true;
+            throw new HTTPException("Invalid parameters", 400);
         } else if ($_FILES['audio_file']['size'] > 10000000) { //10MB
-            $audio_errors[] = 'Audio file is too large.';
-            $audio_file_error = true;
+            throw new HTTPException("Audio file is too large", 400);
         } else if ($_FILES['audio_file']['error'] != 0) {
-            $audio_errors[] = 'Audio file upload error.';
-            $audio_file_error = true;
+            throw new HTTPException("Audio file upload error", 400);
         }
 
         $full_audio_path = "";
@@ -243,8 +234,7 @@ final class SongController {
         $audio_target_file = floor(microtime(true)).".".$audio_file_ext;
 
         if (!in_array($audio_file_ext,$audio_file_extension_allowed)) {
-            $audio_errors[] = "This file extension is not allowed. Please upload a MP3 or WAV or OGG file";
-            $audio_file_error = true;
+            throw new HTTPException("Audio file extension not allowed, please upload MP3, WAV, or OGG", 400);
         }
 
         if ($audio_file_error) {
@@ -264,14 +254,11 @@ final class SongController {
         $image_errors = [];
         $image_file_error = false;
         if (!isset($_FILES['image_file']['error']) || is_array($_FILES['image_file']['error'])) {
-            $image_errors[] = 'Invalid parameters.';
-            $image_file_error = true;
+            throw new HTTPException("Invalid parameters", 400);
         } else if ($_FILES['image_file']['size'] > 10000000) { //10MB
-            $image_errors[] = 'Image file is too large.';
-            $image_file_error = true;
+            throw new HTTPException("Image file is too large", 400);
         } else if ($_FILES['image_file']['error'] != 0) {
-            $image_errors[] = 'Image file upload error.';
-            $image_file_error = true;
+            throw new HTTPException("Image file upload error", 400);
         }
 
         $full_image_path = "";
@@ -289,8 +276,7 @@ final class SongController {
         $image_target_file = floor(microtime(true)).".".$image_file_ext;
 
         if (!in_array($image_file_ext,$image_file_extension_allowed)) {
-            $image_errors[] = "This file extension is not allowed. Please upload a JPG, JPEG, or PNG file";
-            $image_file_error = true;
+            throw new HTTPException("Image file extension is not allowed. Please upload a JPG, JPEG, or PNG", 400);
         }
 
         if ($image_file_error) {
