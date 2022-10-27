@@ -132,9 +132,16 @@
             audio.load()
 
             const button = document.getElementById('button_album');
-            button.onclick = () => {
-                window.location.href = `/detailalbum?id=${data.album_id}`;
+            if (data.album_id) {
+                button.onclick = () => {
+                    window.location.href = `/detailalbum?id=${data.album_id}`;
+                }
+            } else {
+                button.onclick = () => {
+                    alert("This song is not in any album");
+                }
             }
+            
         }
 
         async function getDuration(file) {
