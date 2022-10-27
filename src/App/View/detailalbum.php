@@ -163,9 +163,11 @@
             image.setAttribute('src', `/images?name=${album.image_path}`);
             document.getElementById('judul').innerHTML = `${album.judul}`;
             document.getElementById('penyanyi').innerHTML = `${album.penyanyi},`;
-            // document.getElementById('tanggal_terbit').innerHTML = `Release date: ${album.tanggal_terbit}`;
-            // document.getElementById('genre').innerHTML = `Genre: ${album.genre}`;
             document.getElementById('total_duration').innerHTML = `${Math.floor(album.total_duration/60)}m ${album.total_duration%60}s`;
+            document.getElementById('judul_edit').value = album.judul;
+            document.getElementById('tanggal_terbit_edit').value = album.tanggal_terbit;
+            document.getElementById('genre_edit').value = album.genre;
+            
         }
         
         const updateAlbum = (e) => {
@@ -175,16 +177,25 @@
             const genre = document.getElementById('genre_edit').value;
             const cover_file = document.getElementById('cover_file_edit').files[0];
 
-            const formData = new FormData();
-            formData.append('id', id);
-            formData.append('judul', judul);
-            formData.append('tanggal_terbit', tanggal_terbit);
-            formData.append('genre', genre);
-            formData.append('cover_file', cover_file);
+            let formData = new FormData();
+            judul !== "" ? formData.append("judul", judul) : "";
+            tanggal_terbit !== "" ? formData.append("tanggal_terbit", tanggal_terbit) : "";
+            genre !== "" ? formData.append("genre", genre) : "";
+            cover_file !== undefined ? formData.append("cover_file", cover_file) : "";
 
             const xmlhttp = new XMLHttpRequest();
-            xmlhttp.open("PUT", "updatealbum");
+            formData.append("id", id);
+            xmlhttp.open("POST", "/updatealbum");
             xmlhttp.send(formData);
+
+            xmlhttp.onload = () => {
+                if (xmlhttp.status==200){
+                    window.location.reload();
+                } else{
+                    let res = JSON.parse(xmlhttp.responseText);
+                    alert(res.error)
+                }
+            }
         }
 
         const deleteAlbum = (e) => {

@@ -111,18 +111,15 @@ final class AlbumController {
     public function updateAlbum() {
         try {
             $album_service = new AlbumService();
-
-            $_PUT = $GLOBALS['_PUT'];
-
-            $album_id = isset($_PUT['id']) ? $_PUT['id'] : '';
+            $album_id = isset($_POST['id']) ? $_POST['id'] : '';
             if (!$album_id){
                 throw new HTTPException("Empty album id", 400);
             }
 
             $old_album = $album_service->getAlbumById($album_id)["album"];
-            $judul = !empty($_PUT['judul']) ? $_PUT['judul'] : $old_album['judul'];
-            $genre = !empty($_PUT['genre']) ? $_PUT['genre'] : $old_album['genre'];
-            $tanggal_terbit = !empty($_PUT['tanggal_terbit']) ? $_PUT['tanggal_terbit'] : $old_album['tanggal_terbit'];
+            $judul = !empty($_POST['judul']) ? $_POST['judul'] : $old_album['judul'];
+            $genre = !empty($_POST['genre']) ? $_POST['genre'] : $old_album['genre'];
+            $tanggal_terbit = !empty($_POST['tanggal_terbit']) ? $_POST['tanggal_terbit'] : $old_album['tanggal_terbit'];
             
             // Image File
             $full_image_path = $old_album['image_path'];

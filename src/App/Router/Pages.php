@@ -124,7 +124,7 @@ $router->post("/addalbum", function(){
     $obj->addAlbum();
 });
 
-$router->put("/updatealbum", function(){
+$router->post("/updatealbum", function(){
     $obj = new AlbumController();
     $obj->updateAlbum();
 });

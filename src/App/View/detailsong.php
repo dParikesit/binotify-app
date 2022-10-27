@@ -173,8 +173,7 @@
 
             xhr.onload = () => {
                 if (xhr.status==200){
-                    alert("Song updated successfully");
-                    // window.location.reload();
+                    window.location.reload();
                 } else{
                     let res = JSON.parse(xhr.responseText);
                     alert(res.error)
