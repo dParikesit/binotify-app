@@ -63,7 +63,7 @@
             const xhr = new XMLHttpRequest();
             const xhr2 = new XMLHttpRequest();
 
-            xhr.onreadystatechange = function() {
+            xhr.onload = function() {
                 let res = JSON.parse(xhr.responseText);
                 if (res.status==404) {
                     // Username not found, hence can be used
@@ -78,7 +78,7 @@
                 }
             }
 
-            xhr2.onreadystatechange = function() {
+            xhr2.onload = function() {
                 let res2 = JSON.parse(xhr2.responseText);
                 console.log(res2)
                 if (res2.status==404) {
