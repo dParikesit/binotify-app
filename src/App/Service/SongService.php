@@ -10,7 +10,7 @@ class SongService extends Service{
 
     public function create(string $judul, string $penyanyi, string $tanggal_terbit, string $genre, string $duration, string $audio_path, string $image_path) {
         try {
-            $sql = "INSERT INTO songs (judul, penyanyi, tanggal_terbit, genre, duration, audio_path, image_path) VALUES (:judul, :penyanyi, :tanggal_terbit, :genre, :duration, :audio_path, :image_path)";
+            $sql = "INSERT INTO songs (judul, penyanyi, tanggal_terbit, genre, duration, audio_path, image_path) VALUES (:judul, :penyanyi, :tanggal_terbit, :genre, :duration, :audio_path, :image_path) RETURNING song_id";
             $statement = $this->db->prepare($sql);
             $statement->bindParam(':judul', $judul, PDO::PARAM_STR);
             $statement->bindParam(':penyanyi', $penyanyi, PDO::PARAM_STR);
@@ -21,7 +21,7 @@ class SongService extends Service{
             $statement->bindParam(':image_path', $image_path, PDO::PARAM_STR);
             $statement->execute();
 
-            return $this->db->lastInsertId();
+            return $statement->fetchColumn();
         } catch (PDOException $e) {
             $error_code = ($e->getCode() == 23000) ? 400 : 500;
             $res = new HTTPException($e->getMessage(), $error_code);
@@ -128,6 +128,22 @@ class SongService extends Service{
             $statement->bindParam(':song_id', $song_id, PDO::PARAM_STR);
             $statement->execute();
             $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+            return $result;
+        } catch (PDOException $e) {
+            $error_code = ($e->getCode() == 23000) ? 400 : 500;
+            $res = new HTTPException($e->getMessage(), $error_code);
+            $e->sendJSON();
+        }
+    }
+
+    public function getSongNotInAlbumId($album_id) {
+        try {
+            $sql = "SELECT * FROM songs WHERE album_id = null and penyanyi = (SELECT penyanyi FROM albums WHERE album_id = :album_id) ORDER BY judul ASC";
+            $statement = $this->db->prepare($sql);
+            $statement->bindParam(':album_id', $album_id, PDO::PARAM_STR);
+            $statement->execute();
+            $result = $statement->fetchAll();
 
             return $result;
         } catch (PDOException $e) {

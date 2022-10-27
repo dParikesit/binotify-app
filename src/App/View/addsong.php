@@ -71,6 +71,9 @@
                             $count_data = count($result);
                             for($i = 0; $i < $count_data; $i++) {
                                 $data = $result[$i];
+                                // if(!isset($data["album_id"])) {
+                                // }
+                                
                                 echo "<option value='$data[0]'>$data[1] - $data[2]</option>";
                             }
                         ?>
@@ -125,9 +128,9 @@
             const xmlhttp = new XMLHttpRequest();
             xmlhttp.open("POST", "/addsong");
             await xmlhttp.send(formData);
-            xhr.onload = () => {
-                if (xhr.status==200){
-                    window.location.reload();
+            await xhr.onload = () => {
+                if (xhr.status==201){
+                    alert("Song added successfully");
                 } else{
                     let res = JSON.parse(xhr.responseText);
                     alert(res.error)
