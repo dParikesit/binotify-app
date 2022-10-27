@@ -26,11 +26,11 @@
         <form method="POST">
             <section>
                 <label for="name"><b>What's your name?</b></label>
-                <input type="text" id="name" name="name" placeholder="Enter your name">
+                <input class="margintop" type="text" id="name" name="name" placeholder="Enter your name">
             </section>
             <section>
                 <label for="email"><b>What's your email?</b></label><p id="errorEmail"></p>
-                <input class="margintop" type="text" id="email" name="email" onkeyup={processChange()} placeholder="Enter your email.">
+                <input  type="text" id="email" name="email" onkeyup={processChange()} placeholder="Enter your email.">
             </section>
             <section>
                 <label for="password"><b>Create a password</b></label>
