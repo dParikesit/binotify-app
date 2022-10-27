@@ -82,7 +82,7 @@
                             <input class="form_edit_bottom_input" type="file" name="cover_file" id="cover_file_edit" accept="image/jpg, image/jpeg, image/png"><br>
                         </form>
                         <button type="button" id="button_submit" class="button_save" onclick={updateSong(event)}>
-                            Submit
+                            Save Changes
                         </button>
                         <button type="button" id="button_delete" class="button_delete" onclick={deleteSong(event)}>
                             Delete
