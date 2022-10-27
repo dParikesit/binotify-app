@@ -8,11 +8,12 @@ class UserService extends Service{
         parent::__construct();
     }
 
-    public function create(string $email, string $hashed_pass, string $username) {
+    public function create(string $name, string $email, string $hashed_pass, string $username) {
         try {
-            $sql = "INSERT INTO users (email, password, username) VALUES (:email, :password, :username)";
+            $sql = "INSERT INTO users (name, email, password, username) VALUES (:name, :email, :password, :username)";
 
             $statement = $this->db->prepare($sql);
+            $statement->bindParam(':name', $name, PDO::PARAM_STR);
             $statement->bindParam(':email', $email, PDO::PARAM_STR);
             $statement->bindParam(':password', $hashed_pass, PDO::PARAM_STR);
             $statement->bindParam(':username', $username, PDO::PARAM_STR);

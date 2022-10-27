@@ -1,8 +1,5 @@
 <?php
     defined('BASEPATH') OR exit('No direct access to script allowed');
-    if (!isset($_SESSION["user_id"])) {
-        header("Location: "."/login");
-    }
 ?>
 <?php include 'navbar.php';?>
 <?php include 'sidebar.php';?>
@@ -14,18 +11,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
         <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/listalbum.css">
-        <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/home.css">
+        <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/homepage.css">
         <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/nav.css">
+        <link rel="icon" type="image/x-icon" href="<?php echo URL; ?>/layout/assets/img/favicon.png">
         <title>Binotify</title>
     </head>
 
     <body>
         <?php
-            navbar($_SESSION["isAdmin"], $_SESSION["username"]);
+            $isAdmin = isset($_SESSION["isAdmin"]) ? $_SESSION["isAdmin"] : false;
+            $username = isset($_SESSION["username"]) ? $_SESSION["username"] : "";
+            navbar($isAdmin, $username);
         ?>
         <div class="flex">
             <?php
-                sidebar($_SESSION["isAdmin"]);
+                $isAdmin = isset($_SESSION["isAdmin"]) ? $_SESSION["isAdmin"] : false;
+                sidebar($isAdmin);
             ?>
             <div class="flex-container">
                 <?php

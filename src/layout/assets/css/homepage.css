@@ -43,6 +43,7 @@ tr {
 
 
 .subcard:hover {
+    cursor: pointer;
     background-color: #535854;
     margin-left: 5%;
     margin-right: 5%;

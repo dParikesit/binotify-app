@@ -19,6 +19,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
         <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/addpage.css" />
         <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/nav.css">
+        <link rel="icon" type="image/x-icon" href="<?php echo URL; ?>/layout/assets/img/favicon.png">
         <title>Binotify</title>
     </head>
 
@@ -120,11 +121,18 @@
             formData.append("duration", duration);
             formData.append("album_id", album_id);
 
-            console.log(formData)
 
             const xmlhttp = new XMLHttpRequest();
             xmlhttp.open("POST", "/addsong");
-            xmlhttp.send(formData);
+            await xmlhttp.send(formData);
+            xhr.onload = () => {
+                if (xhr.status==200){
+                    window.location.reload();
+                } else{
+                    let res = JSON.parse(xhr.responseText);
+                    alert(res.error)
+                }
+            }
         }
     </script>
 </html>

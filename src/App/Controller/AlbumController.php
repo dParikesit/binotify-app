@@ -43,7 +43,7 @@ final class AlbumController {
 
             unlink($_SERVER['DOCUMENT_ROOT']."/uploads/images/".$image_path);
 
-            $res = new Response($result, 201);
+            $res = new Response($result, 200);
             $res->sendJSON();
         } catch (HTTPException $e) {
             $e->sendJSON();
@@ -111,21 +111,18 @@ final class AlbumController {
     public function updateAlbum() {
         try {
             $album_service = new AlbumService();
-
-            $_PUT = $GLOBALS['_PUT'];
-
-            $album_id = isset($_PUT['id']) ? $_PUT['id'] : '';
+            $album_id = isset($_POST['id']) ? $_POST['id'] : '';
             if (!$album_id){
                 throw new HTTPException("Empty album id", 400);
             }
 
             $old_album = $album_service->getAlbumById($album_id)["album"];
-            $judul = isset($_PUT['judul']) ? $_PUT['judul'] : $old_album['judul'];
-            $genre = isset($_PUT['genre']) ? $_PUT['genre'] : $old_album['genre'];
-            $tanggal_terbit = isset($_PUT['tanggal_terbit']) ? $_PUT['tanggal_terbit'] : $old_album['tanggal_terbit'];
+            $judul = !empty($_POST['judul']) ? $_POST['judul'] : $old_album['judul'];
+            $genre = !empty($_POST['genre']) ? $_POST['genre'] : $old_album['genre'];
+            $tanggal_terbit = !empty($_POST['tanggal_terbit']) ? $_POST['tanggal_terbit'] : $old_album['tanggal_terbit'];
             
             // Image File
-            $full_image_path = "";
+            $full_image_path = $old_album['image_path'];
             if(isset($_FILES["cover_file"])){
                 if (!isset($_FILES['cover_file']['error']) || is_array($_FILES['cover_file']['error'])) {
                     throw new HTTPException("Invalid parameters", 400);
@@ -157,16 +154,15 @@ final class AlbumController {
                 if ($image_did_upload) {
                     // image_path in database
                     $full_image_path = $image_target_file;
+                    unlink($_SERVER['DOCUMENT_ROOT']."/uploads/images/".$image_path);
                 } else {
                     throw new HTTPException("Image file save error", 400);
                 }
-            } else{
-                $full_image_path = $old_album['image_path'];
             }
             
             $result = $album_service->update($album_id, $judul, $full_image_path, $tanggal_terbit, $genre);
         
-            $res = new Response($result, 201);
+            $res = new Response($result, 200);
             $res->sendJSON();
         } catch (HTTPException $e) {
             $e->sendJSON();

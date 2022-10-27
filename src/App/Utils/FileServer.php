@@ -1,6 +1,7 @@
 <?php 
 
 namespace App\Utils;
+require_once "./HTTPException.php";
 
 class FileServer {
     public function __construct() {
@@ -19,14 +20,21 @@ class FileServer {
     }
 
     public function audio(){
-        $requestedFile = $_GET["name"];
-        $file = $this->base_url . "/audios/" . $requestedFile;
+        if ($_SESSION["count"] >= 3 && !$_SESSION["user_id"]) {
+            $res = new Response("You have reached the maximum number of downloads", 403);
+            $res->sendJSON();
+            return;
+        } else{
+            $requestedFile = $_GET["name"];
+            $file = $this->base_url . "/audios/" . $requestedFile;
+            $_SESSION["count"] = $_SESSION["count"] + 1;
 
-        $contentType = mime_content_type($file);
-        header("Content-type: $contentType");
-        header('Content-Disposition: inline');
-        header('Cache-Control: max-age=2600000');
-        readfile($file);
+            $contentType = mime_content_type($file);
+            header("Content-type: $contentType");
+            header('Content-Disposition: inline');
+            header('Cache-Control: max-age=2600000');
+            readfile($file);
+        } 
     }
 }
 

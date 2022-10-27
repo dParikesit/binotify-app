@@ -82,7 +82,7 @@ $router->post("/addsong", function(){
     $obj->addSong();
 });
 
-$router->put("/updatesong", function(){
+$router->post("/updatesong", function(){
     $obj = new SongController();
     $obj->updateSong();
 });
@@ -124,7 +124,7 @@ $router->post("/addalbum", function(){
     $obj->addAlbum();
 });
 
-$router->put("/updatealbum", function(){
+$router->post("/updatealbum", function(){
     $obj = new AlbumController();
     $obj->updateAlbum();
 });

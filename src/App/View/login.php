@@ -11,6 +11,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+        <link rel="icon" type="image/x-icon" href="<?php echo URL; ?>/layout/assets/img/favicon.png">
         <link rel="stylesheet" href="./layout/assets/css/login.css" />
         <title>Binotify</title>
     </head>
@@ -22,7 +23,7 @@
         </div>
         <hr class="solid first-divider">
 
-        <p><b>To continue, login to Spotify.</b></p>
+        <p><b>To continue, login to Binotify.</b></p>
         
         <form method="POST">
             <section>
@@ -36,12 +37,7 @@
             </section>
         </form>
 
-        <div class="submit-container">
-            <!-- <section class="submit-remember">
-                <input type="checkbox" name="rememberme" id="rememberme">
-                <label for="rememberme">Remember me</label>
-            </section> -->
-            
+        <div class="submit-container">            
             <button type="button" onclick={login(event)} ><b>LOG IN</b></button>
         </div>
 
@@ -50,7 +46,7 @@
         <div class="register-redirect">
             <p><b>Don't have an account?</b></p>
             <button onclick={location.href="/register"} class="button-register">
-                SIGN UP FOR SPOTIFY
+                SIGN UP FOR BINOTIFY
             </button>
         </div>
         
