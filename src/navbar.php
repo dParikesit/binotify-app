@@ -5,7 +5,7 @@ function navbar($isAdmin, $username){
     <div class=\"wrapper site-header__wrapper\">
       <div class=\"site-header__start\">
         <nav class=\"nav show-button-navbar\">
-          <button class=\"nav__toggle\" aria-expanded=\"false\" type=\"button\">
+          <button id=\"navtoggle\" class=\"nav__toggle\" aria-expanded=\"false\" type=\"button\">
             menu
           </button>
           <ul class=\"nav__wrapper\">
@@ -45,7 +45,7 @@ function navbar($isAdmin, $username){
 </div>
 </header>
 <script> 
-  let navToggle = document.querySelector(\".nav__toggle\");
+  let navToggle = document.getElementById(\"navtoggle\");
   let navWrapper = document.querySelector(\".nav__wrapper\");
 
   navToggle.addEventListener(\"click\", function () {
@@ -80,27 +80,6 @@ function navbar($isAdmin, $username){
   } else {
     searchToggle.setAttribute(\"aria-label\", \"Open search\");
   }
-
-  const search = (e) => {
-    e.preventDefault();
-    const parameter = document.getElementById('search').value;
-    const payload = {
-      param: parameter
-  }
-
-  console.log(payload);
-
-  const xhr = new XMLHttpRequest();
-
-  xhr.onload = function() {
-    if (xhr.status==201){
-        window.location.href=\"/search\";
-    }
-  }
-
-  xhr.open(\"POST\", \"/search\");
-  xhr.setRequestHeader(\"Content-type\", \"application/json\");
-  xhr.send(JSON.stringify(payload));
 }
 </script>";
     echo $element1;
