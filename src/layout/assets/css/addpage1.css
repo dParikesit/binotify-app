@@ -26,6 +26,8 @@ body {
     padding: 1vmin;
     border: 1px solid #1DB954;
     border-radius: 1vh;
+    width: 40%;
+    margin-top: 0.75%;
 }
 
 .form_edit {
@@ -44,9 +46,33 @@ body {
     cursor: pointer;
 }
 
+.button:hover {
+    border: #1DB954 2px solid;
+    background-color: transparent;
+    color: #1DB954;
+}
+
+.button_submit {
+    border-radius: 2vmin;
+    max-width: 35vmin;
+    background-color: #1DB954;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 2vmin;
+    margin-top: 2%;
+    cursor: pointer;
+    border-color: transparent;
+}
+
+.button_submit:hover {
+    border: #1DB954 2px solid;
+    background-color: transparent;
+    color: #1DB954;
+}
+
 .selection {
     border-radius: 2vmin;
-    margin-top: 2vmin;
+    margin-top: 2%;
     max-width: 35vmin;
     background-color: #1DB954;
     text-decoration: none;
@@ -56,6 +82,12 @@ body {
 }
 
 .title {
-    font-size: 24px;
+    font-size: 5vmin;
     font-weight: 700;
+}
+
+@media (max-width: 873px) {
+    .input {
+        width: 90%;
+    }
 }

@@ -17,7 +17,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
-        <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/addpage.css" />
+        <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/addpage1.css" />
         <link rel="stylesheet" href="<?php echo URL; ?>/layout/assets/css/nav.css">
         <link rel="icon" type="image/x-icon" href="<?php echo URL; ?>/layout/assets/img/favicon.png">
         <title>Binotify</title>
@@ -36,33 +36,33 @@
                 <form class="form_edit" id="form_edit" method="PUT" enctype="multipart/form-data">
                     <label>
                         Title : 
-                        <input class="input" type="text" name="judul" id="judul" placeholder="Title" required>
                     </label>
+                    <input class="input" type="text" name="judul" id="judul" placeholder="Title" required>
                     <br>
                     <label>
                         Artist :
-                        <input class="input" type="text" name="penyanyi" id="penyanyi" placeholder="Artist" required>
                     </label>
+                    <input class="input" type="text" name="penyanyi" id="penyanyi" placeholder="Artist" required>
                     <br>
                     <label>
                         Cover Album : 
-                        <input class="button" type="file" name="cover_file" id="cover_file" accept="image/jpg, image/jpeg, image/png" required>
                     </label>
+                    <input class="button" type="file" name="cover_file" id="cover_file" accept="image/jpg, image/jpeg, image/png" required>
                     <br>
                     <label >
                         Audio Source :
-                        <input class="button" type="file" name="audio_file" id="audio_file" accept="audio/wav, audio/mp3, audio/ogg" required>
                     </label>
+                    <input class="button" type="file" name="audio_file" id="audio_file" accept="audio/wav, audio/mp3, audio/ogg" required>
                     <br>
                     <label>
                         Genre :
-                        <input class="input" type="text" name="genre" id="genre" placeholder="Genre" required>
                     </label>
+                    <input class="input" type="text" name="genre" id="genre" placeholder="Genre" required>
                     <br>
                     <label>
                         Tanggal Terbit :
-                        <input type="date" id="tanggal_terbit" name="tanggal_terbit" value="2022-10-28"  min="1960-01-01" required>
                     </label>
+                    <input class="input" type="date" id="tanggal_terbit" name="tanggal_terbit" value="2022-10-28"  min="1960-01-01" required>
                     <select class="selection" name="album_id" id="album_id">
                         <option value="">Select Album</option>
                         <?php
@@ -76,7 +76,7 @@
                         ?>
                     </select>
                 </form>
-                <button type="submit" id="button_submit" class="button" onclick={addSong(event)}>
+                <button type="submit" id="button_submit" class="button_submit" onclick={addSong(event)}>
                     Submit
                 </button>
             </div>
