@@ -80,8 +80,8 @@ Router | 13520087
 
 ## Bagian Bonus
 - Docker (13520087)
-- Responsive
-- UI/UX Spotify
+- Responsive (13520057)
+- UI/UX Spotify (13520057)
 
 ## Author
 NIM | NAMA
