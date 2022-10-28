@@ -90,11 +90,19 @@ ul {
 .nav__item {
     display: flex;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2); 
+    margin-left: 2vmin;
+    width: 25vmin;
+}
+
+@media (max-width: 679px) {
+    .nav__item {
+        width: 100%;
+    }
 }
 .nav__item a {
     display: block;
     width: 100%;
-    padding: 1.5rem 2rem; 
+    padding: 1.5rem 1vmin; 
     text-decoration: none;
     color: white;
     font-weight: 700;
@@ -212,7 +220,6 @@ ul {
 }
 
 .sidebar {
-    margin-right: 6vmin;
     list-style-type: none;
     min-height: 90vmin;
 }
@@ -229,4 +236,14 @@ ul {
 
 .hide {
     display: none;
+}
+
+.icon {
+    width: 20%;
+}
+
+.iconwhite {
+    background-color: white;
+    height: max-content;
+    margin-top: 8%;
 }
