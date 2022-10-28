@@ -77,9 +77,9 @@ User List Page
 Page / Feature | NIM
 --- | ---
 Login | 13520087 13520057
-Register | 13520087 13520057
-Home | 13520057
-Search | 13520057
+Register | 13520087 13520057 13520058
+Home | 13520057 13520058
+Search | 13520057 13520058
 Add Song | 13520058 13520057
 Add Album | 13520058 13520057
 Detail Song | 13520058 13520057
@@ -99,8 +99,11 @@ Add Album | 13520058 13520087
 Detail Song | 13520058 13520087
 Detail Album | 13520058 13520087
 List Album | 13520058 13520087
-List User | 13520058 13520087
-Router | 13520087
+List User | 13520087 13520058 
+Router | 13520087 13520058 13520057
+```
+P.S : NIM Pertama pada tabel merupakan penanggung jawab serta pembuat fitur utama
+```
 
 ## Bagian Bonus
 - Docker (13520087)
