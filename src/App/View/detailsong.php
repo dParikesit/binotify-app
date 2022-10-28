@@ -53,12 +53,6 @@
                             <source src="" type="" id="audio_source">
                         </audio>
                     </div>
-                    <?php 
-                    if (!isset($_SESSION["user_id"]) || (isset($_SESSION["user_id"]) && !$_SESSION["isAdmin"])) { ?>
-                        <script>
-                            document.getElementById("admin_content").style.display = "none";
-                        </script>
-                    <?php } ?>
                 </div>
                 <div class="admin_content" id="admin_content">
                     <div class="edit-form">
@@ -89,6 +83,12 @@
                         </button>    
                     </div>
                 </div>
+                <?php 
+                    if (!isset($_SESSION["user_id"]) || (isset($_SESSION["user_id"]) && !$_SESSION["isAdmin"])) { ?>
+                        <script>
+                            document.getElementById("admin_content").style.display = "none";
+                        </script>
+                    <?php } ?>
             </div>
         </div>
         </div>
