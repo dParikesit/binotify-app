@@ -36,7 +36,7 @@ class UserService extends Service{
             $statement->execute();
 
             if($statement->rowCount() == 0) {
-                throw new HTTPException('User is available', 404);
+                throw new HTTPException('User not found', 404);
             }
 
             return $statement->fetch(PDO::FETCH_ASSOC);
