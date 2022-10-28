@@ -76,7 +76,7 @@
                     <?php
                         $maxdata = 2;
                         $page = isset($_GET["page"]) && $_GET["page"] != '' ? $_GET["page"] * $maxdata : 0;
-                        $param = $_GET["search"];
+                        $param = "%" . $_GET["search"] . "%";
                         $tahun;
                         if(ctype_digit($param)) {
                             $tahun = $param;
