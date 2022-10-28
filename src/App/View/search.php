@@ -74,7 +74,7 @@
                         <th>Tahun</th>
                     </tr>
                     <?php
-                        $maxdata = 2;
+                        $maxdata = 5;
                         $page = isset($_GET["page"]) && $_GET["page"] != '' ? $_GET["page"] * $maxdata : 0;
                         $param = "%" . $_GET["search"] . "%";
                         $tahun;
