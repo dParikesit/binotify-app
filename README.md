@@ -57,6 +57,8 @@ List Album |
 List User | 13520058
 
 ### Server-side
+Page / Feature | NIM
+--- | ---
 Login | 
 Register | 
 Home | 
