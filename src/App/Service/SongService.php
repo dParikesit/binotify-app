@@ -209,28 +209,7 @@ class SongService extends Service{
             $e->sendJSON();
         }
     }
-
-    public function getSongByParamAndGenre($param, $genre, $ordering, $page, $maxdata) {
-        try {
-            $sql = "SELECT * FROM songs WHERE (Judul = :Parameter OR Penyanyi = :Parameter OR DATE_PART('year', Tanggal_terbit::date) = :Tahun) AND (Genre = :Genre OR :Genre IS NULL) LIMIT :Maxdata OFFSET :Mindata";
-
-            $statement = $this->db->prepare($sql);
-            $statement->bindParam(':Parameter', $param, PDO::PARAM_INT);
-            $statement->bindParam(':Tahun', $tahun, PDO::PARAM_INT);
-            $statement->bindParam(':Genre', $genre, PDO::PARAM_INT);
-            $statement->bindParam(':Mindata', $page, PDO::PARAM_STR);
-            $statement->bindParam(':Maxdata', $maxdata, PDO::PARAM_STR);
-            $statement->execute();
-            $result = $statement->fetchAll();
-
-            return $result;
-        } catch (PDOException $e) {
-            $error_code = ($e->getCode() == 23000) ? 400 : 500;
-            $res = new HTTPException($e->getMessage(), $error_code);
-            $e->sendJSON();
-        }
-    }
-
+    
     public function getSong() {
         try {
             $sql = "SELECT * FROM songs ORDER BY Tanggal_terbit DESC, Judul ASC LIMIT 10";
