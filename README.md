@@ -63,6 +63,8 @@ Detail Song Page
 ![Detail Song Page](/screenshots/detailsong.png)
 Home Admin Page
 ![Home Admin Page](/screenshots/home_admin.png)
+Home User Page
+![Home User Page](/screenshots/home_user.png)
 Home Guest Page
 ![Home Guest Page](/screenshots/home_guest.png)
 Login Page
