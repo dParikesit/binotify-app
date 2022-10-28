@@ -69,24 +69,24 @@ User List Page
 ### Client-side
 Page / Feature | NIM
 --- | ---
-Login | 
-Register | 
-Home | 
-Search | 
-Add Song | 13520058
-Add Album | 13520058
-Detail Song | 13520058
-Detail Album | 13520058
-List Album |
-List User | 13520058
+Login | 13520087 13520057
+Register | 13520087 13520057
+Home | 13520057
+Search | 13520057
+Add Song | 13520058 13520057
+Add Album | 13520058 13520057
+Detail Song | 13520058 13520057
+Detail Album | 13520058 13520057
+List Album | 13520057
+List User | 13520058 13520057
 
 ### Server-side
 Page / Feature | NIM
 --- | ---
 Login | 
 Register | 
-Home | 
-Search | 
+Home | 13520057
+Search | 13520057
 Add Song | 13520058
 Add Album | 13520058
 Detail Song | 13520058
