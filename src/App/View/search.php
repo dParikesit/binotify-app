@@ -98,8 +98,8 @@
                             echo "</td>";
                             echo "<td>";
                             echo "<div class='flex wrapping-content'>";
-                            // echo "<img src='" . $data[7] .  "' width='50' alt='song' />";
-                            echo "<img src='https://i.scdn.co/image/ab67616d0000b2739abdf14e6058bd3903686148' width='50' alt='song' />";
+                            echo "<img src='" . $data[7] .  "' width='50' alt='song' />";
+                            // echo "<img src='https://i.scdn.co/image/ab67616d0000b2739abdf14e6058bd3903686148' width='50' alt='song' />";
                             echo "<div class='main-content'>";
                             echo "<div class='title'>" . $data[1] .  "</div>";
                             echo "<div class='writer'>" . $data[2] . "</div>";
