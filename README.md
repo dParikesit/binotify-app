@@ -61,24 +61,25 @@ Add Album | 13520058 13520057
 Detail Song | 13520058 13520057
 Detail Album | 13520058 13520057
 List Album | 13520057
-List User | 13520058 13520057
+List User | 13520087 13520057
 
 ### Server-side
 Page / Feature | NIM
 --- | ---
-Login | 
-Register | 
-Home | 13520057
+Login | 13520087
+Register | 13520087
+Home | 13520057 13520087
 Search | 13520057
-Add Song | 13520058
-Add Album | 13520058
-Detail Song | 13520058
-Detail Album | 13520058
-List Album | 13520058
-List User | 
+Add Song | 13520058 13520087
+Add Album | 13520058 13520087
+Detail Song | 13520058 13520087
+Detail Album | 13520058 13520087
+List Album | 13520058 13520087
+List User | 13520058 13520087
+Router | 13520087
 
 ## Bagian Bonus
-- Docker
+- Docker (13520087)
 - Responsive
 - UI/UX Spotify
 
