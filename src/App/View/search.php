@@ -87,9 +87,8 @@
                         $sort = isset($_GET["sort"]) && $_GET["sort"] != '' ? $_GET["sort"] : null;
                         $genre = isset($_GET["genre"]) && $_GET["genre"] != '' ? $_GET["genre"] : null;
                         $songs = new App\Service\SongService();
-                        $result = $songs->getSongByParam($param, $tahun, $genre, $order, $sort, $page, $maxdata);
+                        $total_data = count($songs->getSongByParam($param, $tahun, $genre, $order, $sort, null, null));
                         $count_data = count($songs->getSongByParam($param, $tahun, $genre, $order, $sort, $page, $maxdata));
-                        echo $count_data;
                         for($i = 0; $i < $count_data; $i++) {
                             $data = $songs->getSongByParam($param, $tahun, $genre, $order, $sort, $page, $maxdata)[$i];
                             echo "<tr class='subcard' onClick={navigateTo('" . $data[0] .  "')}>";
@@ -174,10 +173,10 @@
                         <input
                             class="hide" name="page"
                             value="<?php 
-                            if(isset($_GET["page"]) && $_GET["page"] != '' && $count_data == $maxdata) {
-                                echo $_GET["page"] + 1;
-                            } else if (isset($_GET["page"]) && $_GET["page"] != '' && $count_data < $maxdata) {
+                            if(isset($_GET["page"]) && $_GET["page"] != '' && ($count_data < $maxdata || $count_data + $maxdata * $_GET["page"] >= $total_data)) {
                                 echo $_GET["page"];
+                            } else if (isset($_GET["page"]) && $_GET["page"] != '') {
+                                echo $_GET["page"] + 1;
                             } else {
                                 echo 0;
                             }
