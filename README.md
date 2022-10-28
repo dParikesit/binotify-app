@@ -19,7 +19,7 @@ cd tugas-besar-1
 Perbedaan Development dan Production
 1. Mode dev bisa hot reload, production tidak bisa
 2. Pada mode dev, file lagu dan gambar yang diupload akan masuk ke folder local. Pada mode production akan masuk ke named volume docker
-3. Pada mode, dev data seeding akan dimasukkan, pada production tidak
+3. Pada mode dev, data seeding akan dimasukkan, pada production tidak
 ```
 
 #### Development
@@ -78,14 +78,14 @@ Page / Feature | NIM
 --- | ---
 Login | 13520087 13520057
 Register | 13520087 13520057 13520058
-Home | 13520057 13520058
+Home | 13520057 13520058 13520087
 Search | 13520057 13520058
-Add Song | 13520058 13520057
-Add Album | 13520058 13520057
-Detail Song | 13520058 13520057
-Detail Album | 13520058 13520057
-List Album | 13520057
-List User | 13520087 13520057
+Add Song | 13520058 13520057 13520087
+Add Album | 13520058 13520057 13520087
+Detail Song | 13520058 13520057 13520087
+Detail Album | 13520058 13520057 13520087
+List Album | 13520057 13520087
+List User | 13520087 13520057 13520058
 
 ### Server-side
 Page / Feature | NIM
