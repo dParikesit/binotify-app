@@ -126,8 +126,7 @@
             let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
             let usernameRegex = /^[a-zA-Z0-9_]+$/;
             
-            if (email===emailagain) {
-                if (emailRegex.test(email) && emailIsAvailable) {
+            if (emailRegex.test(email) && emailIsAvailable) {
                     if (usernameRegex.test(username) && usernameIsAvailable) {
                         if (password.length >= 8) {
                             const payload = {
@@ -157,9 +156,6 @@
                 } else {
                     alert("Invalid email");
                 }
-            } else{
-                alert("Please enter the same email for confirmation");
-            }
         }
     </script>
 </html>
