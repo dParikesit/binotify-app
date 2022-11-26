@@ -34,7 +34,7 @@
             <div class="container">
                 <div class="content">
                     <div class="user_content">
-                        <img src="https://i.scdn.co/image/ab67616d0000b2739abdf14e6058bd3903686148" alt="cover" id="cover" class="cover"><br>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/No-album-art.png" alt="https://upload.wikimedia.org/wikipedia/commons/3/3c/No-album-art.png" id="cover" class="cover"><br>
                         <a class="judul" id="judul">Title: </a>
                         <div class="desc">
                         <a class="penyanyi" id="penyanyi">Artist: </a>
