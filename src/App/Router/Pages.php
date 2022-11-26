@@ -1,7 +1,7 @@
 <?php
 
 use App\Router\Router;
-use App\Controller\{HomeController, UserController, SearchSongController, SongController, AlbumController};
+use App\Controller\{HomeController, UserController, SearchSongController, SongController, AlbumController, PremiumController};
 use App\Utils\FileServer;
 
 $router = new Router();
@@ -137,6 +137,17 @@ $router->delete("/deletealbum", function(){
 $router->get("/listalbum", function(){
     $obj = new AlbumController();
     $obj->viewAllAlbum();
+});
+
+// Premium
+$router->get("/listpenyanyi", function(){
+    $obj = new PremiumController();
+    $obj->viewSinger();
+});
+
+$router->get("/listsong", function(){
+    $obj = new PremiumController();
+    $obj->viewSingerSong();
 });
 
 $router->run();
