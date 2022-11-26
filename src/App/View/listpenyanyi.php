@@ -35,7 +35,7 @@
             </tr>
             <?php
                 $songs = new App\Service\SongService();
-                $count_data = count($songs->getSong());
+                $count_data = count($songs->getSong()); // TODO: Ubah
                 for($i = 0; $i < $count_data; $i++) {
                     $data = $songs->getSong()[$i];
                     echo "<tr class='subcard'>";
@@ -46,8 +46,8 @@
                     echo "<div class='title'>" . $data[1] .  "</div>";
                     echo "</td>";
                     echo "<td>";
-                    if(true) { // IF subscribe then see song
-                        echo "<div class='button'>See Songs</div>";
+                    if(true) { // TODO: IF subscribe then see song
+                        echo "<div class='button' onClick={navigateTo('" . $data[0] .  "')}>See Songs</div>";
                     } else {
                         echo "<div class='button'>Subscribe</div>";
                     }
@@ -61,7 +61,7 @@
     <script>
         const navigateTo = (song_id) => {
             console.log(song_id);
-            window.location.href = `/detailsong?id=${song_id}`;
+            window.location.href = `/listsong`; // TODO
         }
     </script>
 </html>
