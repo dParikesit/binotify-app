@@ -91,3 +91,7 @@ tr {
     color: white;
     text-decoration: underline;
 }
+
+.button_notclick {
+    color: #a2a3a3;
+}

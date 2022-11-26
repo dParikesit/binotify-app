@@ -36,6 +36,7 @@
             <?php
                 $songs = new App\Service\SongService();
                 $count_data = count($songs->getSong()); // TODO: Ubah
+                $status = "REJECTED"; // TODO: Change status
                 for($i = 0; $i < $count_data; $i++) {
                     $data = $songs->getSong()[$i];
                     echo "<tr class='subcard'>";
@@ -46,8 +47,12 @@
                     echo "<div class='title'>" . $data[1] .  "</div>";
                     echo "</td>";
                     echo "<td>";
-                    if(true) { // TODO: IF subscribe then see song
+                    if($status == "ACCEPTED") { // TODO: IF subscribe then see song
                         echo "<div class='button' onClick={navigateTo('" . $data[0] .  "')}>See Songs</div>";
+                    } else if($status == "PENDING") {
+                        echo "<div class='button_notclick'>PENDING</div>";
+                    } else if ($status == "REJECTED") {
+                        echo "<div class='button_notclick'>REJECTED</div>";
                     } else {
                         echo "<div class='button'>Subscribe</div>";
                     }
