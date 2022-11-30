@@ -10,7 +10,7 @@ class PremiumService extends Service{
 
     public function getSubscribedByUserId($user_id) {
         try {
-            $sql = "SELECT creator_id FROM subscriptions WHERE subscriber_id = :user_id";
+            $sql = "SELECT creator_id FROM subs WHERE subscriber_id = :user_id";
             $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
             $statement = $this->db->prepare($sql);
             $statement->execute();
