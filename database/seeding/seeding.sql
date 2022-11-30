@@ -30,6 +30,6 @@ VALUES ('de000811-180b-4754-8b12-43ace91fd665','Alfred - Interlude','Eminem','20
 ('77472a99-5fbb-4844-8950-afe755a59cfa','Lose Yourself','Eminem','2002-10-08','Hip-Hop',328,'LoseYourself.mp3','LoseYourself.jpg',null),
 ('3c1e5e48-2e6b-469d-8397-29f4b7d544e9','This is What You Came for','Calvin Harris','2016-04-29','Hip-Hop',222,'ThisIsWhatYouCameFor.mp3','ThisIsWhatYouCameFor.png',null);
 
-INSERT INTO subcriptions(creator_id, subscriber_id, status) 
+INSERT INTO subs(creator_id, subscriber_id, status) 
 VALUES (1, 1 ,'PENDING'),
 (2, 1 ,'PENDING');

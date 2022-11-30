@@ -155,4 +155,9 @@ $router->get("/getsubscribed", function(){
     $obj->getUserListSubscription();
 });
 
+$router->post("/chStatus", function(){
+    $obj = new PremiumController();
+    $obj->updateStatus();
+});
+
 $router->run();

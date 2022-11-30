@@ -12,6 +12,18 @@ final class PremiumController {
         include $_SERVER['DOCUMENT_ROOT'] . "/App/View/listsong.php";
     }
 
+    public function updateStatus() {
+        try {
+            $premium_service = new PremiumService();
+            $result = $premium_service->updateStatus($_POST['creator_id'], $_POST['subscriber_id'], $_POST['status']);
+        
+            $res = new Response('Success', 200, $result);
+            $res->sendJSON();
+        } catch (HTTPException $e) {
+            $e->sendJSON();
+        }
+    }
+
     public function getUserListSubscription() {
         try {
             $premium_service = new PremiumService();
