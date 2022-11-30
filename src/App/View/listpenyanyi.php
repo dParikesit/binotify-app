@@ -33,37 +33,42 @@
                 <th>Nama Penyanyi</th>
                 <th></th>
             </tr>
-            <?php
-                $songs = new App\Service\SongService();
-                $count_data = count($songs->getSong()); // TODO: Ubah
-                $status = "REJECTED"; // TODO: Change status
-                for($i = 0; $i < $count_data; $i++) {
-                    $data = $songs->getSong()[$i];
-                    echo "<tr class='subcard'>";
-                    echo "<td class='index'>";
-                    echo $i + 1;
-                    echo "</td>";
-                    echo "<td>";
-                    echo "<div class='title'>" . $data[1] .  "</div>";
-                    echo "</td>";
-                    echo "<td>";
-                    if($status == "ACCEPTED") { // TODO: IF subscribe then see song
-                        echo "<div class='button' onClick={navigateTo('" . $data[0] .  "')}>See Songs</div>";
-                    } else if($status == "PENDING") {
-                        echo "<div class='button_notclick'>PENDING</div>";
-                    } else if ($status == "REJECTED") {
-                        echo "<div class='button_notclick'>REJECTED</div>";
-                    } else {
-                        echo "<div class='button'>Subscribe</div>";
-                    }
-                    echo "</td>";
-                    echo "</tr>";
-                }
-            ?>
+            <tbody id="listtable"></tbody>
         </table>
         </div>
     </body>
     <script>
+        let data = ''
+        const xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.open("GET", `http://localhost:3002/api/listpenyanyi`);
+        xmlhttp.send();
+        let status = "REJECTED" // TODO: Intgrate
+        xmlhttp.onload = () => {
+            const result = JSON.parse(xmlhttp.responseText);
+            console.log(result)
+            for(let i = 0; i < result.data.length; i++) {
+                data = data.concat("<tr class='subcard'><td class='index'>");
+                let index = i + 1
+                data = data.concat(index.toString(2));
+                data = data.concat("</td><td><div class='title'>");
+                data = data.concat(result.data[i].name);
+                data = data.concat("</div></td><td>");
+                if(status == "ACCEPTED") {
+                    data = data.concat("<div class='button' onClick={navigateTo('");
+                    data = data.concat(result.data[i].id);
+                    data = data.concat("')}>See Songs</div>");
+                } else if (status == "REJECTED") {
+                    data = data.concat("<div class='button_notclick'>REJECTED</div>")
+                } else if (status == "PENDING") {
+                    data = data.concat("<div class='button_notclick'>PENDING</div>")
+                } else {
+                    data = data.concat("<div class='button'>Subscribe</div>")
+                }
+                data = data.concat("</td></tr>")
+            }
+            document.getElementById('listtable').innerHTML = data;
+        }
         const navigateTo = (song_id) => {
             console.log(song_id);
             window.location.href = `/listsong`; // TODO
