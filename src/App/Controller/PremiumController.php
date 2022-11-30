@@ -14,6 +14,7 @@ final class PremiumController {
 
     public function updateStatus() {
         try {
+            $_POST = json_decode(file_get_contents('php://input'), true);
             $premium_service = new PremiumService();
             $result = $premium_service->updateStatus($_POST['creator_id'], $_POST['subscriber_id'], $_POST['status']);
         

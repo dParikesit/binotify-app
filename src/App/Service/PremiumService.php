@@ -17,7 +17,7 @@ class PremiumService extends Service{
             $statement->bindParam(':subscriber_id', $subscriber_id, PDO::PARAM_INT);
             $statement->execute();
 
-            return $statement->fetchColumn();
+            return "Status updated";
         } catch (PDOException $e) {
             $error_code = ($e->getCode() == 23000) ? 400 : 500;
             $res = new HTTPException($e->getMessage(), $error_code);
