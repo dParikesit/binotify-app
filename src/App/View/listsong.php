@@ -65,7 +65,8 @@
                 for (let j = 0; j < result.data.length; j++) {
                     data = data.concat('<tr>');
                     data = data.concat('<td>'+result.data[j].title+'</td>');
-                    data = data.concat('<td><audio class="audio_source" id="audio" controls><source src='+result.data[j].audio_path+' id="audio_source"></audio></td>');
+                    let type = 'audio/' + result.data[j].audio.path.split('.').pop();
+                    data = data.concat('<td><audio class="audio_source" id="audio" controls><source src='+result.data[j].audio_path+' type=' +type+' id="audio_source"></audio></td>');
                     data = data.concat('</tr>');
                 }
             }
