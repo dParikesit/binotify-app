@@ -1,5 +1,12 @@
 <?php
     defined('BASEPATH') OR exit('No direct access to script allowed');
+    if (!isset($_SESSION["user_id"])) {
+        header("Location: "."/login");
+    }
+
+    if (!isset($_SESSION["isAdmin"]) || !$_SESSION["isAdmin"] == false) {
+        header("Location: "."/");
+    }
 ?>
 <?php include 'navbar.php';?>
 <?php include 'sidebar.php';?>
@@ -31,37 +38,40 @@
             <tr>
                 <th class="first-index">#</th>
                 <th>Judul</th>
-                <th>Genre</th>
-                <th>Tahun</th>
+                <th>Play</th>
             </tr>
-            <?php
-                $songs = new App\Service\SongService();
-                $count_data = count($songs->getSong());
-                for($i = 0; $i < $count_data; $i++) {
-                    $data = $songs->getSong()[$i];
-                    echo "<tr class='subcard' onClick={navigateTo('" . $data[0] .  "')}>";
-                    echo "<td class='index'>";
-                    echo $i + 1;
-                    echo "</td>";
-                    echo "<td>";
-                    echo "<div class='title'>" . $data[1] .  "</div>";
-                    echo "</td>";
-                    echo "<td>";
-                    echo "<div class='genre'>" . $data[4] .  "</div>";
-                    echo "</td>";
-                    echo "<td>";
-                    echo "<div class='year'>" . substr($data[3], 0, 4) . "</div>";
-                    echo "</td>";
-                    echo "</tr>";
-                }
-            ?>
+            <tbody id="listtable"></tbody>
         </table>
         </div>
     </body>
     <script>
-        const navigateTo = (song_id) => {
-            console.log(song_id);
-            window.location.href = `/detailsong?id=${song_id}`;
+        let list_creatorid;
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "/getsubscribed");
+        xhr.send();
+        xhr.onload = () => {
+            const result = JSON.parse(xhr.responseText);
+            list_creatorid = result.data;
+        }
+        
+        let data = '';
+        const xmlhttp = new XMLHttpRequest();
+
+        for (let i = 0; i < list_creatorid.length; i++) {
+            xmlhttp.open("GET", `http://localhost:3002/api/songs/penyanyi/${list_creatorid[i]}`);
+            xmlhttp.send();
+            xmlhttp.onload = () => {
+                const result = JSON.parse(xmlhttp.responseText);
+                for (let j = 0; j < result.data.length; j++) {
+                    data = data.concat('<tr>');
+                    data = data.concat('<td>'+result.data[j].title+'</td>');
+                    data = data.concat('<td><audio class="audio_source" id="audio" controls><source src='+result.data[j].audio_path+' id="audio_source"></audio></td>');
+                    data = data.concat('</tr>');
+                }
+            }
+        }
+        xmlhttp.onload = () => {
+            document.getElementById("listtable").innerHTML = data;
         }
     </script>
 </html>

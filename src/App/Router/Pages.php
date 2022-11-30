@@ -150,4 +150,9 @@ $router->get("/listsong", function(){
     $obj->viewSingerSong();
 });
 
+$router->get("/getsubscribed", function(){
+    $obj = new PremiumController();
+    $obj->getUserListSubscription();
+});
+
 $router->run();

@@ -69,6 +69,7 @@
             }
             document.getElementById('listtable').innerHTML = data;
         }
+        
         const navigateTo = (song_id) => {
             console.log(song_id);
             window.location.href = `/listsong`; // TODO
