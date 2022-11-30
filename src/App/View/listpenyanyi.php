@@ -43,7 +43,7 @@
 
         xmlhttp.open("GET", `http://localhost:3002/api/listpenyanyi`);
         xmlhttp.send();
-        let status = "REJECTED" // TODO: Intgrate
+        let status = "ACCEPTED" // TODO: Intgrate
         xmlhttp.onload = () => {
             const result = JSON.parse(xmlhttp.responseText);
             console.log(result)
@@ -71,7 +71,7 @@
         }
         const navigateTo = (song_id) => {
             console.log(song_id);
-            window.location.href = `/listsong`; // TODO
+            window.location.href = `/listsong?song_id=${song_id}`; // TODO
         }
     </script>
 </html>
