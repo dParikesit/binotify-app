@@ -32,4 +32,4 @@ VALUES ('de000811-180b-4754-8b12-43ace91fd665','Alfred - Interlude','Eminem','20
 
 INSERT INTO subs(creator_id, subscriber_id, status) 
 VALUES (1, 1 ,'PENDING'),
-(2, 1 ,'PENDING');
+(3, 1 ,'PENDING');
