@@ -247,3 +247,7 @@ ul {
     height: max-content;
     margin-top: 8%;
 }
+
+.khusus a {
+    padding-left: 0vmin;
+}
