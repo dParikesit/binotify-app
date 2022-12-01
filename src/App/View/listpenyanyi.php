@@ -38,41 +38,115 @@
         </div>
     </body>
     <script>
-        let data = ''
-        const xmlhttp = new XMLHttpRequest();
-
-        xmlhttp.open("GET", `http://localhost:3002/api/listpenyanyi`);
-        xmlhttp.send();
-        let status = "ACCEPTED" // TODO: Intgrate
-        xmlhttp.onload = () => {
-            const result = JSON.parse(xmlhttp.responseText);
-            console.log(result)
+        const navigateTo = (creator_id) => {
+            window.location.href = `/listsong?creator_id=${creator_id}`;
+        }
+        const subscribe = (creator_id) => {
+            console.log(creator_id)
+            const xhr4 = new XMLHttpRequest();
+            xhr4.open("POST", `/addSubsReq`);
+            xhr4.setRequestHeader("Content-type", "application/json");
+            xhr4.send(JSON.stringify({creator_id}));
+            xhr4.onload = function() {
+                if (xhr4.status==200){
+                    alert("Subscribed")
+                }
+            }
+        }
+        function merge(singer, subsList) {
+            for (let i = 0; i < singer.length; i++) {
+                for (let j = 0; j < subsList.length; j++) {
+                    if (singer[i].creator_id === subsList[j].creator_id) {
+                        singer[i].status = subsList[j].status;
+                        break;
+                    }
+                }
+            }
+        }
+        function render(result){
+            let data = ""
             for(let i = 0; i < result.data.length; i++) {
                 data = data.concat("<tr class='subcard'><td class='index'>");
-                let index = i + 1
-                data = data.concat(index.toString(2));
+                data = data.concat(i+1);
                 data = data.concat("</td><td><div class='title'>");
                 data = data.concat(result.data[i].name);
                 data = data.concat("</div></td><td>");
+                let status = result.data[i].status
                 if(status == "ACCEPTED") {
                     data = data.concat("<div class='button' onClick={navigateTo('");
-                    data = data.concat(result.data[i].id);
+                    data = data.concat(result.data[i].creator_id);
                     data = data.concat("')}>See Songs</div>");
                 } else if (status == "REJECTED") {
                     data = data.concat("<div class='button_notclick'>REJECTED</div>")
                 } else if (status == "PENDING") {
                     data = data.concat("<div class='button_notclick'>PENDING</div>")
                 } else {
-                    data = data.concat("<div class='button'>Subscribe</div>")
+                    data = data.concat("<div class='button' onClick={subscribe('");
+                    data = data.concat(result.data[i].creator_id);
+                    data = data.concat("')}>Subscribe</div>");
                 }
                 data = data.concat("</td></tr>")
             }
-            document.getElementById('listtable').innerHTML = data;
+            document.getElementById('listtable').innerHTML = data
+        }
+
+        let result = ""
+        let old = ""
+
+        const xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", `/singerPrem`);
+        xmlhttp.send();
+        xmlhttp.onload = () => {
+            result = JSON.parse(xmlhttp.responseText);
+
+            const xhr2 = new XMLHttpRequest();
+            xhr2.open("GET", `/subStatusPHP`);
+            xhr2.send();
+            xhr2.onload = () => {
+                old = JSON.parse(xhr2.responseText)
+                merge(result.data, old.data)
+                render(result);
+            }
+
         }
         
-        const navigateTo = (song_id) => {
-            console.log(song_id);
-            window.location.href = `/listsong?song_id=${song_id}`; // TODO
-        }
+        setInterval(() => {
+            const xhr3 = new XMLHttpRequest();
+            xhr3.open("GET", `/subStatusSOAP`);
+            xhr3.send();
+            xhr3.onload = () => {
+                const result3 = JSON.parse(xhr3.responseText)
+                merge(result.data, result3.data)
+                render(result)
+
+                result3.data.forEach(item => {
+                    console.log(old.data.filter(x => x.creator_id === item.creator_id).length)
+                    if (old.data.filter(x => x.creator_id === item.creator_id).length === 0) {
+                        const xhr4 = new XMLHttpRequest();
+                        xhr4.open("POST", `/addSubsSoap`);
+                        xhr4.setRequestHeader("Content-type", "application/json");
+                        xhr4.send(JSON.stringify({creator_id: item.creator_id}));
+                        xhr4.onload = function() {
+                            if (xhr4.status==200){
+                                console.log("DB item added")
+                            }
+                        }
+                    } else {
+                        if (item.status !== old.data.find(x => x.creator_id === item.creator_id).status) {
+                            const xhr4 = new XMLHttpRequest();
+                            xhr4.open("POST", `/chStatus`);
+                            xhr4.setRequestHeader("Content-type", "application/json");
+                            xhr4.send(JSON.stringify(item));
+                            xhr4.onload = function() {
+                                if (xhr4.status==200){
+                                    console.log("DB item updated")
+                                }
+                            }
+                        }
+                    }                    
+                });
+            }
+        }, 3000);
+        
     </script>
 </html>
