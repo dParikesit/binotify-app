@@ -4,7 +4,7 @@ RUN apt-get update && apt-get upgrade -y
 
 RUN apt-get install -y libxml2-dev libpq-dev
 
-RUN docker-php-ext-install pgsql pdo pdo_pgsql && docker-php-ext-enable pgsql pdo pdo_pgsql
+RUN docker-php-ext-install pgsql pdo pdo_pgsql soap && docker-php-ext-enable pgsql pdo pdo_pgsql soap
 
 RUN mkdir -p /app
 
