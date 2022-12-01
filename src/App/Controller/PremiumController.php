@@ -28,7 +28,7 @@ final class PremiumController {
     public function getUserListSubscription() {
         try {
             $premium_service = new PremiumService();
-            $subscriber_id = $_SESSION['user_id'];
+            $subscriber_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '';
             $result = $premium_service->getSubscribedByUserId($subscriber_id);
         
             $res = new Response('Success', 200, $result);
