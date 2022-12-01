@@ -180,4 +180,9 @@ $router->post("/addSubsReq", function(){
     $obj->addSubsReq();
 });
 
+$router->post("/addSubsSoap", function(){
+    $obj = new PremiumController();
+    $obj->addSubsSoap();
+});
+
 $router->run();

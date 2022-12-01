@@ -1,16 +1,6 @@
 <?php
     defined('BASEPATH') OR exit('No direct access to script allowed');
 ?>
-<?php
-    $songs = new App\Service\PremiumService();
-    // $result = $songs->getSubsStatusSOAP(1);
-    // echo json_encode($result);
-    // $result = $songs->addSubscribeReq(13,1);
-    // echo json_encode($result);
-
-    // $result = $songs->getSubsStatusPHP(1);
-    // echo json_encode($result);
-?>
 <?php include 'navbar.php';?>
 <?php include 'sidebar.php';?>
 
@@ -43,28 +33,23 @@
                 <th>Nama Penyanyi</th>
                 <th></th>
             </tr>
-            <!-- <tr class='subcard'>
-                <td class='index'>#</td>
-                <td><div class='title'>Penyanyi</div></td>
-                <td><div class='button' onClick={}>See songs</div></td>
-            </tr> -->
             <tbody id="listtable"></tbody>
         </table>
         </div>
     </body>
     <script>
-        const navigateTo = (song_id) => {
-            console.log(song_id);
-            window.location.href = `/listsong?song_id=${song_id}`; // TODO
+        const navigateTo = (creator_id) => {
+            window.location.href = `/listsong?creator_id=${creator_id}`;
         }
         const subscribe = (creator_id) => {
+            console.log(creator_id)
             const xhr4 = new XMLHttpRequest();
-            xhr4.open("POST", `/chStatus`);
-            xhr.setRequestHeader("Content-type", "application/json");
-            xhr.send(JSON.stringify(item));
-            xhr.onload = function() {
-                if (xhr.status==200){
-                    console.log("DB item updated")
+            xhr4.open("POST", `/addSubsReq`);
+            xhr4.setRequestHeader("Content-type", "application/json");
+            xhr4.send(JSON.stringify({creator_id}));
+            xhr4.onload = function() {
+                if (xhr4.status==200){
+                    alert("Subscribed")
                 }
             }
         }
@@ -96,7 +81,9 @@
                 } else if (status == "PENDING") {
                     data = data.concat("<div class='button_notclick'>PENDING</div>")
                 } else {
-                    data = data.concat("<div class='button'>Subscribe</div>")
+                    data = data.concat("<div class='button' onClick={subscribe('");
+                    data = data.concat(result.data[i].creator_id);
+                    data = data.concat("')}>Subscribe</div>");
                 }
                 data = data.concat("</td></tr>")
             }
@@ -125,7 +112,7 @@
         
         setInterval(() => {
             const xhr3 = new XMLHttpRequest();
-            xhr3.open("GET", `/subStatusPHP`);
+            xhr3.open("GET", `/subStatusSOAP`);
             xhr3.send();
             xhr3.onload = () => {
                 const result3 = JSON.parse(xhr3.responseText)
@@ -133,17 +120,30 @@
                 render(result)
 
                 result3.data.forEach(item => {
-                    if (item.status !== old.data.find(x => x.creator_id === item.creator_id).status) {
+                    console.log(old.data.filter(x => x.creator_id === item.creator_id).length)
+                    if (old.data.filter(x => x.creator_id === item.creator_id).length === 0) {
                         const xhr4 = new XMLHttpRequest();
-                        xhr4.open("POST", `/chStatus`);
+                        xhr4.open("POST", `/addSubsSoap`);
                         xhr4.setRequestHeader("Content-type", "application/json");
-                        xhr4.send(JSON.stringify(item));
+                        xhr4.send(JSON.stringify({creator_id: item.creator_id}));
                         xhr4.onload = function() {
                             if (xhr4.status==200){
-                                console.log("DB item updated")
+                                console.log("DB item added")
                             }
                         }
-                    }
+                    } else {
+                        if (item.status !== old.data.find(x => x.creator_id === item.creator_id).status) {
+                            const xhr4 = new XMLHttpRequest();
+                            xhr4.open("POST", `/chStatus`);
+                            xhr4.setRequestHeader("Content-type", "application/json");
+                            xhr4.send(JSON.stringify(item));
+                            xhr4.onload = function() {
+                                if (xhr4.status==200){
+                                    console.log("DB item updated")
+                                }
+                            }
+                        }
+                    }                    
                 });
             }
         }, 3000);

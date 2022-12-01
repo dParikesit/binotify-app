@@ -67,7 +67,7 @@ final class PremiumController {
         try {
             $premium_service = new PremiumService();
             $subscriber_id = $_SESSION['user_id'];
-            $result = $premium_service->getSubStatusSOAP($subscriber_id);
+            $result = $premium_service->getSubsStatusSOAP($subscriber_id);
         
             $res = new Response('Success', 200, $result);
             $res->sendJSON();
@@ -76,12 +76,31 @@ final class PremiumController {
         }
     }
 
-    public function addSubsReq($creator_id) {
+    public function addSubsReq() {
         try {
+            $_POST = json_decode(file_get_contents('php://input'), true);
             $premium_service = new PremiumService();
             $subscriber_id = $_SESSION['user_id'];
-            $result = $premium_service->addSubscribeReq($creator_id, $subscriber_id);
-        
+            $result = $premium_service->addSubscribeReq($_POST['creator_id'], $subscriber_id);
+
+            if ($result == 500) {
+                throw new HTTPException('Failed', 400);
+            } 
+
+            $res = new Response('Success', 200, "Subscription request sent");
+            $res->sendJSON();
+        } catch (HTTPException $e) {
+            $e->sendJSON();
+        }
+    }
+
+    public function addSubsSoap() {
+        try {
+            $_POST = json_decode(file_get_contents('php://input'), true);
+            $premium_service = new PremiumService();
+            $subscriber_id = $_SESSION['user_id'];
+            $result = $premium_service->addSubsSoap($_POST['creator_id'], $subscriber_id);
+
             $res = new Response('Success', 200, $result);
             $res->sendJSON();
         } catch (HTTPException $e) {

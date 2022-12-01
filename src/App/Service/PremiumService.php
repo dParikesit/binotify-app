@@ -4,6 +4,7 @@ use \PDO;
 use \SoapClient;
 use \SoapVar;
 use \SoapHeader;
+use \SoapFault;
 use App\Utils\{HTTPException, Response};
 
 class PremiumService extends Service{
@@ -90,7 +91,7 @@ class PremiumService extends Service{
 
     public function getSubsStatusSOAP($subscriber_id) {
         try {
-            $client = new SoapClient('http://soap/subs?wsdl', array("trace" => 1, "exception" => 0));
+            $client = new SoapClient('http://soap/subs?wsdl', array("trace" => 1, "exceptions" => true));
 
             $headerVar = new SoapVar('<apiKey>N6GnHem1dDdtPjsXPzHxUAnWWtZG1ECLIMHgOlv7ine1skabTYLlP9WDYtr7se3lHHihPVdIZ6rg9yHQTcIabpy7qfl94GEYaopDTACMQrxjLsUmJaMd1VqikRWkJNpb</apiKey><clientType>FRONTEND</clientType>', XSD_ANYXML);
 
@@ -115,11 +116,8 @@ class PremiumService extends Service{
             };
             $result = array_map($func, $recordArr);
             return $result;
-        } catch (PDOException $e) {
-            $res = new HTTPException($e->getMessage(), 400);
-            $e->sendJSON();
-        } catch (HTTPException $e) {
-            $e->sendJSON();
+        } catch (\Exception $e) {
+            return 500;
         }
     }
 
@@ -138,14 +136,39 @@ class PremiumService extends Service{
             );
 
             $result = $client->__soapCall("subscribe", array($body));
-            return $result;
+
+            $sql = "INSERT INTO subs(creator_id, subscriber_id) VALUES (:creator_id, :subscriber_id)";
+
+            $statement = $this->db->prepare($sql);
+            $statement->bindParam(':creator_id', $creator_id, PDO::PARAM_INT);
+            $statement->bindParam(':subscriber_id',$subscriber_id, PDO::PARAM_INT);
+            $statement->execute();
+            
+            return 200;
+        } catch (\Exception $e) {
+            return 500;
+        }
+    }
+
+    public function addSubsSoap(int $creator_id, int $subscriber_id) {
+        try {
+            $sql = "INSERT INTO subs(creator_id, subscriber_id) VALUES (:creator_id, :subscriber_id)";
+
+            $statement = $this->db->prepare($sql);
+            $statement->bindParam(':creator_id', $creator_id, PDO::PARAM_INT);
+            $statement->bindParam(':subscriber_id',$subscriber_id, PDO::PARAM_INT);
+            $statement->execute();
+
+            return "Status updated";
         } catch (PDOException $e) {
-            $res = new HTTPException($e->getMessage(), 400);
+            $error_code = ($e->getCode() == 23000) ? 400 : 500;
+            $res = new HTTPException($e->getMessage(), $error_code);
             $e->sendJSON();
         } catch (HTTPException $e) {
             $e->sendJSON();
         }
     }
+
 }
 
 ?>
