@@ -1,6 +1,16 @@
 <?php
     defined('BASEPATH') OR exit('No direct access to script allowed');
 ?>
+<?php
+    $songs = new App\Service\PremiumService();
+    // $result = $songs->getSubsStatusSOAP(1);
+    // echo json_encode($result);
+    // $result = $songs->addSubscribeReq(13,1);
+    // echo json_encode($result);
+
+    // $result = $songs->getSubsStatusPHP(1);
+    // echo json_encode($result);
+?>
 <?php include 'navbar.php';?>
 <?php include 'sidebar.php';?>
 
@@ -33,20 +43,32 @@
                 <th>Nama Penyanyi</th>
                 <th></th>
             </tr>
+            <!-- <tr class='subcard'>
+                <td class='index'>#</td>
+                <td><div class='title'>Penyanyi</div></td>
+                <td><div class='button' onClick={}>See songs</div></td>
+            </tr> -->
             <tbody id="listtable"></tbody>
         </table>
         </div>
     </body>
     <script>
-        let data = ''
-        const xmlhttp = new XMLHttpRequest();
-
-        xmlhttp.open("GET", `http://localhost:3002/api/listpenyanyi`);
-        xmlhttp.send();
-        let status = "ACCEPTED" // TODO: Intgrate
-        xmlhttp.onload = () => {
-            const result = JSON.parse(xmlhttp.responseText);
-            console.log(result)
+        const navigateTo = (song_id) => {
+            console.log(song_id);
+            window.location.href = `/listsong?song_id=${song_id}`; // TODO
+        }
+        function merge(singer, subsList) {
+            for (let i = 0; i < singer.length; i++) {
+                for (let j = 0; j < subsList.length; j++) {
+                    if (singer[i].creator_id === subsList[j].creator_id) {
+                        singer[i].status = subsList[j].status;
+                        break;
+                    }
+                }
+            }
+        }
+        function render(result){
+            let data = ""
             for(let i = 0; i < result.data.length; i++) {
                 data = data.concat("<tr class='subcard'><td class='index'>");
                 let index = i + 1
@@ -54,6 +76,7 @@
                 data = data.concat("</td><td><div class='title'>");
                 data = data.concat(result.data[i].name);
                 data = data.concat("</div></td><td>");
+                let status = result.data[i].status
                 if(status == "ACCEPTED") {
                     data = data.concat("<div class='button' onClick={navigateTo('");
                     data = data.concat(result.data[i].id);
@@ -67,12 +90,38 @@
                 }
                 data = data.concat("</td></tr>")
             }
-            document.getElementById('listtable').innerHTML = data;
+            document.getElementById('listtable').innerHTML = data
+        }
+
+        const xmlhttp = new XMLHttpRequest();
+
+        let result = ""
+        xmlhttp.open("GET", `/singerPrem`);
+        xmlhttp.send();
+        xmlhttp.onload = () => {
+            result = JSON.parse(xmlhttp.responseText);
+
+            const xhr2 = new XMLHttpRequest();
+            xhr2.open("GET", `/subStatusPHP`);
+            xhr2.send();
+            xhr2.onload = () => {
+                const result2 = JSON.parse(xhr2.responseText)
+                merge(result.data, result2.data)
+            }
+
+            render(result);
         }
         
-        const navigateTo = (song_id) => {
-            console.log(song_id);
-            window.location.href = `/listsong?song_id=${song_id}`; // TODO
-        }
+        setInterval(() => {
+            const xhr3 = new XMLHttpRequest();
+            xhr3.open("GET", `/subStatusPHP`);
+            xhr3.send();
+            xhr3.onload = () => {
+                const result3 = JSON.parse(xhr3.responseText)
+                merge(result.data, result3.data)
+                render(result)
+            }
+        }, 3000);
+        
     </script>
 </html>
