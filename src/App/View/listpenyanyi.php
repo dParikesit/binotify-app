@@ -57,6 +57,17 @@
             console.log(song_id);
             window.location.href = `/listsong?song_id=${song_id}`; // TODO
         }
+        const subscribe = (creator_id) => {
+            const xhr4 = new XMLHttpRequest();
+            xhr4.open("POST", `/chStatus`);
+            xhr.setRequestHeader("Content-type", "application/json");
+            xhr.send(JSON.stringify(item));
+            xhr.onload = function() {
+                if (xhr.status==200){
+                    console.log("DB item updated")
+                }
+            }
+        }
         function merge(singer, subsList) {
             for (let i = 0; i < singer.length; i++) {
                 for (let j = 0; j < subsList.length; j++) {
@@ -71,15 +82,14 @@
             let data = ""
             for(let i = 0; i < result.data.length; i++) {
                 data = data.concat("<tr class='subcard'><td class='index'>");
-                let index = i + 1
-                data = data.concat(index.toString(2));
+                data = data.concat(i+1);
                 data = data.concat("</td><td><div class='title'>");
                 data = data.concat(result.data[i].name);
                 data = data.concat("</div></td><td>");
                 let status = result.data[i].status
                 if(status == "ACCEPTED") {
                     data = data.concat("<div class='button' onClick={navigateTo('");
-                    data = data.concat(result.data[i].id);
+                    data = data.concat(result.data[i].creator_id);
                     data = data.concat("')}>See Songs</div>");
                 } else if (status == "REJECTED") {
                     data = data.concat("<div class='button_notclick'>REJECTED</div>")
@@ -93,9 +103,10 @@
             document.getElementById('listtable').innerHTML = data
         }
 
-        const xmlhttp = new XMLHttpRequest();
-
         let result = ""
+        let old = ""
+
+        const xmlhttp = new XMLHttpRequest();
         xmlhttp.open("GET", `/singerPrem`);
         xmlhttp.send();
         xmlhttp.onload = () => {
@@ -105,11 +116,11 @@
             xhr2.open("GET", `/subStatusPHP`);
             xhr2.send();
             xhr2.onload = () => {
-                const result2 = JSON.parse(xhr2.responseText)
-                merge(result.data, result2.data)
+                old = JSON.parse(xhr2.responseText)
+                merge(result.data, old.data)
+                render(result);
             }
 
-            render(result);
         }
         
         setInterval(() => {
@@ -120,6 +131,20 @@
                 const result3 = JSON.parse(xhr3.responseText)
                 merge(result.data, result3.data)
                 render(result)
+
+                result3.data.forEach(item => {
+                    if (item.status !== old.data.find(x => x.creator_id === item.creator_id).status) {
+                        const xhr4 = new XMLHttpRequest();
+                        xhr4.open("POST", `/chStatus`);
+                        xhr4.setRequestHeader("Content-type", "application/json");
+                        xhr4.send(JSON.stringify(item));
+                        xhr4.onload = function() {
+                            if (xhr4.status==200){
+                                console.log("DB item updated")
+                            }
+                        }
+                    }
+                });
             }
         }, 3000);
         
