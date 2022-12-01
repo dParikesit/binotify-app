@@ -160,4 +160,24 @@ $router->post("/chStatus", function(){
     $obj->updateStatus();
 });
 
+$router->get("/singerPrem", function(){
+    $obj = new PremiumController();
+    $obj->getPremiumSinger();
+});
+
+$router->get("/subStatusPHP", function(){
+    $obj = new PremiumController();
+    $obj->getSubStatusPHP();
+});
+
+$router->get("/subStatusSOAP", function(){
+    $obj = new PremiumController();
+    $obj->getSubStatusSOAP();
+});
+
+$router->post("/addSubsReq", function(){
+    $obj = new PremiumController();
+    $obj->addSubsReq();
+});
+
 $router->run();

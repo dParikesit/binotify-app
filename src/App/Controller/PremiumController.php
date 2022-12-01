@@ -37,4 +37,55 @@ final class PremiumController {
             $e->sendJSON();
         }
     }
+
+    public function getPremiumSinger() {
+        try {
+            $premium_service = new PremiumService();
+            $result = $premium_service->getPremiumSinger();
+        
+            $res = new Response('Success', 200, $result);
+            $res->sendJSON();
+        } catch (HTTPException $e) {
+            $e->sendJSON();
+        }
+    }
+
+    public function getSubStatusPHP() {
+        try {
+            $premium_service = new PremiumService();
+            $subscriber_id = $_SESSION['user_id'];
+            $result = $premium_service->getSubsStatusPHP($subscriber_id);
+        
+            $res = new Response('Success', 200, $result);
+            $res->sendJSON();
+        } catch (HTTPException $e) {
+            $e->sendJSON();
+        }
+    }
+
+    public function getSubStatusSOAP() {
+        try {
+            $premium_service = new PremiumService();
+            $subscriber_id = $_SESSION['user_id'];
+            $result = $premium_service->getSubStatusSOAP($subscriber_id);
+        
+            $res = new Response('Success', 200, $result);
+            $res->sendJSON();
+        } catch (HTTPException $e) {
+            $e->sendJSON();
+        }
+    }
+
+    public function addSubsReq($creator_id) {
+        try {
+            $premium_service = new PremiumService();
+            $subscriber_id = $_SESSION['user_id'];
+            $result = $premium_service->addSubscribeReq($creator_id, $subscriber_id);
+        
+            $res = new Response('Success', 200, $result);
+            $res->sendJSON();
+        } catch (HTTPException $e) {
+            $e->sendJSON();
+        }
+    }
 }

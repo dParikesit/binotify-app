@@ -1,6 +1,9 @@
 <?php
 namespace App\Service;
 use \PDO;
+use \SoapClient;
+use \SoapVar;
+use \SoapHeader;
 use App\Utils\{HTTPException, Response};
 
 class PremiumService extends Service{
@@ -35,6 +38,106 @@ class PremiumService extends Service{
             $statement->execute();
             $result = $statement->fetchAll();
 
+            return $result;
+        } catch (PDOException $e) {
+            $res = new HTTPException($e->getMessage(), 400);
+            $e->sendJSON();
+        } catch (HTTPException $e) {
+            $e->sendJSON();
+        }
+    }
+
+    public function getPremiumSinger() {
+        try {
+            $opts = array('http' =>
+                array(
+                    'method'  => 'GET',
+                    'header'  => 'Content-Type: application/json'
+                )
+            );
+
+            $context  = stream_context_create($opts);
+
+            $result = file_get_contents('http://rest:3002/api/listpenyanyi', false, $context);
+
+            $singer = json_decode($result, true);
+
+            return $singer["data"];
+        } catch (PDOException $e) {
+            $res = new HTTPException($e->getMessage(), 400);
+            $e->sendJSON();
+        } catch (HTTPException $e) {
+            $e->sendJSON();
+        }
+    }
+
+    public function getSubsStatusPHP($subscriber_id){
+        try {
+            $sql = "SELECT * FROM subs WHERE subscriber_id = :subscriber_id";
+            $statement = $this->db->prepare($sql);
+            $statement->bindParam(':subscriber_id', $subscriber_id, PDO::PARAM_INT);
+            $statement->execute();
+            $result = $statement->fetchAll();
+
+            return $result;
+        } catch (PDOException $e) {
+            $res = new HTTPException($e->getMessage(), 400);
+            $e->sendJSON();
+        } catch (HTTPException $e) {
+            $e->sendJSON();
+        }
+    }
+
+    public function getSubsStatusSOAP($subscriber_id) {
+        try {
+            $client = new SoapClient('http://soap/subs?wsdl', array("trace" => 1, "exception" => 0));
+
+            $headerVar = new SoapVar('<apiKey>N6GnHem1dDdtPjsXPzHxUAnWWtZG1ECLIMHgOlv7ine1skabTYLlP9WDYtr7se3lHHihPVdIZ6rg9yHQTcIabpy7qfl94GEYaopDTACMQrxjLsUmJaMd1VqikRWkJNpb</apiKey><clientType>FRONTEND</clientType>', XSD_ANYXML);
+
+            $header = new SoapHeader('header','header',$headerVar);
+            $client->__setSoapHeaders($header);
+
+            $body = array(
+                "subscriber_id" => $subscriber_id
+            );
+
+            $singer = $client->__soapCall("getSubStatusBatch", array($body));
+
+            $resultStr = json_encode($singer);
+            $recordArr = json_decode(json_decode($resultStr, true)["return"], true)["records"];
+
+            $func = function($value) {
+                return array(
+                    "creator_id" => $value[0],
+                    "subscriber_id" => $value[1],
+                    "status" => $value[2]
+                );
+            };
+            $result = array_map($func, $recordArr);
+            return $result;
+        } catch (PDOException $e) {
+            $res = new HTTPException($e->getMessage(), 400);
+            $e->sendJSON();
+        } catch (HTTPException $e) {
+            $e->sendJSON();
+        }
+    }
+
+    public function addSubscribeReq($creator_id, $subscriber_id) {
+        try {
+            $client = new SoapClient('http://soap/subs?wsdl', array("trace" => 1, "exception" => 0));
+
+            $headerVar = new SoapVar('<apiKey>N6GnHem1dDdtPjsXPzHxUAnWWtZG1ECLIMHgOlv7ine1skabTYLlP9WDYtr7se3lHHihPVdIZ6rg9yHQTcIabpy7qfl94GEYaopDTACMQrxjLsUmJaMd1VqikRWkJNpb</apiKey><clientType>FRONTEND</clientType>', XSD_ANYXML);
+
+            $header = new SoapHeader('header','header',$headerVar);
+            $client->__setSoapHeaders($header);
+
+            $body = array(
+                "creator_id" => $creator_id,
+                "subscriber_id" => $subscriber_id
+            );
+
+            $result = $client->__soapCall("subscribe", array($body));
             return $result;
         } catch (PDOException $e) {
             $res = new HTTPException($e->getMessage(), 400);
