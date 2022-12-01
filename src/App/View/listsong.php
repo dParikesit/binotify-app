@@ -45,34 +45,36 @@
         </div>
     </body>
     <script>
-        let list_creatorid;
         const xhr = new XMLHttpRequest();
         xhr.open("GET", "/getsubscribed");
         xhr.send();
         xhr.onload = () => {
             const result = JSON.parse(xhr.responseText);
-            list_creatorid = result.data;
-        }
-        
-        let data = '';
-        const xmlhttp = new XMLHttpRequest();
-
-        for (let i = 0; i < list_creatorid.length; i++) {
-            xmlhttp.open("GET", `http://localhost:3002/api/songs/penyanyi/${list_creatorid[i]}`);
-            xmlhttp.send();
-            xmlhttp.onload = () => {
-                const result = JSON.parse(xmlhttp.responseText);
-                for (let j = 0; j < result.data.length; j++) {
-                    data = data.concat('<tr>');
-                    data = data.concat('<td>'+result.data[j].title+'</td>');
-                    let type = 'audio/' + result.data[j].audio.path.split('.').pop();
-                    data = data.concat('<td><audio class="audio_source" id="audio" controls><source src='+result.data[j].audio_path+' type=' +type+' id="audio_source"></audio></td>');
-                    data = data.concat('</tr>');
+            let list_creatorid = result.data;
+            var xmlhttp = [];
+            let row = "";
+            for (let i = 0; i < list_creatorid.length; i++) {
+                if (list_creatorid[i]) {
+                    xmlhttp[i] = new XMLHttpRequest();
+                    xmlhttp[i].open("GET", `http://localhost:3002/api/songs/penyanyi/${list_creatorid[i].creator_id}`);
+                    xmlhttp[i].send();
+                    xmlhttp[i].onload = () => {
+                        let res = JSON.parse(xmlhttp[i].responseText);
+                        var temp = "";
+                        for (let j = 0; j < res.length; j++) {
+                            if (res[j].judul) {
+                                temp += '<tr>';
+                                temp += '<td class="first-index">' + (j + 1) + '</td>';
+                                temp += '<td>'+res[j].judul+'</td>';
+                                let song_uri = res[j].audio_path;
+                                temp += "<td><audio class='audio_source' id='audio' controls><source src="+song_uri+" id='audio_source'></audio></td>";
+                                temp += '</tr>';
+                            }
+                        }
+                        document.getElementById("listtable").innerHTML += temp;
+                    }
                 }
             }
-        }
-        xmlhttp.onload = () => {
-            document.getElementById("listtable").innerHTML = data;
         }
     </script>
 </html>

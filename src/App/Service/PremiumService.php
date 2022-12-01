@@ -27,11 +27,11 @@ class PremiumService extends Service{
         }
     }
 
-    public function getSubscribedByUserId($user_id) {
+    public function getSubscribedByUserId(int $subscriber_id) {
         try {
-            $sql = "SELECT creator_id FROM subs WHERE subscriber_id = :user_id";
-            $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+            $sql = "SELECT creator_id FROM subs WHERE subscriber_id = :subscriber_id";
             $statement = $this->db->prepare($sql);
+            $statement->bindParam(':subscriber_id', $subscriber_id, PDO::PARAM_INT);
             $statement->execute();
             $result = $statement->fetchAll();
 
