@@ -47,6 +47,11 @@ sudo chmod +x -R ./scripts
 4. Website sudah dapat dijalankan pada localhost dengan default port 3000.
 
 ## Screenshot
+List Penyanyi Page
+![List Penyanyi Page](/screenshots/ListPenyanyi.png)
+List Lagu Page
+![List Lagu Page](/screenshots/ListLagu.png)
+
 Add Album Page
 ![Add Album Page](/screenshots/addalbum.png)
 Add Song Page
