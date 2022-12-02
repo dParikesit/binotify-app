@@ -48,9 +48,9 @@ sudo chmod +x -R ./scripts
 
 ## Screenshot
 List Penyanyi Page
-![List Penyanyi Page](/screenshots/ListPenyanyi.png)
+![List Penyanyi Page](/screenshots/ListPenyanyi.jpg)
 List Lagu Page
-![List Lagu Page](/screenshots/ListLagu.png)
+![List Lagu Page](/screenshots/ListLagu.jpg)
 
 Add Album Page
 ![Add Album Page](/screenshots/addalbum.png)
