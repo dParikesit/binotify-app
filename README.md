@@ -75,6 +75,20 @@ User List Page
 ![User List Page](/screenshots/userlist.png)
 
 ## Pembagian Kerja
+
+### Perubahan Client-side
+Page / Feature | NIM
+--- | ---
+List Song | 13520057 13520058 13520087
+List Penyanyi | 13520057 13520087 13520058
+
+### Perubahan Server-side
+Page / Feature | NIM
+--- | ---
+Basis Data | 13520057 13520058 13520087
+Premium User | 13520058 13520087 13520057
+Premium Song | 13520058 13520087 13520057
+
 ### Client-side
 Page / Feature | NIM
 --- | ---
