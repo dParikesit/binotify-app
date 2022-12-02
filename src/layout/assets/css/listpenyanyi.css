@@ -95,3 +95,7 @@ tr {
 .button_notclick {
     color: #a2a3a3;
 }
+
+.rejected {
+    color: red !important;
+}

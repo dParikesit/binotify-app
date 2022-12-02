@@ -77,7 +77,7 @@
                     data = data.concat(result.data[i].creator_id);
                     data = data.concat("')}>See Songs</div>");
                 } else if (status == "REJECTED") {
-                    data = data.concat("<div class='button_notclick'>REJECTED</div>")
+                    data = data.concat("<div class='button_notclick rejected'>REJECTED</div>")
                 } else if (status == "PENDING") {
                     data = data.concat("<div class='button_notclick'>PENDING</div>")
                 } else {
