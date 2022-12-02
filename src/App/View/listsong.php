@@ -50,7 +50,7 @@
                 </div>
                 <div class="controls">
                     <div class="play-container">
-                    <div class="toggle-play play">
+                    <div class="toggle-play pause">
                     </div>
                     </div>
                 <div class="time">
@@ -71,54 +71,46 @@
         </div>
     </body>
     <script>
-
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const id = urlParams.get('creator_id');
         const xhr = new XMLHttpRequest();
-        xhr.open("GET", "/getsubscribed");
+        xhr.open("GET", `http://localhost:3002/api/songs/penyanyi/${id}`);
         xhr.send();
         xhr.onload = () => {
             console.log(xhr.responseText)
-            const result = JSON.parse(xhr.responseText);
-            let list_creatorid = result.data;
-            var xmlhttp = [];
-            let row = "";
-            for (let i = 0; i < list_creatorid.length; i++) {
-                if (list_creatorid[i]) {
-                    xmlhttp[i] = new XMLHttpRequest();
-                    xmlhttp[i].open("GET", `http://localhost:3002/api/songs/penyanyi/${list_creatorid[i].creator_id}`);
-                    xmlhttp[i].send();
-                    xmlhttp[i].onload = () => {
-                        let res = JSON.parse(xmlhttp[i].responseText);
-                        console.log(res)
-                        var temp = "";
-                        for (let j = 0; j < res.length; j++) {
-                            if (res[j].judul) {
-                                temp += '<tr>';
-                                temp += '<td class="first-index">' + (j + 1) + '</td>';
-                                temp += '<td class="judul">'+res[j].judul+'</td>';
-                                let song_uri = res[j].audio_path;
-                                let judul = ""
-                                console.log(typeof res[j].judul)
-                                judul += res[j].judul
-                                // temp += "<td><audio class='audio_source' id='audio' controls><source src="+song_uri+" id='audio_source'></audio></td>";
-                                temp += '<td><div class="button-play" onclick={playSong("' + res[j].audio_path + '","' + judul + '")}></div></td>'
-                                // temp += "<td><button onclick={playSong('nama','1')}>Play</button></td>"
-                                temp += '</tr>';
-                            }
-                        }
-                        document.getElementById("listtable").innerHTML += temp;
-                    }
+            const res = JSON.parse(xhr.responseText);
+            var temp = "";
+            for (let j = 0; j < res.length; j++) {
+                if (res[j].judul) {
+                    temp += '<tr>';
+                    temp += '<td class="first-index">' + (j + 1) + '</td>';
+                    temp += '<td class="judul">'+res[j].judul+'</td>';
+                    let song_uri = res[j].audio_path;
+                    let judul = ""
+                    console.log(typeof res[j].judul)
+                    judul += res[j].judul
+                    // temp += "<td><audio class='audio_source' id='audio' controls><source src="+song_uri+" id='audio_source'></audio></td>";
+                    temp += '<td><div class="button-play" onclick={playSong("' + res[j].audio_path + '","' + judul + '")}></div></td>'
+                    // temp += "<td><button onclick={playSong('nama','1')}>Play</button></td>"
+                    temp += '</tr>';
                 }
             }
+            document.getElementById("listtable").innerHTML += temp;
         }
 
-            let audio = ""
+            let audio = new Audio("")
             const playSong = (path, title) => {
                 console.log(title)
                 // path = "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/backsound.mp3"
+                audio.pause();
                 audio = new Audio(path);
+                audio.play();
                 document.getElementById('judul').innerHTML = title;
 
                 const audioPlayer = document.querySelector(".audio-player");
+
+                
 
             console.dir(audio);
 
