@@ -115,7 +115,7 @@
             let audio = ""
             const playSong = (path, title) => {
                 console.log(title)
-                path = "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/backsound.mp3"
+                // path = "https://ia800905.us.archive.org/19/items/FREE_background_music_dhalius/backsound.mp3"
                 audio = new Audio(path);
                 document.getElementById('judul').innerHTML = title;
 
