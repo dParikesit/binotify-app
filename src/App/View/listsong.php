@@ -97,7 +97,6 @@
                                 temp += '<td class="judul">'+res[j].judul+'</td>';
                                 let song_uri = res[j].audio_path;
                                 let judul = ""
-                                res[j].audio_path = "BOP";
                                 console.log(typeof res[j].judul)
                                 judul += res[j].judul
                                 // temp += "<td><audio class='audio_source' id='audio' controls><source src="+song_uri+" id='audio_source'></audio></td>";
